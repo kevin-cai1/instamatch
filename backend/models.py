@@ -17,3 +17,7 @@ user_update_details = api.model('user_update_details', {
     'password': fields.String(example='12345')
 })
 
+friend_details = api.model('friend_details', {
+  'friend_name': fields.String(example='johnk13')
+})
+
