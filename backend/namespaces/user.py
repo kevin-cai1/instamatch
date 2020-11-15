@@ -40,15 +40,30 @@ class User(Resource):
         result = users.delete(username=username)
         if (not result):
             user.abort(404, 'User {} not found'.format(username), result='none')
-            
+
         return {
             'result': 'success'
         }
 
+    @user.doc(description='''
+        Update the user specified by username
+    ''')
     @user.expect(user_update_details)
     def put(self, username):
-        # update details
+        conn = db.get_db()
         j = get_request_json()
-        print(j)
-        return True
+        users = conn.get_table('users')
+
+        data = dict(username=username, password=j['password'], name=j['name'])
+        result = users.update(data, ['username'])
+
+        if (not result):
+            user.abort(404, 'User {} not found'.format(username), result='none')
+            
+        return {
+            'result': 'success',
+            'username': username,
+            'password': j['password'],
+            'name': j['name']
+        }
     
