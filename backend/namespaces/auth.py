@@ -3,6 +3,7 @@ from flask_restplus import Resource, fields
 from flask import request
 from models import *
 from helpers import *
+import db
 
 auth = api.namespace('auth', description="Authentication")
 
@@ -17,9 +18,20 @@ class Login(Resource):
     ''')
 
     def post(self):
+        conn = db.get_db()
         j = get_request_json()
-        print(j)
-        return "login"
+        users = conn['users']
+        data = dict(username=j['username'], password=j['password'])
+        
+        results = users.find_one(username=j['username'], password=j['password'])
+
+        if (not results):
+            auth.abort(400, 'Username or password incorrect' , result='none')
+
+        return {
+            "result": "success",
+            "username": j['username']
+        }
 
 @auth.route('/signup')
 class Signup(Resource):
@@ -29,5 +41,14 @@ class Signup(Resource):
         Used to create an account
     ''')
     def post(self):
+        conn = db.get_db()
         j = get_request_json()
-        return 'signed up'
+        users = conn['users']
+        data = dict(username=j['username'], password=j['password'], name=j['name'])
+        result = users.insert_ignore(data, ['username'])
+        if (not result):
+            auth.abort(400, 'User {} already exists'.format(j['username']), result='None')
+        return {
+            "result": "success",
+            "username": j['username']
+        }

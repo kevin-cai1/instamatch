@@ -3,6 +3,7 @@ from flask_restplus import Resource, fields
 from flask import request
 from models import *
 from helpers import *
+import db
 
 user = api.namespace('user', description="User information")
 
@@ -15,14 +16,34 @@ class User(Resource):
 
     def get(self, username):
         # fetch user info for given username
-        return "user info"
+        conn = db.get_db()
+        users = conn.get_table('users')
+        results = users.find_one(username=username)
+
+        if (not results):
+            user.abort(404, 'User {} not found'.format(username), result='none')
+            
+        return {
+            'result': 'success',
+            'username': results['username'],
+            'name': results['name'],
+            'password': results['password']
+        }
 
     @user.doc(description='''
         Delete the user specified by username
     ''')
     def delete(self, username):
         # delete user specified by username
-        return True
+        conn = db.get_db()
+        users = conn.get_table('users')
+        result = users.delete(username=username)
+        if (not result):
+            user.abort(404, 'User {} not found'.format(username), result='none')
+            
+        return {
+            'result': 'success'
+        }
 
     @user.expect(user_update_details)
     def put(self, username):
