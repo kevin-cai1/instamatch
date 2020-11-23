@@ -2,14 +2,19 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 
-const Friends = () => {
+const Friends = ({ navigation }) => {
  return (
    <View>
     <View style={friends.header}>
      <Text style={friends.title}>Friends</Text>
     </View>
     <Text>You have:</Text>
-    <Button type="primary">primary</Button>
+    <Button
+      type="primary"
+      onPress={() => navigation.navigate('FriendsList')}
+    >
+      FriendsList
+    </Button>
     <WhiteSpace />
    </View>
  );
