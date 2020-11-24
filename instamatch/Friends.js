@@ -4,19 +4,18 @@ import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 
 const Friends = ({ navigation }) => {
  return (
-   <View>
-    <View style={friends.header}>
-     <Text style={friends.title}>Friends</Text>
-    </View>
+   <>
     <Text>You have:</Text>
-    <Button
-      type="primary"
-      onPress={() => navigation.navigate('FriendsList')}
-    >
-      FriendsList
-    </Button>
-    <WhiteSpace />
-   </View>
+    <WingBlank>
+      <Button
+        type="primary"
+        onPress={() => navigation.navigate('FriendsList')}
+      >
+        FriendsList
+      </Button>
+      <WhiteSpace />
+    </WingBlank>
+   </>
  );
 };
 

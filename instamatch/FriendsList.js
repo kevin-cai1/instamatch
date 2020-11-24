@@ -1,24 +1,27 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
-import { useHistory } from 'react-router';
+import { Entypo } from '@expo/vector-icons';
 
 const FriendsList = () => {
 
   return (
-    <View>
-      <WingBlank>
-        <Button icon="PlusCircleOutlined />">hi</Button><WhiteSpace />
-      </WingBlank>
+    <View style={style.container}>
+      <TouchableOpacity style={style.mdIconButton}>
+        <Entypo name="circle-with-plus" size={55} color="#2C363F" backgroundColor="#E5BD47" />
+        <Text>Add New Friend</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const friends = StyleSheet.create({
-  header: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    height: 50,
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  mdIconButton: {
+    alignItems: "center",
   },
   title: {
     textAlign: 'center',
