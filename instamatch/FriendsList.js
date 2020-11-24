@@ -1,33 +1,45 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
-import { Entypo } from '@expo/vector-icons';
+import { List } from '@ant-design/react-native';
+import AddButtonMd from './Components/AddButtonMd';
 
 const FriendsList = () => {
 
+  const usernameList = [
+    {
+      'letter': 'a',
+      'friends': ['Alex123', 'andy00'],
+    },
+    {
+      'letter': 'k',
+      'friends': ['Kevin07', 'KitKath'],
+    }
+  ];
+
+  const addFriend = () => {
+    console.log('add friend');
+  };
+
   return (
     <View style={style.container}>
-      <TouchableOpacity style={style.mdIconButton}>
-        <Entypo name="circle-with-plus" size={55} color="#2C363F" backgroundColor="#E5BD47" />
-        <Text>Add New Friend</Text>
-      </TouchableOpacity>
+      <AddButtonMd text="Add New Friend" onPressAction={addFriend} />
+        {usernameList.map((letterList) => (
+          <List renderHeader={letterList.letter}>
+            {letterList.friends.map((friend) => (
+              <List.Item>
+                {friend}
+              </List.Item>
+            ))}
+          </List>
+        ))}
     </View>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center'
   },
-  mdIconButton: {
-    alignItems: "center",
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 30,
-    paddingTop: 10,
-  }
 });
 
 export default FriendsList;
