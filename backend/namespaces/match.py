@@ -19,12 +19,12 @@ class Matches(Resource):
     @match.doc(description='''
         Add user into match queue
     ''')
-    @match.expect(friend_details)
+    @match.expect(match_details)
     def post(self, username):
-        # currently deletes friends as well as requests
         conn = db.get_db()
         j = get_request_json()
 
+        #
 
         return {
             'result': 'success'
@@ -34,9 +34,16 @@ class Matches(Resource):
         Check if user has a match
     ''')
     def get(self, username):
-        test = 'hello'
-        test2 = None
-        test_function(test2 if test2 else None, test)
+        
+        return {
+            'result': 'success'
+        }
+
+    @match.doc(description='''
+        Remove the user from the match queue
+    ''')
+    def delete(self, username):
+
         return {
             'result': 'success'
         }

@@ -31,3 +31,9 @@ friend_tags = api.model('friend_tags', {
   'tag_name': fields.String(example='swimming'),
   'friend': fields.String(example='johnk13')
 })
+
+match_details = api.model('match_details', {
+  'activity': fields.String(example='gym'),
+  'tag': fields.String(example='close friends'),
+  'end_time': fields.String(description='end time in UNIX epoch time',example='1606287288')
+})
