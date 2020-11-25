@@ -26,6 +26,8 @@ const AddButtonMd = ({text, onPressAction}) => {
 const style = StyleSheet.create({
   mdIconButton: {
     alignItems: "center",
+    marginTop: 10,
+    marginBottom: 15,
   },
   mdIcon: {
     paddingBottom: 10,

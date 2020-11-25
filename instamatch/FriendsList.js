@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import { List } from '@ant-design/react-native';
+import {StyleSheet, View} from 'react-native';
+import {Button, List} from '@ant-design/react-native';
 import AddButtonMd from './Components/AddButtonMd';
 
-const FriendsList = () => {
+const FriendsList = ({ navigation }) => {
 
   const usernameList = [
     {
@@ -22,11 +22,14 @@ const FriendsList = () => {
 
   return (
     <View style={style.container}>
-      <AddButtonMd text="Add New Friend" onPressAction={addFriend} />
-        {usernameList.map((letterList) => (
-          <List renderHeader={letterList.letter}>
-            {letterList.friends.map((friend) => (
-              <List.Item>
+      <AddButtonMd
+        text="Add New Friend"
+        onPressAction={() => navigation.navigate('SearchFriend')}
+      />
+        {usernameList.map((letterList, idx) => (
+          <List key={idx} renderHeader={letterList.letter}>
+            {letterList.friends.map((friend, idx) => (
+              <List.Item key={idx}>
                 {friend}
               </List.Item>
             ))}
