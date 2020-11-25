@@ -4,6 +4,7 @@ from flask import request
 from models import *
 from helpers import *
 import db
+import time
 
 match = api.namespace('match', description="Managing matching of users")
 
@@ -43,6 +44,14 @@ class Matches(Resource):
         table = conn['match']
 
         matched_table = conn['matched']
+        # clear outdated record
+        current_time = str(time.time()).split('.')[0]
+        print(current_time)
+        outdated = table.find(end_time={'<':current_time})
+        for rec in outdated:
+            # delete outdated records
+            table.delete(username=rec['username'])
+
 
         match = None
         prematched = matched_table.find_one(username=username)
@@ -52,7 +61,7 @@ class Matches(Resource):
         else :
             # find all friends in tag to match with
             results = conn.query('''
-                SELECT match.username, tags.friend
+                SELECT match.username, match.activity, tags.friend
                 FROM match INNER JOIN tags
                     ON match.username = tags.username
                     AND tags.friend != 'None'
@@ -61,19 +70,18 @@ class Matches(Resource):
             # list of potential friends to match
             for record in results:
                 # check if any of these friends are also looking
-                print(record)
                 res = table.find_one(username=record['friend'])
                 if (res): # friend is also in queue
                     # check if friend is ok to match with you
                     result = conn.query('''
-                        SELECT match.username, tags.friend
+                        SELECT match.username, match.activity, tags.friend
                         FROM match INNER JOIN tags
                             ON match.username = tags.username
                             AND tags.friend != 'None'
                         WHERE match.username = :username
                     ''', {'username': res['username']})
                     for friend_r in result:
-                        if friend_r['friend'] == username:
+                        if friend_r['friend'] == username and friend_r['activity'] == record['activity']:
                             match = friend_r['username']
                             data = dict(username=match, match=username)
                             matched_table.insert_ignore(data, ['username'])
