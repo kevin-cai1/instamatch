@@ -21,7 +21,13 @@ const Navbar = (props: NavBarProps) => {
           <TabBar.Item
             key={index}
             title={navItem.title}
-            icon={<AntDesign name={navItem.iconName} size={32}/>}
+            icon={
+              <AntDesign
+                name={navItem.iconName}
+                size={30}
+                color={(props.selectedNav === navItem.nav) ? TINT_COLOR : UNSELECTED_TINT_COLOR}
+              />
+            }
             selected={props.selectedNav === navItem.nav}
             onPress={() => props.onClickNavItem(navItem.nav)}>
             {navItem.component()}
