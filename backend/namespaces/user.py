@@ -78,6 +78,7 @@ class AllUsers(Resource):
 
     def get(self):
         # fetch all user info
+        conn = db.get_db()
         users = conn.get_table('users')
 
         all_users = []
