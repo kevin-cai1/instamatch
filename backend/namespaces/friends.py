@@ -37,13 +37,15 @@ class Friends(Resource):
         conn = db.get_db()
         j = get_request_json()
         table = conn['friends']
-        data = dict(username=username, friend=j['friend_name'])
-        
+        try:
+            data = dict(username=username, friend=j['friend_name'])
+        except KeyError as e:
+            friends.abort(400, '{} not provided'.format(e), result='none')
         # check that both users exist
 
-        result = table.insert_ignore(data, ['username', 'friend_name'])
+        result = table.insert_ignore(data, ['username', 'friend'])
         if (not result):
-            friends.abort(400, 'User {} is already friends with {}'.format(username, j['friend_name']), result='None')
+            friends.abort(400, 'User {} is already friends with {}'.format(username, j['friend_name']), result='none')
 
         return {
             "result": "success"

@@ -44,8 +44,12 @@ class Signup(Resource):
         conn = db.get_db()
         j = get_request_json()
         users = conn['users']
-        data = dict(username=j['username'], password=j['password'], name=j['name'])
-        result = users.insert_ignore(data, ['username'])
+        try:
+            data = dict(username=j['username'], password=j['password'], name=j['name'], email=j['email'])
+            result = users.insert_ignore(data, ['username'])
+        except KeyError as e:
+            auth.abort(400, '{} not provided'.format(e))
+
         if (not result):
             auth.abort(400, 'User {} already exists'.format(j['username']), result='None')
         return {
