@@ -36,8 +36,8 @@ def init_db():
     tags.insert_ignore(dict(username='johnk13', tag='uni friends', friend='Kevin07'), ['username', 'tag', 'friend'])
 
     match = db['match']
-    match.upsert(dict(username='Kevin07', activity='gym', tag='close friends', end_time='1606301300', ['username'])
-    match.upsert(dict(username='johnk13', activity='gym', tag='uni friends', end_time='1606301300', ['username'])
+    match.upsert(dict(username='Kevin07', activity='gym', tag='close friends', end_time='1606301300'), ['username'])
+    match.upsert(dict(username='johnk13', activity='gym', tag='uni friends', end_time='1606301300'), ['username'])
     # create tables
     # populate with sample data
 
