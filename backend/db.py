@@ -8,7 +8,7 @@ def get_db():
 def init_db():
     db = get_db()
     users = db['users']
-    users.insert(dict(username='Kevin07', password='12345', name='Kevin Cai'))
+    users.insert(dict(username='Kevin07', password='12345', name='Kevin Cai', email='kevin@email.com'))
     # create tables
     # populate with sample data
 

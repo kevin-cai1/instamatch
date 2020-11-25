@@ -12,3 +12,6 @@
 ## Running the API
 1. Make sure you have the virtual environment activated before you do anything
 2. Run `python3 run.py` to run the API.
+
+## Using the DB
+The DB will automatically instantiate itself. You can run `python3 db.py` to load the db with sample data
