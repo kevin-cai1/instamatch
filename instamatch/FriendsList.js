@@ -6,7 +6,7 @@ import api from './api';
 
 const FriendsList = ({ navigation }) => {
   const Api = new api();
-  const username = 'charmaine';
+  const username = 'charmaine'; // change this
   const [usernameList, setUsernameList] = React.useState([]);
 
   React.useEffect(() => {
