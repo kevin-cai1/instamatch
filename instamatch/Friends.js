@@ -9,13 +9,17 @@ const Friends = ({ navigation }) => {
 
   const [totalFriends, setTotalFriends] = React.useState(0);
   const [totalTags, setTotalTags] = React.useState(0);
-  const username = 'charmaine';
+  const username = 'charmaine'; // need to change
   const Api = new api();
 
   React.useEffect(() => {
     Api.getAllFriends(username)
       .then((result) => {
         (result.friends) && setTotalFriends(result.friends.length);
+      });
+    Api.getAllTags(username)
+      .then((result) => {
+        (result.tags) && setTotalTags(result.tags.length);
       });
   }, []);
 
