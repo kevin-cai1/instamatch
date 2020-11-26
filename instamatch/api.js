@@ -50,6 +50,11 @@ export default class Api {
     this.setBody(JSON.stringify({
       "friend_name": friend,
     }));
-    return this.fetchResults(`/friends/${username}`);
+    return this.fetchResults(`friends/${username}`);
+  }
+
+  getUserDetails(username) {
+    this.setMethod('GET');
+    return this.fetchResults(`user/${username}`);
   }
 }
