@@ -3,30 +3,20 @@ import {StyleSheet, Text, View} from 'react-native';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import Constants from "expo-constants";
+import api from './api';
 
 const Friends = ({ navigation }) => {
 
   const [totalFriends, setTotalFriends] = React.useState(0);
   const [totalTags, setTotalTags] = React.useState(0);
-  const { manifest } = Constants;
+  const username = 'charmaine';
+  const Api = new api();
 
   React.useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }
-    };
-    const uri = 'https://instamatch-api.herokuapp.com/';
-    console.log(uri);
-    fetch(`${uri}/friends/charmaine/all`, options)
-      .then((result) => console.log(JSON.stringify(result.json())))
-        .catch(function(e) {
-          console.log(e);
-          throw e;
-        });
+    Api.getAllFriends(username)
+      .then((result) => {
+        (result.friends) && setTotalFriends(result.friends.length);
+      });
   }, []);
 
   return (
