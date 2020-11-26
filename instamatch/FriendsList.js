@@ -46,7 +46,12 @@ const FriendsList = ({ navigation }) => {
       {usernameList.map((letterList, idx) => (
         <List key={idx} renderHeader={letterList.letter}>
           {letterList.friends.map((friend, idx) => (
-            <List.Item key={idx}>
+            <List.Item
+              key={idx}
+              onPress={() => navigation.navigate('FriendProfile', {
+                username: friend,
+              })}
+            >
               {friend}
             </List.Item>
           ))}

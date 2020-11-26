@@ -7,6 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Friends from "./Friends";
 import FriendsList from "./FriendsList";
 import SearchFriend from "./SearchFriend";
+import FriendProfile from './FriendProfile';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,14 @@ const FriendsNav = () => {
           component={SearchFriend}
           options={{ title: 'Friends - Add' }}
         />
-      </Stack.Navigator>
+        <Stack.Screen
+          name="FriendProfile"
+          component={FriendProfile}
+          options={({route}) => ({
+            title: route.params.username,
+          })}
+        />
+    </Stack.Navigator>
     </NavigationContainer>
   );
 };
