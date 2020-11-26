@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
+import { AntDesign } from '@expo/vector-icons';
 import Friends from "./Friends";
 import FriendsList from "./FriendsList";
 import SearchFriend from "./SearchFriend";
@@ -12,8 +14,23 @@ const FriendsNav = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Friends" component={Friends} />
-        <Stack.Screen name="FriendsList" component={FriendsList} />
-        <Stack.Screen name="SearchFriend" component={SearchFriend} />
+        <Stack.Screen
+          name="FriendsList"
+          component={FriendsList}
+          options={{
+            title: 'Friends List',
+            headerRight: () => (
+              <Button >
+                <AntDesign name="plus" size={24} color="#1C3AA1" />
+              </Button>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="SearchFriend"
+          component={SearchFriend}
+          options={{ title: 'Friends - Add' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
