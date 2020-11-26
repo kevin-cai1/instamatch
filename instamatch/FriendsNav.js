@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Friends from "./Friends";
 import FriendsList from "./FriendsList";
@@ -17,14 +18,17 @@ const FriendsNav = () => {
         <Stack.Screen
           name="FriendsList"
           component={FriendsList}
-          options={{
+          options={({navigation}) => ({
             title: 'Friends List',
             headerRight: () => (
-              <Button >
+              <TouchableOpacity
+                style={style.addButtonContainer}
+                onPress={() => navigation.navigate('SearchFriend')}
+              >
                 <AntDesign name="plus" size={24} color="#1C3AA1" />
-              </Button>
+              </TouchableOpacity>
             ),
-          }}
+          })}
         />
         <Stack.Screen
           name="SearchFriend"
@@ -35,6 +39,12 @@ const FriendsNav = () => {
     </NavigationContainer>
   );
 };
+
+const style = StyleSheet.create({
+  addButtonContainer: {
+    paddingRight: 10,
+  },
+});
 
 export default FriendsNav;
 
