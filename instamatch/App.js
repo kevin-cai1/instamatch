@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Router from './Router';
 import Home from './Home';
 import { Route } from 'react-router'
-import { AntDesign } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 
 // declare const global: {HermesInternal: null | {}};
 
@@ -14,6 +14,7 @@ const App = () => {
       <Router>
         <Route path="/Home" component={Home} />
       </Router>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
   );
 };

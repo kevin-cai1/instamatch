@@ -11,7 +11,7 @@ user = api.namespace('user', description="User information")
 class User(Resource):
     @user.response(200, 'Success')
     @user.doc(description='''
-        Handle all operations for given user
+        Get info for given user
     ''')
 
     def get(self, username):
@@ -27,6 +27,7 @@ class User(Resource):
             'result': 'success',
             'username': results['username'],
             'name': results['name'],
+            'email': results['email'],
             'password': results['password']
         }
 
@@ -40,15 +41,55 @@ class User(Resource):
         result = users.delete(username=username)
         if (not result):
             user.abort(404, 'User {} not found'.format(username), result='none')
-            
+
         return {
             'result': 'success'
         }
 
+    @user.doc(description='''
+        Update the user specified by username
+    ''')
     @user.expect(user_update_details)
     def put(self, username):
-        # update details
+        conn = db.get_db()
         j = get_request_json()
-        print(j)
-        return True
-    
+        users = conn.get_table('users')
+
+        data = {}
+        data['username'] = username
+        for key in j.keys():
+            data[key] = j[key]
+        
+        result = users.update(data, ['username'])
+
+        if (not result):
+            user.abort(404, 'User {} not found'.format(username), result='none')
+        
+        return_val = data
+        return_val['result'] = 'success'
+        return return_val
+
+@user.route('/all')
+class AllUsers(Resource):
+    @user.response(200, 'Success')
+    @user.doc(description='''
+        Get all users
+    ''')
+
+    def get(self):
+        # fetch all user info
+        conn = db.get_db()
+        users = conn.get_table('users')
+
+        all_users = []
+
+        for user in users:
+            user_details = {}
+            for key in user.keys():
+                user_details[key] = user[key]
+            all_users.append(user_details)
+            
+        return {
+            'result': 'success',
+            'users': all_users
+        }    
