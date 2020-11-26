@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import Friends from "./Friends";
 import FriendsList from "./FriendsList";
 import SearchFriend from "./SearchFriend";
@@ -12,6 +13,8 @@ import FriendProfile from './FriendProfile';
 const Stack = createStackNavigator();
 
 const FriendsNav = () => {
+  const [optionsState, setOptionsState] = React.useState(false);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

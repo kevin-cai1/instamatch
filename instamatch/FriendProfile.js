@@ -1,13 +1,16 @@
 import React from 'react';
 import api from './api';
-import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
-import {WingBlank} from '@ant-design/react-native';
-import {StyleSheet, View, Text } from 'react-native';
+import {FontAwesome5, FontAwesome, SimpleLineIcons} from '@expo/vector-icons';
+import {WingBlank, Modal, Provider } from '@ant-design/react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
+
+const screen = Dimensions.get("window");
 
 const FriendProfile = ({ route, navigation }) => {
   const username = route.params.username;
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [optionVisible, setOptionsVisible] = React.useState(false);
 
   const Api = new api();
 
@@ -21,8 +24,25 @@ const FriendProfile = ({ route, navigation }) => {
       });
   }, []);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={style.addButtonContainer}
+          onPress={() => setOptionsVisible(!optionVisible)}
+        >
+          <SimpleLineIcons
+            name="options"
+            size={24}
+            color="#1C3AA1"
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, optionVisible]);
+
   return (
-    <View>
+    <View style={style.mainContainer}>
       <View style={style.profileContainer}>
         <WingBlank>
           <FontAwesome name="user-circle" size={90} color="black" />
@@ -41,6 +61,18 @@ const FriendProfile = ({ route, navigation }) => {
           </View>
         </WingBlank>
       </View>
+      <Provider>
+        <Modal
+          visible={optionVisible}
+          animationType="slide-down"
+          onClose={() => setOptionsVisible(false)}
+        >
+          <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
+            <Text style={{ textAlign: 'center' }}>Content...</Text>
+            <Text style={{ textAlign: 'center' }}>Content...</Text>
+          </View>
+        </Modal>
+      </Provider>
     </View>
   );
 };
@@ -84,6 +116,12 @@ const style = StyleSheet.create({
   tagIcon: {
     paddingTop: 9,
     marginRight: 5,
+  },
+  addButtonContainer: {
+    paddingRight: 10,
+  },
+  mainContainer: {
+    height: screen.height,
   },
 });
 
