@@ -34,14 +34,14 @@ const Home = () => {
       <View style={ homeStyles.header }>
         <Text style={ homeStyles.headerText }>Home</Text>
       </View>
-      <List style={{ backgroundColor: 'white' }} className="picker-list" renderHeader={'Session Details'}>
+      <List className="picker-list" renderHeader={'Session Details'}>
         <Item extra="1 hr (Default)" arrow="empty" onPress={() => {}}>
           <Text style={homeStyles.row}>I'm free for...</Text>
         </Item>
-        <Item style={{ color: '#647C90' }} extra="Any Activity (Default)" arrow="empty" onPress={() => {}}>
+        <Item extra="Any Activity (Default)" arrow="empty" onPress={() => {}}>
           <Text style={homeStyles.row}>To do...</Text>
         </Item>
-        <Item style={{ color: '#647C90' }} extra="All Friends (Default)" arrow="empty" onPress={() => {}}>
+        <Item extra="All Friends (Default)" arrow="empty" onPress={() => {}}>
           <Text style={homeStyles.row}>With...</Text>
         </Item>
       </List>

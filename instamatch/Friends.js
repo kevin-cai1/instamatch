@@ -39,6 +39,7 @@ const Friends = ({ navigation }) => {
       <WhiteSpace style={friends.whitespace} />
       <Button
         style={[friends.button, friends.secondaryButton]}
+        onPress={() => navigation.navigate('TagsList')}
       >
         <View style={friends.buttonContent}>
           <FontAwesome5 style={friends.tagIcon} name="tags" size={50} color="rgba(255, 255, 255, 0.85)" />
