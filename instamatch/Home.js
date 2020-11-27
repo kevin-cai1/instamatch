@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Font from 'expo-font';
-import { Image, Text, View } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 import { List, Button, WhiteSpace } from '@ant-design/react-native';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -30,23 +30,73 @@ const Activities = [
 
 const Home = () => {
   return (
-    <View>
-      <View>
-        <Text>Home</Text>
+    <View style={homeStyles.container}>
+      <View style={ homeStyles.header }>
+        <Text style={ homeStyles.headerText }>Home</Text>
       </View>
       <List style={{ backgroundColor: 'white' }} className="picker-list" renderHeader={'Session Details'}>
-        <Item arrow="empty" onPress={() => {}}>
-          I'm free for...
+        <Item extra="1 hr (Default)" arrow="empty" onPress={() => {}}>
+          <Text style={homeStyles.row}>I'm free for...</Text>
         </Item>
-        <Item extra="(Default) Any Activity" arrow="empty" onPress={() => {}}>
-          To do...
+        <Item style={{ color: '#647C90' }} extra="Any Activity (Default)" arrow="empty" onPress={() => {}}>
+          <Text style={homeStyles.row}>To do...</Text>
         </Item>
-        <Item extra="(Default) All Friends" arrow="empty" onPress={() => {}}>
-          With...
+        <Item style={{ color: '#647C90' }} extra="All Friends (Default)" arrow="empty" onPress={() => {}}>
+          <Text style={homeStyles.row}>With...</Text>
         </Item>
       </List>
-      <Button type="primary">Start Now!</Button>
+      <View style={homeStyles.buttonContainer}>
+        <TouchableOpacity
+          style={{ borderWidth:1,
+            borderColor:'#1C3AA1',
+            alignItems:'center',
+            justifyContent:'center',
+            width:172,
+            height:172,
+            backgroundColor:'#1C3AA1',
+            borderRadius:100,
+          }}
+          >
+          <Text style={homeStyles.cta}>Start Now!</Text>
+        </TouchableOpacity>
+      </View>
     </View>);
 };
+
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F2F2F2',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    borderBottomWidth: 1.5,
+    marginBottom: 60,
+  },
+  headerText: {
+    fontSize: 24,
+  },
+  row: {
+    color: '#647C90',
+    fontSize: 20,
+  },
+  buttonContainer: {
+    display: 'flex',
+    paddingTop: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bigButton: {
+    backgroundColor: '#1C3AA1',
+    borderColor: '#1C3AA1',
+  },
+  cta: {
+    color: 'white',
+    fontSize: 20,
+  }
+});
 
 export default Home;
