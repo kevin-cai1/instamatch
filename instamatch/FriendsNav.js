@@ -9,6 +9,7 @@ import Friends from "./Friends";
 import FriendsList from "./FriendsList";
 import SearchFriend from "./SearchFriend";
 import FriendProfile from './FriendProfile';
+import TagsList from './TagsList';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,13 @@ const FriendsNav = () => {
           options={({route}) => ({
             title: route.params.username,
           })}
+        />
+        <Stack.Screen
+          name="TagsList"
+          component={TagsList}
+          options={{
+            title: 'Manage Tags'
+          }}
         />
     </Stack.Navigator>
     </NavigationContainer>
