@@ -1,7 +1,7 @@
 import React from 'react';
 import api from './api';
 import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/vector-icons';
-import {WingBlank, Modal, Provider, WhiteSpace, List, Flex } from '@ant-design/react-native';
+import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 
 const screen = Dimensions.get("window");
@@ -11,8 +11,20 @@ const FriendProfile = ({ route, navigation }) => {
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [optionVisible, setOptionsVisible] = React.useState(false);
+  const [blockModalVisible, setBlockModalVisible] = React.useState(false);
+  const [removeModalVisible, setRemoveModalVisible] = React.useState(false);
 
   const Api = new api();
+
+  const handleRemoveModal = () => {
+    setOptionsVisible(false);
+    setRemoveModalVisible(true);
+  };
+
+  const handleBlockModal = () => {
+    setOptionsVisible(false);
+    setBlockModalVisible(true);
+  };
 
   React.useEffect(() => {
     Api.getUserDetails(username)
@@ -71,22 +83,52 @@ const FriendProfile = ({ route, navigation }) => {
           <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
             <List>
               <List.Item>
-                <TouchableOpacity style={style.optionsItem}>
+                <TouchableOpacity style={style.optionsItem} onPress={handleRemoveModal}>
                   <MaterialIcons name="cancel" size={35} color="red" />
                   <Text style={style.optionsItemText}>Remove</Text>
                 </TouchableOpacity>
               </List.Item>
               <List.Item>
-                <TouchableOpacity style={style.optionsItem}>
+                <TouchableOpacity style={style.optionsItem} onPress={handleBlockModal}>
                   <MaterialIcons name="block" size={32} color="red" />
                   <Text style={[style.optionsItemText, {paddingHorizontal: 20}]}>Block</Text>
                 </TouchableOpacity>
               </List.Item>
             </List>
           </View>
-          <TouchableOpacity style={style.optionsCancel}>
+          <TouchableOpacity style={style.optionsCancel} onPress={() => setOptionsVisible(false)} >
             <Text style={style.optionsCancelText}>Cancel</Text>
           </TouchableOpacity>
+        </Modal>
+        <Modal
+          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Remove ${username}`}</Text>}
+          transparent
+          onClose={() => setRemoveModalVisible(false)}
+          maskClosable
+          visible={removeModalVisible}
+          footer={[
+            { text: 'Cancel', onPress: () => setRemoveModalVisible(false) },
+            { text: 'Yes', onPress: () => console.log('TODO') },
+          ]}
+        >
+          <View style={{ paddingVertical: 20 }}>
+            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to remove ${username} from your friends?`}</Text>
+          </View>
+        </Modal>
+        <Modal
+          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Block ${username}`}</Text>}
+          transparent
+          onClose={() => setBlockModalVisible(false)}
+          maskClosable
+          visible={blockModalVisible}
+          footer={[
+            { text: 'Cancel', onPress: () => setBlockModalVisible(false) },
+            { text: 'Yes', onPress: () => console.log('TODO') },
+          ]}
+        >
+          <View style={{ paddingVertical: 20 }}>
+            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to block ${username}? This will remove them from your friends and block them from adding you in the future.`}</Text>
+          </View>
         </Modal>
       </Provider>
     </View>
