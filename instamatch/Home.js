@@ -3,30 +3,11 @@ import * as Font from 'expo-font';
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 import { List, Button, WhiteSpace } from '@ant-design/react-native';
 import { AntDesign } from '@expo/vector-icons';
+import ActivityPicker from './ActivityPicker';
+import FriendPicker from './FriendPicker';
+import TimePicker from './TimePicker';
 
 const Item = List.Item;
-const Activities = [
-  [
-    {
-      label: 'Gym',
-      value: 'gym',
-    },
-    {
-      label: 'Brunch',
-      value: 'brunch',
-    },
-  ],
-  [
-    {
-      label: 'Video Call',
-      value: 'video call',
-    },
-    {
-      label: 'Dinner',
-      value: 'dinner',
-    },
-  ],
-];
 
 const Home = () => {
   return (
@@ -34,17 +15,11 @@ const Home = () => {
       <View style={ homeStyles.header }>
         <Text style={ homeStyles.headerText }>Home</Text>
       </View>
-      <List className="picker-list" renderHeader={'Session Details'}>
-        <Item extra="1 hr (Default)" arrow="empty" onPress={() => {}}>
-          <Text style={homeStyles.row}>I'm free for...</Text>
-        </Item>
-        <Item extra="Any Activity (Default)" arrow="empty" onPress={() => {}}>
-          <Text style={homeStyles.row}>To do...</Text>
-        </Item>
-        <Item extra="All Friends (Default)" arrow="empty" onPress={() => {}}>
-          <Text style={homeStyles.row}>With...</Text>
-        </Item>
-      </List>
+      <View style={ homeStyles.list }>
+        <TimePicker/>
+        <ActivityPicker/>
+        <FriendPicker/>
+      </View>
       <View style={homeStyles.buttonContainer}>
         <TouchableOpacity
           style={{ borderWidth:1,
@@ -72,12 +47,15 @@ const homeStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 10,
     borderBottomWidth: 1.5,
-    marginBottom: 60,
+    marginBottom: 100,
   },
   headerText: {
     fontSize: 24,
+  },
+  list: {
+    padding: 10,
   },
   row: {
     color: '#647C90',
@@ -85,7 +63,7 @@ const homeStyles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    paddingTop: 60,
+    paddingTop: 40,
     justifyContent: "center",
     alignItems: "center",
   },
