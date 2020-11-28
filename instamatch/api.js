@@ -45,16 +45,20 @@ export default class Api {
     return this.fetchResults(`friends/search/${name}`);
   }
 
-  addFriend(username, friend) {
+  addFriend(username, body) {
     this.setMethod('POST');
-    this.setBody(JSON.stringify({
-      "friend_name": friend,
-    }));
+    this.setBody(body);
     return this.fetchResults(`friends/${username}`);
   }
 
   getUserDetails(username) {
     this.setMethod('GET');
     return this.fetchResults(`user/${username}`);
+  }
+
+  getFriendStatus(username, friendname) {
+    this.setMethod('GET');
+    this.setBody("");
+    return this.fetchResults(`friends/${username}/${friendname}`);
   }
 }
