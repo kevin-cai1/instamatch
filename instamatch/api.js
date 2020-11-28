@@ -61,4 +61,9 @@ export default class Api {
     this.setBody("");
     return this.fetchResults(`friends/${username}/${friendname}`);
   }
+
+  getTagFriends(username, tag) {
+    this.setMethod('GET');
+    return this.fetchResults(`tags/${username}/${tag}`);
+  }
 }
