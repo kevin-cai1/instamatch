@@ -1,7 +1,7 @@
 import React from 'react';
 import api from './api';
-import {FontAwesome5, FontAwesome, SimpleLineIcons} from '@expo/vector-icons';
-import {WingBlank, Modal, Provider } from '@ant-design/react-native';
+import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/vector-icons';
+import {WingBlank, Modal, Provider, WhiteSpace, List, Flex } from '@ant-design/react-native';
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 
 const screen = Dimensions.get("window");
@@ -66,11 +66,27 @@ const FriendProfile = ({ route, navigation }) => {
           visible={optionVisible}
           animationType="slide-down"
           onClose={() => setOptionsVisible(false)}
+          style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
         >
-          <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
+          <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
+            <List>
+              <List.Item>
+                <TouchableOpacity style={style.optionsItem}>
+                  <MaterialIcons name="cancel" size={35} color="red" />
+                  <Text style={style.optionsItemText}>Remove</Text>
+                </TouchableOpacity>
+              </List.Item>
+              <List.Item>
+                <TouchableOpacity style={style.optionsItem}>
+                  <MaterialIcons name="block" size={32} color="red" />
+                  <Text style={[style.optionsItemText, {paddingHorizontal: 20}]}>Block</Text>
+                </TouchableOpacity>
+              </List.Item>
+            </List>
           </View>
+          <TouchableOpacity style={style.optionsCancel}>
+            <Text style={style.optionsCancelText}>Cancel</Text>
+          </TouchableOpacity>
         </Modal>
       </Provider>
     </View>
@@ -122,6 +138,33 @@ const style = StyleSheet.create({
   },
   mainContainer: {
     height: screen.height,
+  },
+  optionsItem: {
+    height: 57,
+    backgroundColor: '#FFFFFF',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  optionsItemText: {
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 5,
+    paddingHorizontal: 10,
+  },
+  optionsCancel: {
+    height: 57,
+    paddingTop: 14,
+    borderRadius: 13,
+    backgroundColor: '#FFFFFF',
+    marginHorizontal: 5,
+  },
+  optionsCancelText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#007ff9',
+    fontWeight: '500',
   },
 });
 
