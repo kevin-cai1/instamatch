@@ -4,8 +4,8 @@ import ReactNativePickerModule from "react-native-picker-module";
 
 const ActivityPicker = () => {
   const pickerRef = useRef()
-  const [value, setValue] = useState()
-  const activities = ['Any Activity', 'Gym', 'Walk', 'Swim', 'Other Sport', 'Brunch', 'Dinner', 'Drinks', 'Video Call', 'Phone Call'];
+  const [value, setValue] = useState("Any Activity (Default)");
+  const activities = ['Any Activity (Default)', 'Gym', 'Walk', 'Swim', 'Other Sport', 'Brunch', 'Dinner', 'Drinks', 'Video Call', 'Phone Call'];
   return (
     <View>
       <SafeAreaView style={pickerStyles.container}>
@@ -77,7 +77,7 @@ const pickerStyles = StyleSheet.create({
   },
   rowValue: {
     color: '#647C90',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,
   },

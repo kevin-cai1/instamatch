@@ -69,7 +69,7 @@ const pickerStyles = StyleSheet.create({
   },
   rowValue: {
     color: '#647C90',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,
   },

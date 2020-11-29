@@ -6,7 +6,7 @@ import api from './api';
 const FriendPicker = () => {
   const username='johnk13'
   const pickerRef = useRef()
-  const [value, setValue] = useState()
+  const [value, setValue] = useState("All Friends (Default)")
   const Api = new api();
   const [tagsList, setTagsList] = React.useState([]);
   React.useEffect(() => {
@@ -87,7 +87,7 @@ const pickerStyles = StyleSheet.create({
   },
   rowValue: {
     color: '#647C90',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,
   },
