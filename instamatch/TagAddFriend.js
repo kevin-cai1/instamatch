@@ -7,48 +7,54 @@ import Toast from 'react-native-toast-message';
 
 import api from './api';
 
-const SearchFriend = () => {
+const TagAddFriend = ({ route, navigation }) => {
 
   const [searchInput, setSearchInput] = React.useState("");
   const Api = new api();
+  const tagName = route.params.tag;
   const username = 'charmaine'; // change this
-  const [usernames, setUsernames] = React.useState([]);
+  const [friends, setFriends] = React.useState([]);
 
   React.useEffect(() => {
-    Api.searchUser(searchInput)
-      .then((result) => setUsernames(result.users));
-  }, [searchInput]);
-
-  const handleAdd = (friend) => {
-    const body = JSON.stringify({
-      "friend_name": friend,
-    });
-
-    Api.addFriend(username, body)
+    Api.getAllFriends(username)
       .then((result) => {
-        if (result.result) {
-          Api.getFriendStatus(username, friend)
-            .then((response) => {
-              if (response.status === 'friends') {
-                Toast.show({
-                  text1: `You are now friends with ${friend}!`,
-                });
-              } else {
-                Toast.show({
-                  text1: `Friend request sent to ${friend}.`,
-                });
-              }
-            });
+        if (result.friends) {
+          const allFriends = result.friends;
+          setFriends(allFriends);
         }
       });
-  };
+  }, []);
+
+  // const handleAdd = (friend) => {
+  //   const body = JSON.stringify({
+  //     "friend_name": friend,
+  //   });
+  //
+  //   Api.addFriend(username, body)
+  //     .then((result) => {
+  //       if (result.result) {
+  //         Api.getFriendStatus(username, friend)
+  //           .then((response) => {
+  //             if (response.status === 'friends') {
+  //               Toast.show({
+  //                 text1: `You are now friends with ${friend}!`,
+  //               });
+  //             } else {
+  //               Toast.show({
+  //                 text1: `Friend request sent to ${friend}.`,
+  //               });
+  //             }
+  //           });
+  //       }
+  //     });
+  // };
 
   return (
     <>
       <SearchBar
-        placeholder="Search user..."
+        placeholder="Search friend..."
         onChangeText={(text) => setSearchInput(text)}
-        onClear={() => setUsernames([])}
+        onClear={() => setSearchInput("")}
         value={searchInput}
         lightTheme={true}
         round={true}
@@ -56,11 +62,11 @@ const SearchFriend = () => {
         inputContainerStyle={style.inputStyle}
       />
       <List>
-        {usernames.map((friend, idx) => (
+        {friends.map((friend, idx) => (
           <List.Item key={idx} >
             <View style={style.listItem}>
               <Text style={style.itemText} >{friend}</Text>
-              <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)} >
+              <TouchableOpacity style={style.addIcon} >
                 <AntDesign name="pluscircleo" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -97,4 +103,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default SearchFriend;
+export default TagAddFriend;
