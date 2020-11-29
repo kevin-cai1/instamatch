@@ -23,8 +23,8 @@ const Home = () => {
             borderColor:'#1C3AA1',
             alignItems:'center',
             justifyContent:'center',
-            width:172,
-            height:172,
+            width:180,
+            height:180,
             backgroundColor:'#1C3AA1',
             borderRadius:100,
           }}
