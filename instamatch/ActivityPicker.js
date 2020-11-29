@@ -5,7 +5,7 @@ import ReactNativePickerModule from "react-native-picker-module";
 const ActivityPicker = () => {
   const pickerRef = useRef()
   const [value, setValue] = useState()
-  const activities = ['Any Activity', 'Gym', 'Brunch', 'Dinner', 'Drinks', 'Video Call', 'Phone Call', 'Walk'];
+  const activities = ['Any Activity', 'Gym', 'Walk', 'Swim', 'Other Sport', 'Brunch', 'Dinner', 'Drinks', 'Video Call', 'Phone Call'];
   return (
     <View>
       <SafeAreaView style={pickerStyles.container}>

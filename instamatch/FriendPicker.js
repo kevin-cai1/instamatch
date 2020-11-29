@@ -1,11 +1,22 @@
 import React, { useRef, useState } from "react";
 import { View, Button, SafeAreaView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ReactNativePickerModule from "react-native-picker-module";
+import api from './api';
 
 const FriendPicker = () => {
+  const username='johnk13'
   const pickerRef = useRef()
   const [value, setValue] = useState()
-  const friends = ['All Friends', 'tag1', 'tag2', 'tag3'];
+  const Api = new api();
+  const [tagsList, setTagsList] = React.useState([]);
+  React.useEffect(() => {
+    Api.getAllTags(username)
+      .then((result) => {
+        console.log(result);
+        (result.tags) && setTagsList(result.tags);
+      });
+  }, []);
+
   return (
     <View>
       <SafeAreaView style={pickerStyles.container}>
@@ -22,7 +33,7 @@ const FriendPicker = () => {
         pickerRef={pickerRef}
         value={value}
         title={"With..."}
-        items={friends}
+        items={tagsList}
         titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '360' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
