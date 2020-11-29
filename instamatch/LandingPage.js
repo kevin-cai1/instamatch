@@ -4,7 +4,7 @@ import { Carousel } from '@ant-design/react-native';
 import { ACCENT_COLOR } from './Constants';
 
 const screen = Dimensions.get("window");
-const ratio = screen.width/875; // actual image width
+const ratio = screen.width/803; // actual image width
 
 const LandingPage = () => {
   
@@ -19,18 +19,33 @@ const LandingPage = () => {
             style={styles.image}
             source= {require('./assets/gallery-img.png')}
           />
+          <View style={styles.caption} >
+            <Text style={styles.text}>
+            A great app for instantly finding friends who are free!
+          </Text>
+          </View>
         </View>
         <View style={styles.item}>
           <Image
             style={styles.image}
             source= {require('./assets/gallery-img.png')}
           />
+          <View style={styles.caption}>
+            <Text style={styles.text}>
+              Second image caption
+            </Text>
+          </View>
         </View>
         <View style={styles.item}>
           <Image
             style={styles.image}
             source= {require('./assets/gallery-img.png')}
           />
+          <View style={styles.caption}>
+            <Text style={styles.text}>
+              Third image caption
+            </Text>
+          </View>
         </View>
       </Carousel>
       <View style={styles.buttonGroup}>
@@ -53,15 +68,24 @@ const styles = StyleSheet.create({
   gallery: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 1372 * ratio,
+    height: screen.height - 200,
     flexGrow: 1,
   },
   item: {
-    backgroundColor: '#ff0000',
+    backgroundColor: '#3A3A3A',
+  },
+  caption:{
+    backgroundColor: '#3A3A3A',
+    height: 200,
+  },
+  text: {
+    color: '#ffffff',
+    margin: 20,
+    fontSize: 18,
   },
   image: {
     width: screen.width,
-    height: 1372 * ratio, // actual image height
+    height: 1082 * ratio, // actual image height
   },
   buttonGroup: {
     display: "flex",
@@ -76,7 +100,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 2,
     backgroundColor: ACCENT_COLOR,
-    height: screen.height - (1372 * ratio) - 107,
+    height: 100,
     alignItems: "center",
     textAlign: "center",
     justifyContent: 'center',
