@@ -28,6 +28,7 @@
     "expo-constants": "^9.2.0",
     "expo-status-bar": "~1.0.2",
     "fbjs": "^3.0.0",
+    "formik": "^2.2.5",
     "rc-form": "^2.4.11",
     "react": "16.13.1",
     "react-dom": "^16.13.1",
@@ -39,13 +40,13 @@
     "react-native-picker-module": "^2.0.2",
     "react-native-picker-select": "^8.0.3",
     "react-native-reanimated": "^1.13.2",
-    "react-native-safe-area-context": "^3.1.4",
     "react-native-screens": "^2.10.1",
     "react-native-toast-message": "^1.3.6",
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "^0.11.7",
     "react-router": "^5.2.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "yup": "^0.31.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
