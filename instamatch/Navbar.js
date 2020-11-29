@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native'
 import {Icon, TabBar} from '@ant-design/react-native';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -22,11 +23,18 @@ const Navbar = (props: NavBarProps) => {
             key={index}
             title={navItem.title}
             icon={
-              <AntDesign
-                name={navItem.iconName}
-                size={30}
-                color={(props.selectedNav === navItem.nav) ? TINT_COLOR : UNSELECTED_TINT_COLOR}
-              />
+              <View style={style.container}>
+                {
+                  (props.selectedNav === navItem.nav) && 
+                  <View style={style.line} />
+                }
+                <AntDesign
+                  name={navItem.iconName}
+                  size={30}
+                  color={(props.selectedNav === navItem.nav) ? TINT_COLOR : UNSELECTED_TINT_COLOR}
+                />
+              </View>
+              
             }
             selected={props.selectedNav === navItem.nav}
             onPress={() => props.onClickNavItem(navItem.nav)}>
@@ -37,5 +45,22 @@ const Navbar = (props: NavBarProps) => {
     </TabBar>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },  
+  icon: {
+    position: 'absolute',
+    top: -16,
+    width: 500
+  },
+  line: {
+    borderTopColor: TINT_COLOR,
+    borderTopWidth: 3,
+    width: 137
+  }
+})
 
 export default Navbar;
