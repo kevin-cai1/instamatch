@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Settings from './Settings';
 import NotificationSettings from './NotificationSettings';
 import AccountSettings from './AccountSettings';
+import LandingPage from './LandingPage';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,10 @@ const SettingsNav = () => {
           name="NotificationSettings"
           component={NotificationSettings}
           options={{ title: 'Notifications'}}
+        />
+        <Stack.Screen
+          name="LandingPage"
+          component={LandingPage}
         />
       </Stack.Navigator>
     </NavigationContainer>

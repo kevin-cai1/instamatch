@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native'
 import {Icon, TabBar} from '@ant-design/react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 import {
   UNSELECTED_TINT_COLOR,
@@ -14,6 +14,7 @@ import {NavBarProps} from './NavTypes';
 const Navbar = (props: NavBarProps) => {
   return (
     <TabBar
+      styles={style.tab}
       unselectedTintColor={UNSELECTED_TINT_COLOR}
       tintColor={TINT_COLOR}
       barTintColor={BAR_TINT_COLOR}>
@@ -28,7 +29,7 @@ const Navbar = (props: NavBarProps) => {
                   (props.selectedNav === navItem.nav) && 
                   <View style={style.line} />
                 }
-                <AntDesign
+                <Feather
                   name={navItem.iconName}
                   size={30}
                   color={(props.selectedNav === navItem.nav) ? TINT_COLOR : UNSELECTED_TINT_COLOR}
@@ -47,14 +48,17 @@ const Navbar = (props: NavBarProps) => {
 };
 
 const style = StyleSheet.create({
+  tab: {
+    height: 100
+  },
   container: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   line: {
     borderTopColor: TINT_COLOR,
     borderTopWidth: 3,
-    width: 137
+    width: 137,
   }
 })
 

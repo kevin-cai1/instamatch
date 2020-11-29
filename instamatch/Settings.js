@@ -28,6 +28,14 @@ const Settings = ({ navigation }) => {
             <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
           </View>
         </List.Item>
+        <List.Item onPress={() => navigation.navigate('LandingPage')}>
+          <View style={style.nestedLabel}>
+            <Text style={style.label}>
+              Landing Page 
+            </Text>
+            <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
+          </View>
+        </List.Item>
       </List>
       <List style={style.logout}>
         <List.Item onPress={() => console.log('handle logout')} >
