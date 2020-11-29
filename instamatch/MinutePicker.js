@@ -1,39 +1,23 @@
 import React, { useRef, useState } from "react";
 import { View, Button, SafeAreaView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ReactNativePickerModule from "react-native-picker-module";
-import api from './api';
 
-const FriendPicker = () => {
-  const username='johnk13'
+const MinutePicker = () => {
   const pickerRef = useRef()
-  const [value, setValue] = useState("All Friends (Default)")
-  const Api = new api();
-  const [tagsList, setTagsList] = React.useState([]);
-  React.useEffect(() => {
-    Api.getAllTags(username)
-      .then((result) => {
-        console.log(result);
-        (result.tags) && setTagsList(result.tags);
-      });
-  }, []);
-
+  const [min, setMin] = useState("0 min");
+  const mins = ['0 min', '5 min', '10 min', '15 min', '20 min', '25 min', '30 min', '35 min', '40 min', '45 min', '50 min', '55 min'];
   return (
     <View>
-      <SafeAreaView style={pickerStyles.container}>
-        <Text style={pickerStyles.rowTitle}>
-          With...
+      <TouchableOpacity style={pickerStyles.row} onPress={() => pickerRef.current.show()}>
+        <Text style={pickerStyles.rowValue}>
+          {min}
         </Text>
-        <TouchableOpacity style={pickerStyles.row} onPress={() => pickerRef.current.show()}>
-          <Text style={pickerStyles.rowValue}>
-            {value}
-          </Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      </TouchableOpacity>
       <ReactNativePickerModule
         pickerRef={pickerRef}
-        value={value}
-        title={"With..."}
-        items={tagsList}
+        value={min}
+        title={"I'm free for..."}
+        items={mins}
         titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '400' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
@@ -52,10 +36,11 @@ const FriendPicker = () => {
         onCancel={() => {
           console.log("Cancelled")
         }}
-        onValueChange={value => {
-          console.log("value: ", value)
-          setValue(value)
+        onValueChange={min => {
+          console.log("value: ", min)
+          setMin(min)
         }}
+        ios={{ overlayColor: 'rgba(0,0,0,0.3)' }}
       />
     </View>
   )
@@ -67,7 +52,7 @@ const pickerStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 20
   },
   row: {
     borderWidth: 1,
@@ -75,11 +60,11 @@ const pickerStyles = StyleSheet.create({
     borderColor: '#647C90',
     marginRight: 32,
     height: 40,
-    width: 160,
+    width: 70,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginLeft: 40
+    marginLeft: 10
   },
   rowTitle: {
     color: '#647C90',
@@ -93,4 +78,4 @@ const pickerStyles = StyleSheet.create({
   },
 });
 
-export default FriendPicker;
+export default MinutePicker;

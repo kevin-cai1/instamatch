@@ -23,11 +23,11 @@ const ActivityPicker = () => {
         value={value}
         title={"To do..."}
         items={activities}
-        titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '360' }}
+        titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '400' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
-        confirmButtonEnabledTextStyle={{ color: "#147efb", fontWeight: '360', fontSize: 20 }}
-        confirmButtonDisabledTextStyle={{ color: "#8e8e93", fontWeight: '360', fontSize: 20 }}
+        confirmButtonEnabledTextStyle={{ color: "#147efb", fontWeight: '400', fontSize: 20 }}
+        confirmButtonDisabledTextStyle={{ color: "#8e8e93", fontWeight: '400', fontSize: 20 }}
         cancelButtonTextStyle={{ color: "#147efb", fontWeight: '600', fontSize: 20 }}
         confirmButtonStyle={{
           backgroundColor: "rgba(255,255,255,1)",

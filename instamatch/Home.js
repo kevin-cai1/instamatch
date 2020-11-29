@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Font from 'expo-font';
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
-import { List, Button, WhiteSpace } from '@ant-design/react-native';
+import { List, Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { AntDesign } from '@expo/vector-icons';
 import ActivityPicker from './ActivityPicker';
 import FriendPicker from './FriendPicker';
@@ -12,9 +12,9 @@ const Item = List.Item;
 const Home = () => {
   return (
     <View style={homeStyles.container}>
-      <View style={ homeStyles.header }>
+      <WingBlank style={ homeStyles.header }>
         <Text style={ homeStyles.headerText }>Home</Text>
-      </View>
+      </WingBlank>
       <View style={ homeStyles.list }>
         <TimePicker/>
         <ActivityPicker/>
