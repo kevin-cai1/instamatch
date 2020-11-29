@@ -17,7 +17,7 @@ const NotificationSettings = ({ navigation }) => {
           extra={
             <Switch
               trackColor={{ false: '#787770', true: ACCENT_COLOR }}
-              thumbColor={notification ? '#EAEAEB' : '#EAEAEB'}
+              thumbColor="#fefeff"
               onValueChange={(value) => setNotification(value)}
               value={notification}
             />
@@ -31,7 +31,7 @@ const NotificationSettings = ({ navigation }) => {
           extra={
             <Switch
               trackColor={{ false: '#787770', true: ACCENT_COLOR }}
-              thumbColor={match ? '#EAEAEB' : '#EAEAEB'}
+              thumbColor="#fefeff"
               onValueChange={(value) => setMatch(value)}
               value={match}
               disabled={!notification}
@@ -44,7 +44,7 @@ const NotificationSettings = ({ navigation }) => {
           extra={
             <Switch
               trackColor={{ false: '#787770', true: ACCENT_COLOR }}
-              thumbColor={activity ? '#EAEAEB' : '#EAEAEB'}
+              thumbColor="#fefeff"
               onValueChange={(value) => setActivity(value)}
               value={activity}
               disabled={!notification}

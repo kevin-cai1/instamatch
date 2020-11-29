@@ -37,6 +37,7 @@ export default class Api {
 
   getAllTags(username) {
     this.setMethod('GET');
+    this.setBody("");
     return this.fetchResults(`tags/${username}`);
   }
 
@@ -64,6 +65,13 @@ export default class Api {
 
   getTagFriends(username, tag) {
     this.setMethod('GET');
+    this.setBody("");
     return this.fetchResults(`tags/${username}/${tag}`);
+  }
+
+  addTag(username, body){
+    this.setMethod('POST');
+    this.setBody(body);
+    return this.fetchResults(`tags/${username}`);
   }
 }

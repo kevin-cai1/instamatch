@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Keyboard} from 'react-native';
+import {StyleSheet, Text, View, Keyboard, TouchableOpacity} from 'react-native';
 import { Button, WhiteSpace, WingBlank, List } from '@ant-design/react-native';
 import { SearchBar } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
@@ -60,7 +60,9 @@ const SearchFriend = () => {
           <List.Item key={idx} >
             <View style={style.listItem}>
               <Text style={style.itemText} >{friend}</Text>
-              <AntDesign name="pluscircleo" size={24} color="black" onPress={() => handleAdd(friend)}/>
+              <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)} >
+                <AntDesign name="pluscircleo" size={24} color="black" />
+              </TouchableOpacity>
             </View>
           </List.Item>
         ))}
@@ -88,6 +90,10 @@ const style = StyleSheet.create({
   },
   inputStyle: {
     height: 35,
+  },
+  addIcon: {
+    paddingTop: 13,
+    paddingRight: 8,
   },
 });
 
