@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import { View, Button, SafeAreaView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ReactNativePickerModule from "react-native-picker-module";
 
-const ActivityPicker = () => {
+const ActivityPicker = ( {updateActivity} ) => {
   const pickerRef = useRef()
-  const [value, setValue] = useState("Any Activity (Default)");
-  const activities = ['Any Activity (Default)', 'Gym', 'Walk', 'Swim', 'Other Sport', 'Brunch', 'Dinner', 'Drinks', 'Video Call', 'Phone Call'];
+  const [value, setValue] = useState("Any Activity");
+  const activities = ['Any Activity', 'Gym', 'Walk', 'Swim', 'Other Sport', 'Brunch', 'Dinner', 'Drinks', 'Video Call', 'Phone Call'];
   return (
     <View>
       <SafeAreaView style={pickerStyles.container}>
@@ -44,6 +44,7 @@ const ActivityPicker = () => {
         onValueChange={value => {
           console.log("value: ", value)
           setValue(value)
+          updateActivity(value)
         }}
         ios={{ overlayColor: 'rgba(0,0,0,0.3)' }}
       />

@@ -3,7 +3,7 @@ import { View, Button, SafeAreaView, Text, StyleSheet, TouchableOpacity } from "
 import ReactNativePickerModule from "react-native-picker-module";
 import MinutePicker from "./MinutePicker"
 
-const TimePicker = () => {
+const TimePicker = ( {updateHr, updateMin} ) => {
   const pickerRef = useRef()
   const [hr, setHr] = useState("1 hr");
   const hours = ['0 hr', '1 hr', '2 hr', '3 hr', '4 hr', '5 hr', '6 hr', '7 hr', '8 hr', '9 hr', '10 hr', '11 hr', '12 hr', '13 hr', '14 hr', '15 hr', '16 hr', '17 hr', '18 hr', '19 hr', '20 hr', '21 hr', '22 hr', '23 hr'];
@@ -18,7 +18,7 @@ const TimePicker = () => {
             {hr}
           </Text>
         </TouchableOpacity>
-        <MinutePicker/>
+        <MinutePicker updateMin={ (value) => { updateMin(value) }} />
       </SafeAreaView>
       <ReactNativePickerModule
         pickerRef={pickerRef}
@@ -44,8 +44,9 @@ const TimePicker = () => {
           console.log("Cancelled")
         }}
         onValueChange={hr => {
-          console.log("value: ", hr)
+          console.log("value: ", hr);
           setHr(hr)
+          updateHr(hr);
         }}
         ios={{ overlayColor: 'rgba(0,0,0,0.3)' }}
       />

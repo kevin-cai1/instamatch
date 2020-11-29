@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import * as Font from 'expo-font';
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 import { List, Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
@@ -9,13 +9,18 @@ import TimePicker from './TimePicker';
 
 const Item = List.Item;
 
-const Home = () => {
+const Home = ( {navigation} ) => {
+  const now = Date.now();
+  const [hr, setHr] = useState("1 hr");
+  const [min, setMin] = useState("0 min");
+  const [activity, setActivity] = useState("Any Activity");
+  const [friends, setFriends] = useState("All Friends");
   return (
     <View style={homeStyles.container}>
       <View style={ homeStyles.list }>
-        <TimePicker/>
-        <ActivityPicker/>
-        <FriendPicker/>
+        <TimePicker updateHr={ (value) => { setHr(value) }} updateMin={ (value) => { setMin(value) }}/>
+        <ActivityPicker updateActivity={ (value) => { setActivity(value) }}/>
+        <FriendPicker updateFriends={ (value) => { setFriends(value) }}/>
       </View>
       <View style={homeStyles.buttonContainer}>
         <TouchableOpacity
@@ -28,11 +33,13 @@ const Home = () => {
             backgroundColor:'#1C3AA1',
             borderRadius:100,
           }}
+          onPress={() => navigation.navigate('MatchScreen', { hours: hr, minutes: min, activity: activity, friends: friends })}
           >
           <Text style={homeStyles.cta}>Start Now!</Text>
         </TouchableOpacity>
       </View>
-    </View>);
+    </View>
+  );
 };
 
 const homeStyles = StyleSheet.create({

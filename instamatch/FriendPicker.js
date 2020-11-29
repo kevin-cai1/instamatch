@@ -3,17 +3,18 @@ import { View, Button, SafeAreaView, Text, StyleSheet, TouchableOpacity } from "
 import ReactNativePickerModule from "react-native-picker-module";
 import api from './api';
 
-const FriendPicker = () => {
+const FriendPicker = ( {updateFriends} ) => {
   const username='johnk13'
   const pickerRef = useRef()
-  const [value, setValue] = useState("All Friends (Default)")
+  const [value, setValue] = useState("All Friends")
   const Api = new api();
-  const [tagsList, setTagsList] = React.useState([]);
+  const [tagsList, setTagsList] = React.useState(["All Friends"]);
   React.useEffect(() => {
     Api.getAllTags(username)
       .then((result) => {
         console.log(result);
-        (result.tags) && setTagsList(result.tags);
+        (result.tags) && setTagsList(oldList => [...oldList, result.tags]);
+        // setTagsList(oldList => [...oldList, "All Friends"]);
       });
   }, []);
 
@@ -55,6 +56,7 @@ const FriendPicker = () => {
         onValueChange={value => {
           console.log("value: ", value)
           setValue(value)
+          updateFriends(value)
         }}
       />
     </View>

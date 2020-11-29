@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { View, Button, SafeAreaView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ReactNativePickerModule from "react-native-picker-module";
 
-const MinutePicker = () => {
+const MinutePicker = ( {updateMin} ) => {
   const pickerRef = useRef()
   const [min, setMin] = useState("0 min");
   const mins = ['0 min', '5 min', '10 min', '15 min', '20 min', '25 min', '30 min', '35 min', '40 min', '45 min', '50 min', '55 min'];
@@ -39,6 +39,7 @@ const MinutePicker = () => {
         onValueChange={min => {
           console.log("value: ", min)
           setMin(min)
+          updateMin(min);
         }}
         ios={{ overlayColor: 'rgba(0,0,0,0.3)' }}
       />
