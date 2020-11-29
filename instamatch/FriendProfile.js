@@ -7,9 +7,11 @@ import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native
 const screen = Dimensions.get("window");
 
 const FriendProfile = ({ route, navigation }) => {
-  const username = route.params.username;
+  const friendUsername = route.params.username;
+  const username = 'charmaine'; // pls change
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [tags, setTags] = React.useState([]);
   const [optionVisible, setOptionsVisible] = React.useState(false);
   const [blockModalVisible, setBlockModalVisible] = React.useState(false);
   const [removeModalVisible, setRemoveModalVisible] = React.useState(false);
@@ -27,12 +29,26 @@ const FriendProfile = ({ route, navigation }) => {
   };
 
   React.useEffect(() => {
-    Api.getUserDetails(username)
+    Api.getUserDetails(friendUsername)
       .then((result) => {
         if (result.result === 'success') {
           setFullName(result.name);
           setEmail(result.email);
         }
+      });
+  }, []);
+
+  React.useEffect(() => {
+    Api.getAllTags(username)
+      .then((result) => {
+        result.tags.map((tag) => {
+          Api.getTagFriends(username, tag)
+            .then((response) => {
+              if (response.friends.includes(friendUsername)) {
+                setTags([...tags, tag]);
+              }
+            });
+        })
       });
   }, []);
 
@@ -65,14 +81,23 @@ const FriendProfile = ({ route, navigation }) => {
           <Text style={style.email}>{email}</Text>
         </WingBlank>
       </View>
-      <View style={style.tagsContainer}>
-        <WingBlank>
-          <View style={[style.flexRow]}>
-            <FontAwesome5 name="tags" size={20} color="black" style={style.tagIcon} />
-            <Text style={style.tagsText}>Tags</Text>
-          </View>
-        </WingBlank>
-      </View>
+      {(tags.length > 0) && (
+        <View style={style.tagsContainer}>
+          <WingBlank>
+            <View style={[style.flexRow]}>
+              <FontAwesome5 name="tags" size={20} color="black" style={style.tagIcon} />
+              <Text style={style.tagsText}>Tags</Text>
+            </View>
+          </WingBlank>
+          <List>
+            {tags.map((tag, idx) => (
+              <List.Item key={idx}>
+                <Text style={style.tagNameText}>{tag}</Text>
+              </List.Item>
+            ))}
+          </List>
+        </View>
+      )}
       <Provider>
         <Modal
           visible={optionVisible}
@@ -101,7 +126,7 @@ const FriendProfile = ({ route, navigation }) => {
           </TouchableOpacity>
         </Modal>
         <Modal
-          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Remove ${username}`}</Text>}
+          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Remove ${friendUsername}`}</Text>}
           transparent
           onClose={() => setRemoveModalVisible(false)}
           maskClosable
@@ -112,11 +137,11 @@ const FriendProfile = ({ route, navigation }) => {
           ]}
         >
           <View style={{ paddingVertical: 20 }}>
-            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to remove ${username} from your friends?`}</Text>
+            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to remove ${friendUsername} from your friends?`}</Text>
           </View>
         </Modal>
         <Modal
-          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Block ${username}`}</Text>}
+          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Block ${friendUsername}`}</Text>}
           transparent
           onClose={() => setBlockModalVisible(false)}
           maskClosable
@@ -127,7 +152,7 @@ const FriendProfile = ({ route, navigation }) => {
           ]}
         >
           <View style={{ paddingVertical: 20 }}>
-            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to block ${username}? This will remove them from your friends and block them from adding you in the future.`}</Text>
+            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to block ${friendUsername}? This will remove them from your friends and block them from adding you in the future.`}</Text>
           </View>
         </Modal>
       </Provider>
@@ -170,6 +195,7 @@ const style = StyleSheet.create({
   tagsText: {
     fontSize: 25,
     fontWeight: '400',
+    marginBottom: 10,
   },
   tagIcon: {
     paddingTop: 9,
@@ -207,6 +233,10 @@ const style = StyleSheet.create({
     textAlign: 'center',
     color: '#007ff9',
     fontWeight: '500',
+  },
+  tagNameText: {
+    fontSize: 16,
+    marginVertical: 10,
   },
 });
 
