@@ -67,19 +67,19 @@ const TagsList = ({ navigation }) => {
   return (
     <>
       <View style={style.container}>
-        { (tagList.length === 0) && (
-          <AddButtonMd
-            text="Add New Tag"
-            onPressAction={() => navigation.navigate('SearchFriend')}
-          />
-        )}
+        {/*{ (tagList.length === 0) && (*/}
+        {/*  <AddButtonMd*/}
+        {/*    text="Add New Tag"*/}
+        {/*    onPressAction={() => navigation.navigate('SearchFriend')}*/}
+        {/*  />*/}
+        {/*)}*/}
         {tagList.map((letterList, idx) => (
           <List key={idx} renderHeader={letterList.letter}>
             {letterList.tags.map((tag, idx) => (
               <List.Item
                 key={idx}
-                onPress={() => navigation.navigate('FriendProfile', {
-                  username: tag,
+                onPress={() => navigation.navigate('TagDetails', {
+                  tag: tag,
                 })}
               >
                 {tag}
