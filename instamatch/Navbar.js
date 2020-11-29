@@ -50,11 +50,6 @@ const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center'
-  },  
-  icon: {
-    position: 'absolute',
-    top: -16,
-    width: 500
   },
   line: {
     borderTopColor: TINT_COLOR,
