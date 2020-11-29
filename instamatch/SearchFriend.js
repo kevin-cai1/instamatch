@@ -20,35 +20,47 @@ const SearchFriend = () => {
   }, [searchInput]);
 
   const handleAdd = (friend) => {
-    Api.addFriend(username, friend)
+    const body = JSON.stringify({
+      "friend_name": friend,
+    });
+
+    Api.addFriend(username, body)
       .then((result) => {
         if (result.result) {
-          Toast.show({
-            text1: `Successfully added ${friend}`,
-          });
+          Api.getFriendStatus(username, friend)
+            .then((response) => {
+              if (response.status === 'friends') {
+                Toast.show({
+                  text1: `You are now friends with ${friend}!`,
+                });
+              } else {
+                Toast.show({
+                  text1: `Friend request sent to ${friend}.`,
+                });
+              }
+            });
         }
       });
   };
 
   return (
     <>
-      <WingBlank>
-        <SearchBar
-          placeholder="Search user..."
-          onChangeText={(text) => setSearchInput(text)}
-          onClear={() => setUsernames([])}
-          value={searchInput}
-          lightTheme={true}
-          round={true}
-          containerStyle={style.container}
-        />
-      </WingBlank>
+      <SearchBar
+        placeholder="Search user..."
+        onChangeText={(text) => setSearchInput(text)}
+        onClear={() => setUsernames([])}
+        value={searchInput}
+        lightTheme={true}
+        round={true}
+        containerStyle={style.container}
+        inputContainerStyle={style.inputStyle}
+      />
       <List>
         {usernames.map((friend, idx) => (
-          <List.Item key={idx}>
+          <List.Item key={idx} >
             <View style={style.listItem}>
-              <Text>{friend}</Text>
-              <AntDesign name="pluscircleo" size={24} color="black" onPress={(friend) => handleAdd(friend)}/>
+              <Text style={style.itemText} >{friend}</Text>
+              <AntDesign name="pluscircleo" size={24} color="black" onPress={() => handleAdd(friend)}/>
             </View>
           </List.Item>
         ))}
@@ -59,13 +71,24 @@ const SearchFriend = () => {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: '#EAEAEB',
+    backgroundColor: '#fcfcfc',
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    paddingVertical: 15,
   },
   listItem: {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-  }
+    height: 50,
+  },
+  itemText: {
+    fontSize: 18,
+    paddingTop: 15,
+  },
+  inputStyle: {
+    height: 35,
+  },
 });
 
 export default SearchFriend;

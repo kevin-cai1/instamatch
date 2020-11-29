@@ -4,6 +4,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const TimePicker = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [time, setTime] = useState("1 hr (Default)");
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -13,7 +14,8 @@ const TimePicker = () => {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
+  const handleConfirm = (value) => {
+    console.log(value);
     hideDatePicker();
   };
 
@@ -25,7 +27,7 @@ const TimePicker = () => {
         </Text>
         <TouchableOpacity style={pickerStyles.row} onPress={showDatePicker}>
           <Text style={pickerStyles.rowValue}>
-            1 Hour
+            {time}
           </Text>
         </TouchableOpacity>
       </SafeAreaView>
@@ -67,7 +69,7 @@ const pickerStyles = StyleSheet.create({
   },
   rowValue: {
     color: '#647C90',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,
   },
