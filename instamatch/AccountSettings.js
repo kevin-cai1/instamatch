@@ -1,38 +1,37 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { WingBlank, List } from '@ant-design/react-native';
+import { List } from '@ant-design/react-native';
 import { Ionicons } from '@expo/vector-icons';
 import api from './api';
-import { ACCENT_COLOR } from './Constants';
 
-const Settings = ({ navigation }) => {
-  const settings = ['Account', 'Notifications'];
+const AccountSettings = ({ navigation }) => {
   const Api = new api();
 
+  
   return (
     <View style={style.container}>
       <List>
-        <List.Item onPress={() => navigation.navigate('AccountSettings')}>
+        <List.Item onPress={() => {console.log('go to change name')}}>
           <View style={style.nestedLabel}>
             <Text style={style.label}>
-              Account
+              Change display name
             </Text>
             <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
           </View>
         </List.Item>
-        <List.Item onPress={() => navigation.navigate('NotificationSettings')}>
+        <List.Item onPress={() => {console.log('go to change pw')}}>
           <View style={style.nestedLabel}>
             <Text style={style.label}>
-              Notifications 
+              Change password
             </Text>
             <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
           </View>
         </List.Item>
       </List>
-      <List style={style.logout}>
-        <List.Item onPress={() => console.log('handle logout')} >
-          <Text style={style.logoutLabel}>
-            Logout
+      <List style={style.delete}>
+        <List.Item onPress={() => console.log('DELETE ACCOUNT')}>
+          <Text style={style.deleteLabel}>
+            Delete Account
           </Text>
         </List.Item>
       </List>
@@ -44,11 +43,12 @@ const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
   },
-  logout: {
-    paddingTop: 80,
+  delete: {
+    paddingTop: 50,
+    color: '#ff0000',
   },
-  logoutLabel: {
-    color: ACCENT_COLOR,
+  deleteLabel: {
+    color: '#ff0000',
     fontSize: 18,
   },
   nestedLabel:{
@@ -65,4 +65,4 @@ const style = StyleSheet.create({
   }
 });
 
-export default Settings;
+export default AccountSettings;
