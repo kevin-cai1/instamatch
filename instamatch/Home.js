@@ -12,9 +12,6 @@ const Item = List.Item;
 const Home = () => {
   return (
     <View style={homeStyles.container}>
-      <WingBlank style={ homeStyles.header }>
-        <Text style={ homeStyles.headerText }>Home</Text>
-      </WingBlank>
       <View style={ homeStyles.list }>
         <TimePicker/>
         <ActivityPicker/>
@@ -49,13 +46,13 @@ const homeStyles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderBottomWidth: 1.5,
-    marginBottom: 100,
   },
   headerText: {
     fontSize: 24,
   },
   list: {
     padding: 10,
+    marginTop: 100,
   },
   row: {
     color: '#647C90',

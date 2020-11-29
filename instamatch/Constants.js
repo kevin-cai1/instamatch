@@ -3,6 +3,7 @@ import Friends from './Friends';
 import SettingsNav from './SettingsNav';
 import { AntDesign } from '@expo/vector-icons';
 import FriendsNav from "./FriendsNav";
+import HomeNav from "./HomeNav";
 
 export const UNSELECTED_TINT_COLOR = '#575757';
 export const TINT_COLOR = '#536BBF';
@@ -13,7 +14,7 @@ export const NAV_ITEMS = [
     title: 'Home',
     iconName: 'home',
     nav: 'home',
-    component: Home,
+    component: HomeNav,
   },
   {
     title: 'Friends',
