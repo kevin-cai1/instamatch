@@ -74,4 +74,10 @@ export default class Api {
     this.setBody(body);
     return this.fetchResults(`tags/${username}`);
   }
+
+  addFriendToTag(username, body) {
+    this.setMethod('POST');
+    this.setBody(body);
+    return this.fetchResults(`tags/friends/${username}`);
+  }
 }

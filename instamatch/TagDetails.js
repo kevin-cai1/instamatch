@@ -4,6 +4,7 @@ import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons, Feather, AntD
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import Api from './api';
+import notImplementedError from './helper';
 
 const screen = Dimensions.get("window");
 
@@ -11,6 +12,7 @@ const TagDetails = ({ route, navigation }) => {
   const username = 'charmaine'; // please change
   const tagName = route.params.tag;
   const [friends, setFriends] = React.useState([]);
+  const [optionsVisible, setOptionsVisible] = React.useState(false);
   const api = new Api();
 
   React.useEffect(() => {
@@ -20,7 +22,24 @@ const TagDetails = ({ route, navigation }) => {
           setFriends(result.friends);
         }
       });
-  }, []);
+  }, [navigation]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={style.addButtonContainer}
+          onPress={() => setOptionsVisible(!optionsVisible)}
+        >
+          <SimpleLineIcons
+            name="options"
+            size={24}
+            color="#1C3AA1"
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, optionsVisible]);
 
   return (
     <View style={style.mainContainer}>
@@ -28,7 +47,7 @@ const TagDetails = ({ route, navigation }) => {
         <WingBlank>
           <View style={[style.flexRow, style.profileLine]}>
             <Text style={style.title}>{tagName}</Text>
-            <Feather name="edit-2" size={25} color="#1C3AA1" style={style.editIcon} />
+            <Feather name="edit-2" size={25} color="#1C3AA1" style={style.editIcon} onPress={notImplementedError}/>
           </View>
         </WingBlank>
       </View>
@@ -52,6 +71,28 @@ const TagDetails = ({ route, navigation }) => {
           ))}
         </List>
       </View>
+      <Provider>
+        <Modal
+          visible={optionsVisible}
+          animationType="slide-down"
+          onClose={() => setOptionsVisible(false)}
+          style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
+        >
+          <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
+            <List>
+              <List.Item>
+                <TouchableOpacity style={style.optionsItem} >
+                  <MaterialIcons name="cancel" size={35} color="red" />
+                  <Text style={style.optionsItemText}>Delete Tag</Text>
+                </TouchableOpacity>
+              </List.Item>
+            </List>
+          </View>
+          <TouchableOpacity style={style.optionsCancel} onPress={() => setOptionsVisible(false)} >
+            <Text style={style.optionsCancelText}>Cancel</Text>
+          </TouchableOpacity>
+        </Modal>
+      </Provider>
     </View>
   );
 };

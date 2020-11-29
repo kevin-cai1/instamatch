@@ -14,6 +14,7 @@ const TagAddFriend = ({ route, navigation }) => {
   const tagName = route.params.tag;
   const username = 'charmaine'; // change this
   const [friends, setFriends] = React.useState([]);
+  const [filteredList, setFilteredList] = React.useState([]);
 
   React.useEffect(() => {
     Api.getAllFriends(username)
@@ -21,33 +22,34 @@ const TagAddFriend = ({ route, navigation }) => {
         if (result.friends) {
           const allFriends = result.friends;
           setFriends(allFriends);
+          setFilteredList(allFriends);
         }
       });
   }, []);
 
-  // const handleAdd = (friend) => {
-  //   const body = JSON.stringify({
-  //     "friend_name": friend,
-  //   });
-  //
-  //   Api.addFriend(username, body)
-  //     .then((result) => {
-  //       if (result.result) {
-  //         Api.getFriendStatus(username, friend)
-  //           .then((response) => {
-  //             if (response.status === 'friends') {
-  //               Toast.show({
-  //                 text1: `You are now friends with ${friend}!`,
-  //               });
-  //             } else {
-  //               Toast.show({
-  //                 text1: `Friend request sent to ${friend}.`,
-  //               });
-  //             }
-  //           });
-  //       }
-  //     });
-  // };
+  React.useEffect(() => {
+    const friendsFiltered = [];
+    friends.map((friend) => {
+      if (friend.toLowerCase().includes(searchInput.toLowerCase())) {
+        friendsFiltered.push(friend);
+      }
+    });
+    setFilteredList(friendsFiltered);
+  }, [searchInput]);
+
+  const handleAdd = (friend) => {
+    const body = JSON.stringify({
+      "tag_name": tagName,
+      "friend": friend,
+    });
+
+    Api.addFriendToTag(username, body)
+      .then(() => {
+        Toast.show({
+          text1: `Added ${friend} to ${tagName}`,
+        });
+      });
+  };
 
   return (
     <>
@@ -62,11 +64,11 @@ const TagAddFriend = ({ route, navigation }) => {
         inputContainerStyle={style.inputStyle}
       />
       <List>
-        {friends.map((friend, idx) => (
+        {filteredList.map((friend, idx) => (
           <List.Item key={idx} >
             <View style={style.listItem}>
               <Text style={style.itemText} >{friend}</Text>
-              <TouchableOpacity style={style.addIcon} >
+              <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)}>
                 <AntDesign name="pluscircleo" size={24} color="black" />
               </TouchableOpacity>
             </View>

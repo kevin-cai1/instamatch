@@ -3,6 +3,7 @@ import api from './api';
 import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/vector-icons';
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
+import notImplementedError from './helper';
 
 const screen = Dimensions.get("window");
 
@@ -41,11 +42,13 @@ const FriendProfile = ({ route, navigation }) => {
   React.useEffect(() => {
     Api.getAllTags(username)
       .then((result) => {
+        const newTags = [];
         result.tags.map((tag) => {
           Api.getTagFriends(username, tag)
             .then((response) => {
               if (response.friends.includes(friendUsername)) {
-                setTags([...tags, tag]);
+                newTags.push(tag);
+                setTags([...tags, ...newTags]);
               }
             });
         })
@@ -76,7 +79,9 @@ const FriendProfile = ({ route, navigation }) => {
           <FontAwesome name="user-circle" size={90} color="black" />
           <View style={[style.flexRow, style.profileLine]}>
             <Text style={style.fullName}>{fullName}</Text>
-            <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon}/>
+            <TouchableOpacity onPress={notImplementedError}>
+              <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon} />
+            </TouchableOpacity>
           </View>
           <Text style={style.email}>{email}</Text>
         </WingBlank>

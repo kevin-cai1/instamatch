@@ -67,7 +67,7 @@ const FriendsNav = () => {
           name="TagAddFriend"
           component={TagAddFriend}
           options={() => ({
-            title: "Add to Tag",
+            title: "Add Friend to Tag",
           })}
         />
     </Stack.Navigator>
