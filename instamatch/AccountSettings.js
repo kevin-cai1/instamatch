@@ -1,17 +1,32 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { List } from '@ant-design/react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { List, Modal, Provider } from '@ant-design/react-native';
 import { Ionicons } from '@expo/vector-icons';
+
 import api from './api';
+
+const screen = Dimensions.get("window");
 
 const AccountSettings = ({ navigation }) => {
   const Api = new api();
+  const username = "kevin";
+  const [modalOpen, setModalOpen] = React.useState(false);
 
-  
+  const deleteAccount = () => {
+    Api.deleteAccount(username)
+      .then(() => {
+        console.log('logout');
+      });
+  };
+
+  const handleDeleteConfirm = () => {
+    setModalOpen(true);
+  };
+
   return (
     <View style={style.container}>
       <List>
-        <List.Item onPress={() => {console.log('go to change name')}}>
+        <List.Item onPress={() => navigation.navigate('ChangeDisplayName')}>
           <View style={style.nestedLabel}>
             <Text style={style.label}>
               Change display name
@@ -19,7 +34,7 @@ const AccountSettings = ({ navigation }) => {
             <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
           </View>
         </List.Item>
-        <List.Item onPress={() => {console.log('go to change pw')}}>
+        <List.Item onPress={() => navigation.navigate('ChangePassword')}>
           <View style={style.nestedLabel}>
             <Text style={style.label}>
               Change password
@@ -29,12 +44,30 @@ const AccountSettings = ({ navigation }) => {
         </List.Item>
       </List>
       <List style={style.delete}>
-        <List.Item onPress={() => console.log('DELETE ACCOUNT')}>
+        <List.Item onPress={() => handleDeleteConfirm()}>
           <Text style={style.deleteLabel}>
             Delete Account
           </Text>
         </List.Item>
       </List>
+      <Provider>
+        <Modal
+          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>Confirm Delete</Text>}
+          transparent
+          onClose={() => setModalOpen(false)}
+          maskClosable
+          visible={modalOpen}
+          footer={[
+            { text: 'Cancel', onPress: () => setModalOpen(false) },
+            { text: 'Yes', onPress: () => deleteAccount() },
+          ]}
+        >
+          <View style={{ paddingVertical: 20 }}>
+            <Text style={{ textAlign: 'center', fontSize: 15, }}>Are you sure you want to delete your account?</Text>
+          </View>
+        </Modal>
+      </Provider>
+      
     </View>
   );
 };
@@ -42,6 +75,7 @@ const AccountSettings = ({ navigation }) => {
 const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    height: screen.height,
   },
   delete: {
     paddingTop: 50,

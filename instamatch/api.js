@@ -80,4 +80,15 @@ export default class Api {
     this.setBody(body);
     return this.fetchResults(`tags/friends/${username}`);
   }
+
+  changeUserDetails(username, body) {
+    this.setMethod('PUT');
+    this.setBody(body);
+    return this.fetchResults(`user/${username}`);
+  }
+
+  deleteAccount(username) {
+    this.setMethod('DELETE');
+    return this.fetchResults(`user/${username}`);
+  }
 }

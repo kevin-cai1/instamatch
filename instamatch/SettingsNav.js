@@ -5,6 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 import Settings from './Settings';
 import NotificationSettings from './NotificationSettings';
 import AccountSettings from './AccountSettings';
+import ChangeDisplayName from './ChangeDisplayName';
+import ChangePassword from './ChangePassword';
 import LandingPage from './LandingPage';
 
 const Stack = createStackNavigator();
@@ -27,6 +29,16 @@ const SettingsNav = () => {
         <Stack.Screen
           name="LandingPage"
           component={LandingPage}
+        />
+        <Stack.Screen
+          name="ChangePassword"
+          component={ChangePassword}
+          options={{ title: 'Change Password'}}
+        />
+        <Stack.Screen
+          name="ChangeDisplayName"
+          component={ChangeDisplayName}
+          options={{ title: 'Change Display Name'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
