@@ -47,13 +47,6 @@ const MinutePicker = () => {
 }
 
 const pickerStyles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 20
-  },
   row: {
     borderWidth: 1,
     borderRadius: 5,

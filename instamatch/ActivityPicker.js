@@ -55,9 +55,10 @@ const pickerStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 20,
+    marginLeft: 18
   },
   row: {
     borderWidth: 1,
@@ -69,7 +70,7 @@ const pickerStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginLeft: 40
+    marginLeft: 83
   },
   rowTitle: {
     color: '#647C90',
