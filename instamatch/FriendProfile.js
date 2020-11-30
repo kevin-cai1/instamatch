@@ -4,6 +4,7 @@ import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/v
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import notImplementedError from './helper';
+import Toast from "react-native-toast-message";
 
 const screen = Dimensions.get("window");
 
@@ -29,6 +30,19 @@ const FriendProfile = ({ route, navigation }) => {
     setBlockModalVisible(true);
   };
 
+  const handleDeleteFriend = () => {
+    // const body = JSON.stringify({
+    //   "friend_name": friendUsername,
+    // });
+    // Api.deleteFriend(username, body)
+    //   .then(() => {
+    //     Toast.show({
+    //       text1: `Deleted ${friendUsername}`,
+    //     });
+    //   })
+    notImplementedError();
+  };
+
   React.useEffect(() => {
     Api.getUserDetails(friendUsername)
       .then((result) => {
@@ -37,7 +51,7 @@ const FriendProfile = ({ route, navigation }) => {
           setEmail(result.email);
         }
       });
-  }, []);
+  }, [route.params.username]);
 
   React.useEffect(() => {
     Api.getAllTags(username)
@@ -53,7 +67,7 @@ const FriendProfile = ({ route, navigation }) => {
             });
         })
       });
-  }, []);
+  }, [route.params.username]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -96,7 +110,12 @@ const FriendProfile = ({ route, navigation }) => {
           </WingBlank>
           <List>
             {tags.map((tag, idx) => (
-              <List.Item key={idx}>
+              <List.Item
+                key={idx}
+                onPress={() => navigation.navigate('TagDetails', {
+                  tag: tag,
+                })}
+              >
                 <Text style={style.tagNameText}>{tag}</Text>
               </List.Item>
             ))}
@@ -138,7 +157,10 @@ const FriendProfile = ({ route, navigation }) => {
           visible={removeModalVisible}
           footer={[
             { text: 'Cancel', onPress: () => setRemoveModalVisible(false) },
-            { text: 'Yes', onPress: () => console.log('TODO') },
+            { text: 'Yes', onPress: () => {
+              setRemoveModalVisible(false);
+              handleDeleteFriend();
+              } },
           ]}
         >
           <View style={{ paddingVertical: 20 }}>
@@ -153,7 +175,10 @@ const FriendProfile = ({ route, navigation }) => {
           visible={blockModalVisible}
           footer={[
             { text: 'Cancel', onPress: () => setBlockModalVisible(false) },
-            { text: 'Yes', onPress: () => console.log('TODO') },
+            { text: 'Yes', onPress: () => {
+              setBlockModalVisible(false);
+              notImplementedError();
+              } },
           ]}
         >
           <View style={{ paddingVertical: 20 }}>

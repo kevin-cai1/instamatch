@@ -65,7 +65,12 @@ const TagDetails = ({ route, navigation }) => {
         </WingBlank>
         <List>
           {friends.map((friend, idx) => (
-            <List.Item key={idx}>
+            <List.Item
+              key={idx}
+              onPress={() => navigation.navigate('FriendProfile', {
+                username: friend,
+              })}
+            >
               <Text style={style.tagNameText}>{friend}</Text>
             </List.Item>
           ))}
@@ -81,7 +86,10 @@ const TagDetails = ({ route, navigation }) => {
           <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
             <List>
               <List.Item>
-                <TouchableOpacity style={style.optionsItem} >
+                <TouchableOpacity style={style.optionsItem} onPress={() => {
+                  setOptionsVisible(false);
+                  notImplementedError();
+                }}>
                   <MaterialIcons name="cancel" size={35} color="red" />
                   <Text style={style.optionsItemText}>Delete Tag</Text>
                 </TouchableOpacity>

@@ -91,4 +91,10 @@ export default class Api {
     this.setMethod('DELETE');
     return this.fetchResults(`user/${username}`);
   }
+
+  deleteFriend(username, body) {
+    this.setMethod('DELETE');
+    this.setBody(body);
+    return this.fetchResults(`friends/${username}`);
+  }
 }

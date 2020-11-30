@@ -74,7 +74,7 @@ const TagsList = ({ navigation }) => {
         { (resultsFetched) && (tagList.length === 0) && (
           <WingBlank>
             <Text style={{textAlign: 'center', fontSize: 25, fontWeight: '500', marginTop: window.height/6, marginBottom: 10,}}>Add Some Tags</Text>
-            <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>Tags help you categorise friends into different categories, e.g. close friends, gym buddies. </Text>
+            <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>Tags help you sort friends into different categories, e.g. close friends, gym buddies. </Text>
             <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>You can choose to only be visible to them when creating an activity session.</Text>
             <Button style={{backgroundColor: '#1C3AA1', borderRadius: 25 }} onPress={() => setModalVisible(true)}>
               <Text style={{color: '#FFFFFF', fontWeight: '500', fontSize: 20 }}>
