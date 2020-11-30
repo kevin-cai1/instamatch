@@ -33,7 +33,7 @@ const Home = ( {navigation} ) => {
             backgroundColor:'#1C3AA1',
             borderRadius:100,
           }}
-          onPress={() => navigation.navigate('MatchScreen', { hours: hr, minutes: min, activity: activity, friends: friends })}
+          onPress={() => navigation.replace('MatchScreen', { hours: hr, minutes: min, activity: activity, friends: friends })}
           >
           <Text style={homeStyles.cta}>Start Now!</Text>
         </TouchableOpacity>
