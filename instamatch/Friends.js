@@ -23,33 +23,32 @@ const Friends = ({ navigation }) => {
       });
   }, []);
 
-  return ( (totalFriends !== "" && totalTags !== "") && (
-      <View style={friends.container}>
-        <WingBlank>
-          <Button
-            style={[friends.button, friends.primaryButton]}
-            onPress={() => navigation.navigate('FriendsList')}
-          >
-            <View style={friends.buttonContent}>
-              <FontAwesome5 name="user-friends" size={50} color="rgba(255, 255, 255, 0.85)" />
-              <Text style={[friends.buttonText, friends.friendText]}>{`${totalFriends} Friends`}</Text>
-              <Ionicons name="ios-arrow-forward" size={50} color="rgba(255, 255, 255, 0.5)" />
-            </View>
-          </Button>
-          <WhiteSpace style={friends.whitespace} />
-          <Button
-            style={[friends.button, friends.secondaryButton]}
-            onPress={() => navigation.navigate('TagsList')}
-          >
-            <View style={friends.buttonContent}>
-              <FontAwesome5 style={friends.tagIcon} name="tags" size={50} color="rgba(255, 255, 255, 0.85)" />
-              <Text style={friends.buttonText}>{`${totalTags} Friend Tags`}</Text>
-              <Ionicons style={friends.arrowIcon} name="ios-arrow-forward" size={50} color="rgba(255, 255, 255, 0.5)" />
-            </View>
-          </Button>
-        </WingBlank>
-      </View>
-    )
+  return (
+    <View style={friends.container}>
+      <WingBlank>
+        <Button
+          style={[friends.button, friends.primaryButton]}
+          onPress={() => navigation.navigate('FriendsList')}
+        >
+          <View style={friends.buttonContent}>
+            <FontAwesome5 name="user-friends" size={50} color="rgba(255, 255, 255, 0.85)" />
+            <Text style={[friends.buttonText, friends.friendText]}>{`${totalFriends} Friends`}</Text>
+            <Ionicons name="ios-arrow-forward" size={50} color="rgba(255, 255, 255, 0.5)" />
+          </View>
+        </Button>
+        <WhiteSpace style={friends.whitespace} />
+        <Button
+          style={[friends.button, friends.secondaryButton]}
+          onPress={() => navigation.navigate('TagsList')}
+        >
+          <View style={friends.buttonContent}>
+            <FontAwesome5 style={friends.tagIcon} name="tags" size={50} color="rgba(255, 255, 255, 0.85)" />
+            <Text style={friends.buttonText}>{`${totalTags} Friend Tags`}</Text>
+            <Ionicons style={friends.arrowIcon} name="ios-arrow-forward" size={50} color="rgba(255, 255, 255, 0.5)" />
+          </View>
+        </Button>
+      </WingBlank>
+    </View>
  );
 };
 
