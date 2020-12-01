@@ -3,6 +3,8 @@ import api from './api';
 import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/vector-icons';
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
+import notImplementedError from './helper';
+import Toast from "react-native-toast-message";
 
 const screen = Dimensions.get("window");
 
@@ -28,6 +30,19 @@ const FriendProfile = ({ route, navigation }) => {
     setBlockModalVisible(true);
   };
 
+  const handleDeleteFriend = () => {
+    // const body = JSON.stringify({
+    //   "friend_name": friendUsername,
+    // });
+    // Api.deleteFriend(username, body)
+    //   .then(() => {
+    //     Toast.show({
+    //       text1: `Deleted ${friendUsername}`,
+    //     });
+    //   })
+    notImplementedError();
+  };
+
   React.useEffect(() => {
     Api.getUserDetails(friendUsername)
       .then((result) => {
@@ -36,21 +51,23 @@ const FriendProfile = ({ route, navigation }) => {
           setEmail(result.email);
         }
       });
-  }, []);
+  }, [route.params.username]);
 
   React.useEffect(() => {
     Api.getAllTags(username)
       .then((result) => {
+        const newTags = [];
         result.tags.map((tag) => {
           Api.getTagFriends(username, tag)
             .then((response) => {
               if (response.friends.includes(friendUsername)) {
-                setTags([...tags, tag]);
+                newTags.push(tag);
+                setTags([...tags, ...newTags]);
               }
             });
         })
       });
-  }, []);
+  }, [route.params.username]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -76,7 +93,9 @@ const FriendProfile = ({ route, navigation }) => {
           <FontAwesome name="user-circle" size={90} color="black" />
           <View style={[style.flexRow, style.profileLine]}>
             <Text style={style.fullName}>{fullName}</Text>
-            <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon}/>
+            <TouchableOpacity onPress={notImplementedError}>
+              <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon} />
+            </TouchableOpacity>
           </View>
           <Text style={style.email}>{email}</Text>
         </WingBlank>
@@ -91,7 +110,12 @@ const FriendProfile = ({ route, navigation }) => {
           </WingBlank>
           <List>
             {tags.map((tag, idx) => (
-              <List.Item key={idx}>
+              <List.Item
+                key={idx}
+                onPress={() => navigation.navigate('TagDetails', {
+                  tag: tag,
+                })}
+              >
                 <Text style={style.tagNameText}>{tag}</Text>
               </List.Item>
             ))}
@@ -133,7 +157,10 @@ const FriendProfile = ({ route, navigation }) => {
           visible={removeModalVisible}
           footer={[
             { text: 'Cancel', onPress: () => setRemoveModalVisible(false) },
-            { text: 'Yes', onPress: () => console.log('TODO') },
+            { text: 'Yes', onPress: () => {
+              setRemoveModalVisible(false);
+              handleDeleteFriend();
+              } },
           ]}
         >
           <View style={{ paddingVertical: 20 }}>
@@ -148,7 +175,10 @@ const FriendProfile = ({ route, navigation }) => {
           visible={blockModalVisible}
           footer={[
             { text: 'Cancel', onPress: () => setBlockModalVisible(false) },
-            { text: 'Yes', onPress: () => console.log('TODO') },
+            { text: 'Yes', onPress: () => {
+              setBlockModalVisible(false);
+              notImplementedError();
+              } },
           ]}
         >
           <View style={{ paddingVertical: 20 }}>

@@ -37,6 +37,7 @@ export default class Api {
 
   getAllTags(username) {
     this.setMethod('GET');
+    this.setBody("");
     return this.fetchResults(`tags/${username}`);
   }
 
@@ -64,6 +65,58 @@ export default class Api {
 
   getTagFriends(username, tag) {
     this.setMethod('GET');
+    this.setBody("");
     return this.fetchResults(`tags/${username}/${tag}`);
   }
+
+  addTag(username, body){
+    this.setMethod('POST');
+    this.setBody(body);
+    return this.fetchResults(`tags/${username}`);
+  }
+
+  addFriendToTag(username, body) {
+    this.setMethod('POST');
+    this.setBody(body);
+    return this.fetchResults(`tags/friends/${username}`);
+  }
+
+  changeUserDetails(username, body) {
+    this.setMethod('PUT');
+    this.setBody(body);
+    return this.fetchResults(`user/${username}`);
+  }
+
+  deleteAccount(username) {
+    this.setMethod('DELETE');
+    return this.fetchResults(`user/${username}`);
+  }
+
+  deleteFriend(username, body) {
+    this.setMethod('DELETE');
+    this.setBody(body);
+    return this.fetchResults(`friends/${username}`);
+  }
+
+  addToMatchQueue(username, body) {
+    this.setMethod('POST');
+    this.setBody(body);
+    return this.fetchResults(`match/${username}`);
+  }
+
+  checkMatch(username) {
+    this.setMethod('GET');
+    return this.fetchResults(`match/${username}`);
+  }
+
+  checkMatchQueue() {
+    this.setMethod('GET');
+    return this.fetchResults(`match/pool`);
+  }
+
+  deleteFromMatchQueue(username) {
+    this.setMethod('DELETE');
+    return this.fetchResults(`match/${username}`);
+  }
+
 }

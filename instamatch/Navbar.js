@@ -1,6 +1,7 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native'
 import {Icon, TabBar} from '@ant-design/react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 import {
   UNSELECTED_TINT_COLOR,
@@ -13,6 +14,7 @@ import {NavBarProps} from './NavTypes';
 const Navbar = (props: NavBarProps) => {
   return (
     <TabBar
+      styles={style.tab}
       unselectedTintColor={UNSELECTED_TINT_COLOR}
       tintColor={TINT_COLOR}
       barTintColor={BAR_TINT_COLOR}>
@@ -22,11 +24,18 @@ const Navbar = (props: NavBarProps) => {
             key={index}
             title={navItem.title}
             icon={
-              <AntDesign
-                name={navItem.iconName}
-                size={30}
-                color={(props.selectedNav === navItem.nav) ? TINT_COLOR : UNSELECTED_TINT_COLOR}
-              />
+              <View style={style.container}>
+                {
+                  (props.selectedNav === navItem.nav) && 
+                  <View style={style.line} />
+                }
+                <Feather
+                  name={navItem.iconName}
+                  size={30}
+                  color={(props.selectedNav === navItem.nav) ? TINT_COLOR : UNSELECTED_TINT_COLOR}
+                />
+              </View>
+              
             }
             selected={props.selectedNav === navItem.nav}
             onPress={() => props.onClickNavItem(navItem.nav)}>
@@ -37,5 +46,20 @@ const Navbar = (props: NavBarProps) => {
     </TabBar>
   );
 };
+
+const style = StyleSheet.create({
+  tab: {
+    height: 100
+  },
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  line: {
+    borderTopColor: TINT_COLOR,
+    borderTopWidth: 3,
+    width: 137,
+  }
+})
 
 export default Navbar;
