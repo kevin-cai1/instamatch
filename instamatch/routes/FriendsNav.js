@@ -5,13 +5,11 @@ import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import Friends from "./Friends";
-import FriendsList from "./FriendsList";
-import SearchFriend from "./SearchFriend";
-import FriendProfile from './FriendProfile';
-import TagsList from './TagsList';
-import TagDetails from './TagDetails';
-import TagAddFriend from './TagAddFriend';
+import Friends from "../Friends";
+import FriendsList from "../FriendsList";
+import SearchFriend from "../SearchFriend";
+import FriendProfile from '../FriendProfile';
+import TagsList from '../TagsList';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +17,7 @@ const FriendsNav = () => {
   const [optionsState, setOptionsState] = React.useState(false);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name="Friends" component={Friends} />
         <Stack.Screen
@@ -55,20 +53,6 @@ const FriendsNav = () => {
           options={{
             title: 'Manage Tags'
           }}
-        />
-        <Stack.Screen
-          name="TagDetails"
-          component={TagDetails}
-          options={() => ({
-            title: "",
-          })}
-        />
-        <Stack.Screen
-          name="TagAddFriend"
-          component={TagAddFriend}
-          options={() => ({
-            title: "Add Friend to Tag",
-          })}
         />
     </Stack.Navigator>
     </NavigationContainer>

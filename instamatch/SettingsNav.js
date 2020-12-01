@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const SettingsNav = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen 

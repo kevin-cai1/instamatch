@@ -2,7 +2,7 @@ import Home from './Home';
 import Friends from './Friends';
 import SettingsNav from './SettingsNav';
 import { AntDesign } from '@expo/vector-icons';
-import FriendsNav from "./FriendsNav";
+import FriendsNav from "./routes/FriendsNav";
 import HomeNav from "./HomeNav";
 
 export const UNSELECTED_TINT_COLOR = '#575757';

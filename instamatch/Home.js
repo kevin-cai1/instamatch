@@ -10,11 +10,39 @@ import TimePicker from './TimePicker';
 const Item = List.Item;
 
 const Home = ( {navigation} ) => {
-  const now = Date.now();
+  const now = parseInt(Date.now()/1000);
   const [hr, setHr] = useState("1 hr");
   const [min, setMin] = useState("0 min");
   const [activity, setActivity] = useState("Any Activity");
   const [friends, setFriends] = useState("All Friends");
+  const handleStartMatch = () => {
+    const strHours = hr.split(' ');
+    const hours = parseInt(strHours[0], 10);
+    const strMins = min.split(' ');
+    const minutes = parseInt(strMins[0], 10);
+    const body = JSON.stringify({
+      "activity": activity,
+      "tag": friends
+    });
+
+    // Api.addFriend(username, body)
+    //   .then((result) => {
+    //     if (result.result) {
+    //       Api.getFriendStatus(username, friend)
+    //         .then((response) => {
+    //           if (response.status === 'friends') {
+    //             Toast.show({
+    //               text1: `You are now friends with ${friend}!`,
+    //             });
+    //           } else {
+    //             Toast.show({
+    //               text1: `Friend request sent to ${friend}.`,
+    //             });
+    //           }
+    //         });
+    //     }
+    //   });
+  };
   return (
     <View style={homeStyles.container}>
       <View style={ homeStyles.list }>
@@ -32,8 +60,16 @@ const Home = ( {navigation} ) => {
             height:180,
             backgroundColor:'#1C3AA1',
             borderRadius:100,
+            shadowOpacity: 0.5,
+            shadowRadius: 4,
+            shadowColor: '#474e59',
+            shadowOffset: { height: 5, width: 0 },
           }}
-          onPress={() => navigation.replace('MatchScreen', { hours: hr, minutes: min, activity: activity, friends: friends })}
+          onPress={() => {
+            handleStartMatch();
+            navigation.replace('PendingScreen', { hours: hr, minutes: min, activity: activity, friends: friends })
+            }
+          }
           >
           <Text style={homeStyles.cta}>Start Now!</Text>
         </TouchableOpacity>

@@ -97,4 +97,26 @@ export default class Api {
     this.setBody(body);
     return this.fetchResults(`friends/${username}`);
   }
+
+  addToMatchQueue(username, body) {
+    this.setMethod('POST');
+    this.setBody(body);
+    return this.fetchResults(`match/${username}`);
+  }
+
+  checkMatch(username) {
+    this.setMethod('GET');
+    return this.fetchResults(`match/${username}`);
+  }
+
+  checkMatchQueue() {
+    this.setMethod('GET');
+    return this.fetchResults(`match/pool`);
+  }
+
+  deleteFromMatchQueue(username) {
+    this.setMethod('DELETE');
+    return this.fetchResults(`match/${username}`);
+  }
+
 }
