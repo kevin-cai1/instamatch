@@ -26,7 +26,7 @@ const LoginScreen = ({navigation}) => {
  return (
    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Image source={InstaMatchL ogo} style={styles.logo}/>
+        <Image source={InstaMatchLogo} style={styles.logo}/>
         <Formik
           initialValues={{ username: '', password: ''}}
           onSubmit={(values, actions) => {

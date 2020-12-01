@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const HomeNav = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} options={{ headerStyle: { backgroundColor: '#f2f2f2', shadowColor: 'transparent' }, }} />
         <Stack.Screen
