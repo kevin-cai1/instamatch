@@ -5,6 +5,7 @@ import { List, Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { AntDesign } from '@expo/vector-icons';
 import CountDown from 'react-native-countdown-component';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
+import api from './api';
 
 console.disableYellowBox = true;
 const PendingScreen = ( { navigation, route } ) => {
@@ -13,6 +14,7 @@ const PendingScreen = ( { navigation, route } ) => {
   const hours = parseInt(strHours[0], 10);
   const strMins = route.params.minutes.split(' ');
   const minutes = parseInt(strMins[0], 10);
+  
   return (
     <View style={homeStyles.container}>
       <View style={homeStyles.list}>
