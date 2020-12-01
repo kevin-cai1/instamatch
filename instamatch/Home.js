@@ -32,8 +32,12 @@ const Home = ( {navigation} ) => {
             height:180,
             backgroundColor:'#1C3AA1',
             borderRadius:100,
+            shadowOpacity: 0.5,
+            shadowRadius: 4,
+            shadowColor: '#474e59',
+            shadowOffset: { height: 5, width: 0 },
           }}
-          onPress={() => navigation.replace('MatchScreen', { hours: hr, minutes: min, activity: activity, friends: friends })}
+          onPress={() => navigation.replace('PendingScreen', { hours: hr, minutes: min, activity: activity, friends: friends })}
           >
           <Text style={homeStyles.cta}>Start Now!</Text>
         </TouchableOpacity>
