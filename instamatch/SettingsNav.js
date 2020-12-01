@@ -8,6 +8,7 @@ import AccountSettings from './AccountSettings';
 import ChangeDisplayName from './ChangeDisplayName';
 import ChangePassword from './ChangePassword';
 import LandingPage from './LandingPage';
+import Profile from './Profile';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,10 @@ const SettingsNav = () => {
           name="ChangeDisplayName"
           component={ChangeDisplayName}
           options={{ title: 'Change Display Name'}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
         />
       </Stack.Navigator>
     </NavigationContainer>

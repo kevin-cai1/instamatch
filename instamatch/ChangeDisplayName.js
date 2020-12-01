@@ -7,7 +7,7 @@ import api from './api';
 
 const screen = Dimensions.get("window");
 
-const ChangeDisplayName = () => {
+const ChangeDisplayName = ({ navigation }) => {
   const username = "xX_charmander_Xx";
   const Api = new api();
   const [displayName, setDisplayName] = React.useState('');
@@ -22,10 +22,18 @@ const ChangeDisplayName = () => {
           text1: `Display name changed successfully`,
         });
       });
+    navigation.goBack();
   };
 
   const handleSubmit = () => {
-    
+    if (displayName) {
+      changeName(displayName);
+    } else {
+      Toast.show({
+        text1: 'Display name cannot be empty',
+        type: 'error',
+      });
+    }
     Keyboard.dismiss();
 
   }
