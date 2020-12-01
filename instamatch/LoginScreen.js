@@ -5,8 +5,6 @@ import InstaMatchLogo from './assets/InstaMatchLogo.png';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-
-export default InputBox
 const ReviewSchema = yup.object({
   username: yup.string()
     .required()
@@ -16,17 +14,27 @@ const ReviewSchema = yup.object({
     .min(6)
 })
 
-const LoginScreen = () => {
+const storeData = async (username) => {
+  try {
+    await AsyncStorage.setItem('@username', username)
+  } catch (e) {
+    console.log("LoginScreen.js: Line 21: " + e);
+  }
+}
+
+const LoginScreen = ({navigation}) => {
  return (
    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Image source={InstaMatchLogo} style={styles.logo}/>
+        <Image source={InstaMatchL ogo} style={styles.logo}/>
         <Formik
           initialValues={{ username: '', password: ''}}
           onSubmit={(values, actions) => {
             actions.resetForm();
             console.log(values);
             Keyboard.dismiss();
+            storeData(values.username);
+            navigation.navigate('Router');
           }}
         >
           {(props) => (
