@@ -34,6 +34,10 @@ const LoginScreen = ({navigation}) => {
             console.log(values);
             Keyboard.dismiss();
             storeData(values.username);
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Router'}],
+            });
             navigation.navigate('Router');
           }}
         >
