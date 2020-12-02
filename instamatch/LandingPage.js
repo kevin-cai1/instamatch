@@ -6,7 +6,7 @@ import { ACCENT_COLOR } from './Constants';
 const screen = Dimensions.get("window");
 const ratio = screen.width/803; // actual image width
 
-const LandingPage = () => {
+const LandingPage = ({navigation}) => {
   
   return (
     <View>
@@ -50,12 +50,12 @@ const LandingPage = () => {
       </Carousel>
       <View style={styles.buttonGroup}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => console.log("go to signup")}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CreateAccountScreen')}>
             <Text style={styles.buttonLabel}>Signup</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer} >
-          <TouchableOpacity style={styles.button} onPress={() => console.log("go to login")}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen')}>
             <Text style={styles.buttonLabel} >Login</Text>
           </TouchableOpacity>
         </View>

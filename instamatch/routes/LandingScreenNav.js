@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CreateAccountScreen from "../CreateAccountScreen";
 import LoginScreen from "../LoginScreen";
-import LandingScreen from "../LandingScreen";
+import LandingPage from "../LandingPage";
 import Router from './Router';
 
 const Stack = createStackNavigator();
@@ -13,8 +13,8 @@ const LandingScreenNav = () => {
     <NavigationContainer independent={true}>
       <Stack.Navigator headerMode="none">
         <Stack.Screen 
-          name="LandingScreen"
-          component={LandingScreen}
+          name="LandingPage"
+          component={LandingPage}
         />
         <Stack.Screen 
           name="CreateAccountScreen"
