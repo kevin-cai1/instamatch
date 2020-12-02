@@ -10,6 +10,8 @@ import FriendsList from "../FriendsList";
 import SearchFriend from "../SearchFriend";
 import FriendProfile from '../FriendProfile';
 import TagsList from '../TagsList';
+import TagDetails from '../TagDetails';
+import TagAddFriend from '../TagAddFriend';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +56,20 @@ const FriendsNav = () => {
             title: 'Manage Tags'
           }}
         />
+        <Stack.Screen
+          name="TagDetails"
+          component={TagDetails}
+          options={() => ({
+            title: "",
+          })}
+        />
+        <Stack.Screen
+          name="TagAddFriend"
+          component={TagAddFriend}
+          options={() => ({
+            title: "Add Friend to Tag",
+          })}
+        />
     </Stack.Navigator>
     </NavigationContainer>
   );
@@ -66,4 +82,3 @@ const style = StyleSheet.create({
 });
 
 export default FriendsNav;
-
