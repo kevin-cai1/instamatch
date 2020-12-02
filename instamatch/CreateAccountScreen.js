@@ -29,11 +29,11 @@ const getData = async () => {
 
 const AccountDetailValidation = yup.object({
   username: yup.string()
-    .required('Must input a username'),
+    .required('Please enter a username'),
     //.min(5, 'Username must be between 4-12 characters')
     //.max(12, 'Username must be between 4-12 characters'),
   displayName: yup.string()
-    .required('Must input a username'),
+    .required('Please enter a display name'),
     //.min(5, 'Username must be between 4-12 characters')
     //.max(12, 'Username must be between 4-12 characters'),
   email: yup.string()

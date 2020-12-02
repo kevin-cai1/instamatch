@@ -3,6 +3,7 @@ import { Text, Image, View, TextInput, TouchableWithoutFeedback, Keyboard, Touch
 import InstaMatchLogo from './assets/InstaMatchLogo.png';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import api from './api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import loginAccountStyles from './styles/LoginAccountStyles';
 
@@ -26,6 +27,27 @@ const storeData = async (username) => {
 }
 
 const LoginScreen = ({navigation}) => {
+  const Api = new api();
+  const loginFunction = (accountDetails) => {
+    Api.login(JSON.stringify(accountDetails)).then((response) => {
+      console.log("response status: " + response.status);
+      console.log("response: " + JSON.stringify(response));
+      if (response.result === "success") {
+        storeData(accountDetails.username);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Router'}],
+        });
+        navigation.navigate('Router');
+      } else {
+        Toast.show({
+          text1: `Username or password is in incorrect`,
+          type: 'error'
+        });
+      }
+    })
+  }
+
  return (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
   <View style={loginAccountStyles.container}>
@@ -37,7 +59,7 @@ const LoginScreen = ({navigation}) => {
         actions.resetForm();
         console.log(values);
         Keyboard.dismiss();
-        createAccountFunction(values);
+        loginFunction(values);
       }}
       style={loginAccountStyles.form}
     >
