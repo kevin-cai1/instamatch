@@ -3,8 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import Friends from "../Friends";
 import FriendsList from "../FriendsList";
 import SearchFriend from "../SearchFriend";
@@ -33,6 +32,13 @@ const FriendsNav = () => {
                 onPress={() => navigation.navigate('SearchFriend')}
               >
                 <AntDesign name="plus" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => { navigation.goBack() }}
+              >
+                <MaterialIcons name="arrow-back-ios" size={24} color="black" />
               </TouchableOpacity>
             ),
           })}
