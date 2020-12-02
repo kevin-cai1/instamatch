@@ -1,16 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
-import LandingScreenNav from './routes/LandingScreenNav';
+import * as routes from './routes/index';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-// declare const global: {HermesInternal: null | {}};
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <>
-    <LandingScreenNav/>   
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name="LandingScreenNav" component={routes.LandingScreenNav}/>
+        <Drawer.Screen name="MainAppRoutes" component={routes.MainAppRoutes}/>
+      </Drawer.Navigator>
+    </NavigationContainer>    
     <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
   );

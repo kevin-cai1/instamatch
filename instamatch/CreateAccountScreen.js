@@ -55,7 +55,7 @@ const CreateAccountScreen = ({navigation}) => {
           index: 0,
           routes: [{ name: 'Router'}],
         });
-        navigation.navigate('Router');
+        navigation.navigate('MainAppRoutes', { screen: 'Router' });
       } else {
         Toast.show({
           text1: `User '${accountDetails.username}' already exists`,

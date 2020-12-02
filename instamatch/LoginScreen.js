@@ -7,6 +7,8 @@ import api from './api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import loginAccountStyles from './styles/LoginAccountStyles';
 import Toast from "react-native-toast-message";
+import helper from './helper';
+import notImplementedError from './helper';
 
 const LoginValidation = yup.object({
   username: yup.string()
@@ -35,11 +37,7 @@ const LoginScreen = ({navigation}) => {
       console.log("response: " + JSON.stringify(response));
       if (response.result === "success") {
         storeData(accountDetails.username);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Router'}],
-        });
-        navigation.navigate('Router');
+        navigation.navigate('MainAppRoutes', { screen: 'Router' });
       } else {
         Toast.show({
           text1: `Username or password is in incorrect`,
@@ -86,7 +84,7 @@ const LoginScreen = ({navigation}) => {
           <TouchableOpacity onPress={props.handleSubmit} style={loginAccountStyles.createAccountButton}>
             <Text style={loginAccountStyles.buttonText}>Sign In</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('CreateAccountScreen')} style={{alignSelf: 'flex-end', paddingTop: 36}}>
+          <TouchableOpacity onPress={() => notImplementedError()} style={{alignSelf: 'flex-end', paddingTop: 36}}>
             <Text style={{fontSize: 18, textDecorationLine: 'underline', color: '#1C3AA1'}}>Forgot login details?</Text>
           </TouchableOpacity>
         </View>
