@@ -14,6 +14,7 @@ const TagDetails = ({ route, navigation }) => {
   const [friends, setFriends] = React.useState([]);
   const [optionsVisible, setOptionsVisible] = React.useState(false);
   const api = new Api();
+  let listener = null;
 
   const getUsername = async () => {
     try {
@@ -23,7 +24,7 @@ const TagDetails = ({ route, navigation }) => {
     }
   };
 
-  React.useEffect(() => {
+  const getFriends = () => {
     getUsername().then((username) => {
       api.getTagFriends(username, tagName)
         .then((result) => {
@@ -31,6 +32,13 @@ const TagDetails = ({ route, navigation }) => {
             setFriends(result.friends);
           }
         });
+    });
+  };
+
+  React.useEffect(() => {
+    getFriends();
+    listener = navigation.addListener('focus', () => {
+      getFriends();
     });
   }, [navigation]);
 

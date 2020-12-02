@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, Text, TextInput, Dimensions} from 'react-native';
 import {Button, List, Modal, Provider, WingBlank} from '@ant-design/react-native';
-import AddButtonMd from './Components/AddButtonMd';
 import api from './api';
 import {AntDesign} from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
@@ -17,6 +16,7 @@ const TagsList = ({ navigation }) => {
   const [newTag, setNewTag] = React.useState("");
   const [tagAdded, setTagAdded] = React.useState("");
   const [resultsFetched, setResultsFetched] = React.useState(false);
+  let listener = null;
 
   const getUsername = async () => {
     try {
@@ -58,7 +58,7 @@ const TagsList = ({ navigation }) => {
     getUsername().then((user) => setUsername(user));
   });
 
-  React.useEffect(() => {
+  const fetchData = () => {
     getUsername().then((username) => {
       Api.getAllTags(username)
         .then((result) => {
@@ -80,6 +80,13 @@ const TagsList = ({ navigation }) => {
             setResultsFetched(true);
           }
         });
+    });
+  };
+
+  React.useEffect(() => {
+    fetchData();
+    listener = navigation.addListener('focus', () => {
+      fetchData();
     });
   }, [tagAdded]);
 
