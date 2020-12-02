@@ -72,6 +72,7 @@ export default class Api {
   addTag(username, body){
     this.setMethod('POST');
     this.setBody(body);
+    console.log("within addTag: " + JSON.stringify(this));
     return this.fetchResults(`tags/${username}`);
   }
 
@@ -121,4 +122,17 @@ export default class Api {
     return this.fetchResults(`match/${username}`);
   }
 
+  signUp(body) {
+    this.setMethod('POST');
+    this.setBody(body);
+    console.log("within signup: " + JSON.stringify(this));
+    return this.fetchResults(`auth/signup`);
+  }
+
+  login(body) {
+    this.setMethod('POST');
+    this.setBody(body);
+    console.log(this);
+    return this.fetchResults(`auth/login`);
+  }
 }

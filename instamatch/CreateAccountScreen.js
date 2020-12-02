@@ -5,6 +5,8 @@ import InstaMatchLogo from './assets/InstaMatchLogo.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import api from './api';
+import { apisAreAvailable } from 'expo';
 
 const clearAll = async () => {
   try {
@@ -34,7 +36,6 @@ const getData = async () => {
   }
 }
 
-
 const AccountDetailValidation = yup.object({
   username: yup.string()
     .required('Must input a username'),
@@ -52,39 +53,32 @@ const AccountDetailValidation = yup.object({
     //.oneOf([yup.ref('password')],'Password does not match')
 })
 
-const postAccountDetails = (values) => {
-  fetch('https://127.0.0.1:5000/auth/signup', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username: values.username,
-      email: values.email,
-      password: values.password,
-      name: values.confirmPassword
-    })
-  })
-  .then((response) => response.json())
-  .then((json) => {
-    console.log(body);
-    return json;
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-}
 
 const CreateAccountScreen = ({navigation}) => {
   const loginNavigate = () => {
     navigation.navigate('LoginScreen')
   }
 
+  const Api = new api();
+  const createAccountFunction = (accountDetails) => {
+    const accJSON = {
+      "username": accountDetails.username,
+      "email": accountDetails.email,
+      "password": accountDetails.password,
+      "name": "steve"
+    }
+    console.log(JSON.stringify(accJSON));
+    Api.signUp(accJSON).then((result) => {
+      console.log("result: " + JSON.stringify(result));
+    })
+    //storeData(values.username);
+    //navigation.navigate('Router');
+  }
+
  return (
    <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.container}>
       <View style={styles.container}>
-        <Image source={InstaMatchLogo}/>
+      <Image source={InstaMatchLogo} style={styles.logo}/>
         <Formik
           initialValues={{ username: '', email: '', password: '', confirmPassword: ''}}
           validationSchema={AccountDetailValidation}
@@ -92,15 +86,15 @@ const CreateAccountScreen = ({navigation}) => {
             actions.resetForm();
             console.log(values);
             Keyboard.dismiss();
-            storeData(values.username);
-            navigation.navigate('Router');
+            createAccountFunction(values);
           }}
+          style={styles.form}
         >
           {(props) => (
-            <View>
+            <View style={styles.form}>
               <InputItem 
                 placeholder="Username" 
-                styles={styles.inputBox}
+                styles={styles.testBox}
                 value={props.values.username}
                 onChangeText={props.handleChange('username')}
               />
@@ -144,8 +138,15 @@ const CreateAccountScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    flex: 1,
     backgroundColor: '#F2F2F2',
+    margin: 20,
+    marginTop: 30,
+  },
+  form: {
+    width: 300,
+    flex: 1,
+    alignSelf: 'center'
   },
   inputbox: {
     borderWidth: 5,
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     width: 50
   },
   logo: {
-    justifyContent: "center"
+    alignSelf: "center"
   },
   button: {
     backgroundColor: "#1C3AA1",
@@ -171,6 +172,15 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontSize: 16,
     textAlign: 'center'
-  }
+  },
+  testBox: {
+    borderWidth: 1,
+    borderColor: 'crimson',
+    padding: 10,
+    fontSize: 18,
+    borderRadius: 10,
+    height: 40,
+    marginBottom: 40,
+  },
 })
 export default CreateAccountScreen;
