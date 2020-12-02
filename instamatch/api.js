@@ -106,11 +106,13 @@ export default class Api {
 
   checkMatch(username) {
     this.setMethod('GET');
+    this.setBody("");
     return this.fetchResults(`match/${username}`);
   }
 
   checkMatchQueue() {
     this.setMethod('GET');
+    this.setBody("");
     return this.fetchResults(`match/pool`);
   }
 
