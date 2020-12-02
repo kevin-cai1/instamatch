@@ -1,18 +1,20 @@
 import React from 'react';
-import { StyleSheet, Image, View, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { InputItem } from '@ant-design/react-native';
+import { Text, Image, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import InstaMatchLogo from './assets/InstaMatchLogo.png';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import loginAccountStyles from './styles/LoginAccountStyles';
 
-const ReviewSchema = yup.object({
+const LoginValidation = yup.object({
   username: yup.string()
-    .required()
-    .min(5),
+    .required('Please enter in your username'),
+    //.min(5, 'Username must be between 4-12 characters')
+    //.max(12, 'Username must be between 4-12 characters'),
   password: yup.string()
-    .required()
-    .min(6)
+    .required('Please enter in your password'),
+    //.min(6, 'Password must be between 6-12 characters')
+    //.max(12, 'Password must be between 6-12 characters'),
 })
 
 const storeData = async (username) => {
@@ -25,67 +27,57 @@ const storeData = async (username) => {
 
 const LoginScreen = ({navigation}) => {
  return (
-   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Image source={InstaMatchLogo} style={styles.logo}/>
-        <Formik
-          initialValues={{ username: '', password: ''}}
-          onSubmit={(values, actions) => {
-            actions.resetForm();
-            console.log(values);
-            Keyboard.dismiss();
-            storeData(values.username);
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Router'}],
-            });
-            navigation.navigate('Router');
-          }}
-        >
-          {(props) => (
-            <View>
-              <InputItem 
-                placeholder="Username" 
-                styles={styles.inputBox}
-                value={props.values.username}
-                onChangeText={props.handleChange('username')}
-              />
-              <InputItem 
-                placeholder="Password" 
-                styles={styles.inputBox}
-                type='password'
-                value={props.values.password}
-                onChangeText={props.handleChange('password')}
-              />
-              <Button title='Sign In' onPress={props.handleSubmit} style={styles.button}/>
-            </View>
-          )}
-        </Formik>
-      </View>
-    </TouchableWithoutFeedback>
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+  <View style={loginAccountStyles.container}>
+    <Image source={InstaMatchLogo} style={loginAccountStyles.logo}/>
+    <Formik
+      initialValues={{ username: '', email: '', password: '', confirmPassword: ''}}
+      validationSchema={LoginValidation}
+      onSubmit={(values, actions) => {
+        actions.resetForm();
+        console.log(values);
+        Keyboard.dismiss();
+        createAccountFunction(values);
+      }}
+      style={loginAccountStyles.form}
+    >
+      {(props) => (
+        <View style={loginAccountStyles.form}>
+          <TextInput 
+            placeholder="Username" 
+            style={loginAccountStyles.inputBox}
+            value={props.values.username}
+            onChangeText={props.handleChange('username')}
+            placeholderTextColor='#647C90'
+          />
+          <Text style={loginAccountStyles.errorText}>{props.touched.username && props.errors.username}</Text>
+          <TextInput 
+            placeholder="Password" 
+            style={loginAccountStyles.inputBox}
+            type='password'
+            value={props.values.password}
+            onChangeText={props.handleChange('password')}
+            placeholderTextColor='#647C90'
+          />
+          <Text style={loginAccountStyles.errorText}>{props.touched.password && props.errors.password}</Text>
+          <TouchableOpacity onPress={props.handleSubmit} style={loginAccountStyles.createAccountButton}>
+            <Text style={loginAccountStyles.buttonText}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('CreateAccountScreen')} style={{alignSelf: 'flex-end', paddingTop: 36}}>
+            <Text style={{fontSize: 18, textDecorationLine: 'underline', color: '#1C3AA1'}}>Forgot login details?</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </Formik>
+    <View>
+      <Text style={loginAccountStyles.font}>Don't have an account yet?</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('CreateAccountScreen')} style={loginAccountStyles.signInButton}>
+        <Text style={loginAccountStyles.signInText}>Sign Up</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</TouchableWithoutFeedback>
  )
 };
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: '#F2F2F2',
-  },
-  inputbox: {
-    borderWidth: 1,
-    borderColor: '#1C3AA1',
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6
-  },
-  logo: {
-    height: 100
-  },
-  button: {
-    color: '#1C3AA1',
-    backgroundColor: '#1C3AA1'
-  }
-})
 export default LoginScreen;
