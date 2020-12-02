@@ -22,6 +22,20 @@ const Settings = ({ navigation }) => {
       });
   };
 
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+      // clear error
+    }
+    console.log('Done.')
+  }
+
+  const logout = () => {
+    clearAll();
+    console.log('log out');
+  }
+
   React.useEffect(() => {
     loadData();
     listener = navigation.addListener('focus', () => {
@@ -70,17 +84,9 @@ const Settings = ({ navigation }) => {
             <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
           </View>
         </List.Item>
-        <List.Item onPress={() => navigation.navigate('LandingPage')}>
-          <View style={style.nestedLabel}>
-            <Text style={style.label}>
-              Landing Page 
-            </Text>
-            <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
-          </View>
-        </List.Item>
       </List>
       <List style={style.logout}>
-        <List.Item onPress={() => console.log('handle logout')} >
+        <List.Item onPress={() => logout()} >
           <Text style={style.logoutLabel}>
             Logout
           </Text>
