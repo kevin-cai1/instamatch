@@ -10,15 +10,24 @@ const Settings = ({ navigation }) => {
   const [displayName, setDisplayName] = React.useState('Display Name');
   const [name, setName] = React.useState('Profile');
   const [profilePic, setProfilePic] = React.useState('');
+  let listener = null;
   const Api = new api();
 
-  React.useEffect(() => {
+  const loadData = () => {
     Api.getUserDetails(username)
       .then((result) => {
         (result.name) && setDisplayName(result.name);
         (result.username) && setName(result.username);
         (result.profile_img) && setProfilePic(result.profile_img);
       });
+  };
+
+  React.useEffect(() => {
+    loadData();
+    listener = navigation.addListener('focus', () => {
+      loadData();
+    });
+    
   }, []);
 
   return (
@@ -89,7 +98,7 @@ const style = StyleSheet.create({
     paddingTop: 80,
   },
   logoutLabel: {
-    color: ACCENT_COLOR,
+    color: '#1C3AA1',
     fontSize: 18,
   },
   nestedLabel:{
