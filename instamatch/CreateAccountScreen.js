@@ -16,17 +16,6 @@ const storeData = async (username) => {
   }
 }
 
-const getData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@username')
-    if (value !== null) {
-      console.log("username stored: " + value)
-    }
-  } catch (e) {
-    console.log("CreateAccountScreen.js: Line 24: " + e);
-  }
-}
-
 const AccountDetailValidation = yup.object({
   username: yup.string()
     .required('Please enter a username'),
@@ -37,15 +26,15 @@ const AccountDetailValidation = yup.object({
     //.min(5, 'Username must be between 4-12 characters')
     //.max(12, 'Username must be between 4-12 characters'),
   email: yup.string()
-    .required('Please enter a valid email address'),
-    //.email('Please enter a valid email address'),
+    .required('Please enter a valid email address')
+    .email('Please enter a valid email address'),
   password: yup.string()
     .required('Password must be between 6-12 characters'),
     //.min(6, 'Password must be between 6-12 characters')
     //.max(12, 'Password must be between 6-12 characters'),
   confirmPassword: yup.string()
     .required('Password does not match')
-    //.oneOf([yup.ref('password')],'Password does not match')
+    .oneOf([yup.ref('password')],'Password does not match')
 })
 
 const CreateAccountScreen = ({navigation}) => {
@@ -81,7 +70,7 @@ const CreateAccountScreen = ({navigation}) => {
       <View style={loginAccountStyles.container}>
         <Image source={InstaMatchLogo} style={loginAccountStyles.logo}/>
         <Formik
-          initialValues={{ username: '', email: '', password: '', confirmPassword: ''}}
+          initialValues={{ username: '', displayName: '', email: '', password: '', confirmPassword: ''}}
           validationSchema={AccountDetailValidation}
           onSubmit={(values, actions) => {
             actions.resetForm();
@@ -108,7 +97,7 @@ const CreateAccountScreen = ({navigation}) => {
                 onChangeText={props.handleChange('displayName')}
                 placeholderTextColor='#647C90'
               />
-              <Text style={loginAccountStyles.errorText}>{props.touched.username && props.errors.username}</Text>
+              <Text style={loginAccountStyles.errorText}>{props.touched.displayName && props.errors.displayName}</Text>
              <TextInput 
                 placeholder="Email" 
                 style={loginAccountStyles.inputBox}
@@ -125,6 +114,7 @@ const CreateAccountScreen = ({navigation}) => {
                 value={props.values.password}
                 onChangeText={props.handleChange('password')}
                 placeholderTextColor='#647C90'
+                secureTextEntry={true}
               />
               <Text style={loginAccountStyles.errorText}>{props.touched.password && props.errors.password}</Text>
               <TextInput 
@@ -134,6 +124,7 @@ const CreateAccountScreen = ({navigation}) => {
                 value={props.values.confirmPassword}
                 onChangeText={props.handleChange('confirmPassword')}
                 placeholderTextColor='#647C90'
+                secureTextEntry={true}
               />
               <Text style={loginAccountStyles.errorText}>{props.touched.confirmPassword && props.errors.confirmPassword}</Text>
               <TouchableOpacity onPress={props.handleSubmit} style={loginAccountStyles.createAccountButton}>

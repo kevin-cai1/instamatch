@@ -77,10 +77,10 @@ const LoginScreen = ({navigation}) => {
           <TextInput 
             placeholder="Password" 
             style={loginAccountStyles.inputBox}
-            type='password'
             value={props.values.password}
             onChangeText={props.handleChange('password')}
             placeholderTextColor='#647C90'
+            secureTextEntry={true}
           />
           <Text style={loginAccountStyles.errorText}>{props.touched.password && props.errors.password}</Text>
           <TouchableOpacity onPress={props.handleSubmit} style={loginAccountStyles.createAccountButton}>
