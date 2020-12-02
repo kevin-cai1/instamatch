@@ -35,9 +35,10 @@ const FriendsNav = () => {
             ),
             headerLeft: () => (
               <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
               >
-                <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
             ),
           })}
@@ -45,34 +46,76 @@ const FriendsNav = () => {
         <Stack.Screen
           name="SearchFriend"
           component={SearchFriend}
-          options={{ title: 'Friends - Add' }}
+          options={({navigation}) => ({
+            title: 'Friends - Add',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           name="FriendProfile"
           component={FriendProfile}
-          options={({route}) => ({
+          options={({route, navigation}) => ({
             title: route.params.username,
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen
           name="TagsList"
           component={TagsList}
-          options={{
-            title: 'Manage Tags'
-          }}
+          options={({route, navigation}) => ({
+            title: 'Manage Tags',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           name="TagDetails"
           component={TagDetails}
-          options={() => ({
-            title: "",
+          options={({navigation}) => ({
+            title: '',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen
           name="TagAddFriend"
           component={TagAddFriend}
-          options={() => ({
-            title: "Add Friend to Tag",
+          options={({navigation}) => ({
+            title: 'Add Friend to Tag',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
           })}
         />
     </Stack.Navigator>
