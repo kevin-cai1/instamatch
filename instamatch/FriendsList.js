@@ -3,36 +3,47 @@ import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import {Button, List, WingBlank} from '@ant-design/react-native';
 import AddButtonMd from './Components/AddButtonMd';
 import api from './api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const window = Dimensions.get("window");
 
 const FriendsList = ({ navigation }) => {
   const Api = new api();
-  const username = 'charmaine'; // change this
+  // const username = 'charmaine'; // change this
   const [usernameList, setUsernameList] = React.useState([]);
   const [resultsFetched, setResultsFetched] = React.useState(false);
 
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
   React.useEffect(() => {
-    Api.getAllFriends(username)
-      .then((result) => {
-        if (result.friends) {
-          const allFriends = result.friends.sort(function (a, b) {
-            return a.toLowerCase().localeCompare(b.toLowerCase()
-          )});
-          const letterList = [];
-          allFriends.map((user) => {
-            const letterObj = letterList.find((obj) => obj.letter === user[0].toLowerCase());
-            if (!letterObj) {
-              const newLetterObj = {'letter': user[0].toLowerCase(), 'friends': [user]};
-              letterList.push(newLetterObj);
-            } else {
-              letterObj.friends.push(user);
-            }
-          });
-          setUsernameList(letterList);
-          setResultsFetched(true);
-        }
-      });
+    getUsername().then((username) => {
+      Api.getAllFriends(username)
+        .then((result) => {
+          if (result.friends) {
+            const allFriends = result.friends.sort(function (a, b) {
+              return a.toLowerCase().localeCompare(b.toLowerCase()
+              )});
+            const letterList = [];
+            allFriends.map((user) => {
+              const letterObj = letterList.find((obj) => obj.letter === user[0].toLowerCase());
+              if (!letterObj) {
+                const newLetterObj = {'letter': user[0].toLowerCase(), 'friends': [user]};
+                letterList.push(newLetterObj);
+              } else {
+                letterObj.friends.push(user);
+              }
+            });
+            setUsernameList(letterList);
+            setResultsFetched(true);
+          }
+        });
+    });
   }, []);
 
   return (

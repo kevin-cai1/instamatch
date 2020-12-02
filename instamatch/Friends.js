@@ -4,23 +4,35 @@ import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import api from './api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Friends = ({ navigation }) => {
 
   const [totalFriends, setTotalFriends] = React.useState("");
   const [totalTags, setTotalTags] = React.useState("");
-  const username = 'charmaine'; // need to change
+  // const username = 'charmaine'; // need to change
   const Api = new api();
 
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
   React.useEffect(() => {
-    Api.getAllFriends(username)
-      .then((result) => {
-        (result.friends) && setTotalFriends(result.friends.length);
-      });
-    Api.getAllTags(username)
-      .then((result) => {
-        (result.tags) && setTotalTags(result.tags.length);
-      });
+    getUsername().then((username) => {
+      console.log(username);
+      Api.getAllFriends(username)
+        .then((result) => {
+          (result.friends) && setTotalFriends(result.friends.length);
+        });
+      Api.getAllTags(username)
+        .then((result) => {
+          (result.tags) && setTotalTags(result.tags.length);
+        });
+    });
   }, []);
 
   return (
