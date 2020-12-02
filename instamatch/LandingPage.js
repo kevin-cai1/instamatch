@@ -2,23 +2,24 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, Dimensions, Button, TouchableOpacity } from 'react-native';
 import { Carousel } from '@ant-design/react-native';
 import { ACCENT_COLOR } from './Constants';
-import { ServerContainer } from '@react-navigation/native';
 
 const screen = Dimensions.get("screen");
-const ratio = screen.width/803; // actual image width
 
 const LandingPage = ({navigation}) => {
   
   return (
-    <View>
+    <View style={{height: screen.height, backgroundColor: '#000'}}>
       <Carousel
         style={styles.gallery}
+        dotActiveStyle={{backgroundColor: '#fff'}}
+        dotStyle={{backgroundColor: '#999'}}
         selectedIndex={0}
+        infinite
       >
         <View style={styles.item}>
           <View style={styles.imageContainer}>
             <Image
-              style={styles.image}
+              style={styles.logo}
               source= {require('./assets/InstaMatchLogo.png')}
             />
           </View>
@@ -31,7 +32,7 @@ const LandingPage = ({navigation}) => {
         <View style={styles.item, styles.item2}>
           <View style={styles.imageContainer}>
             <Image
-              style={styles.image}
+              style={styles.logo}
               source= {require('./assets/InstaMatchLogo.png')}
             />
           </View>
@@ -44,15 +45,14 @@ const LandingPage = ({navigation}) => {
         <View style={styles.item, styles.item3}>
           <View style={styles.imageContainer}>
             <Image
-              style={styles.image}
+              style={styles.logo}
               source= {require('./assets/InstaMatchLogo.png')}
             />
           </View>
           <View style={styles.caption}>
             <Text style={styles.text}>
               Manage your friends with tags!
-            </Text>
-            <Text style={styles.text} >
+              {"\n\n"}
               Match with the friends you want, when you want
             </Text>
           </View>
@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     margin: 20,
     fontSize: 20,
   },
-  image: {
+  logo: {
     marginTop: screen.height * 0.08,
-    marginLeft: 10
-    /* width: screen.width,
-    height: 1082 * ratio, // actual image height */
+    marginLeft: 10,
+  },
+  image: {
     
   },
   buttonGroup: {

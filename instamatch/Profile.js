@@ -5,6 +5,7 @@ import Toast from "react-native-toast-message";
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from './api';
 import { ACCENT_COLOR } from './Constants';
 
@@ -15,11 +16,19 @@ const Profile = () => {
   const [name, setName] = React.useState('');
   const [newName, setNewName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [newEmail, setNewEmail] = React.useState('');
   const [nameModalVisible, setNameModalVisible] = React.useState(false);
   const [emailModalVisible, setEmailModalVisible] = React.useState(false);
-  const username = "Kevin07";
   const Api = new api();
+
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
 
   const changeName = () => {
     const body = JSON.stringify({
@@ -65,12 +74,16 @@ const Profile = () => {
   };
 
   React.useEffect(() => {
-    Api.getUserDetails(username)
-      .then((result) => {
-        (result.email) && setEmail(result.email);
-        (result.name) && setName(result.name);
-        (result.profile_img) && setImage(result.profile_img);
-      });
+    getUsername().then((user) => {
+      Api.getUserDetails(user)
+        .then((result) => {
+          (result.email) && setEmail(result.email);
+          (result.name) && setName(result.name);
+          (result.profile_img) && setImage(result.profile_img);
+          (result.username) && setUsername(result.username);
+        });
+    })
+    
   }, []);
 
   const handleImage = () => {

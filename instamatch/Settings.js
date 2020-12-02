@@ -3,23 +3,33 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import { WingBlank, List } from '@ant-design/react-native';
 import { Ionicons } from '@expo/vector-icons';
 import api from './api';
-import { ACCENT_COLOR } from './Constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Settings = ({ navigation }) => {
-  const username = "Kevin07";
   const [displayName, setDisplayName] = React.useState('Display Name');
   const [name, setName] = React.useState('Profile');
   const [profilePic, setProfilePic] = React.useState('');
   let listener = null;
   const Api = new api();
 
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
   const loadData = () => {
-    Api.getUserDetails(username)
-      .then((result) => {
-        (result.name) && setDisplayName(result.name);
-        (result.username) && setName(result.username);
-        (result.profile_img) && setProfilePic(result.profile_img);
-      });
+    getUsername().then((username) => {
+      Api.getUserDetails(username)
+        .then((result) => {
+          console.log(result);
+          (result.name) && setDisplayName(result.name);
+          (result.username) && setName(result.username);
+          (result.profile_img) && setProfilePic(result.profile_img);
+        });
+    });    
   };
 
   const clearAll = async () => {

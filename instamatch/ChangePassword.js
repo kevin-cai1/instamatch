@@ -2,18 +2,27 @@ import React from 'react';
 import { StyleSheet, View, TextInput, Text, Dimensions, Keyboard } from 'react-native';
 import { WingBlank, Button, InputItem } from '@ant-design/react-native';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ACCENT_COLOR } from './Constants';
 import api from './api';
 
 const screen = Dimensions.get("window");
 
 const ChangePassword = ({ navigation }) => {
-  const username = "xX_charmander_Xx";
   const Api = new api();
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [currentPassword, setCurrentPassword] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
 
   const changePassword = (password) => {
     const body = JSON.stringify({
@@ -29,11 +38,14 @@ const ChangePassword = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    Api.getUserDetails(username)
-      .then((result) => {
-        console.log(result);
-        (result.password) && setPassword(result.password);
-      });
+    getUsername().then((username) => {
+      Api.getUserDetails(username)
+        .then((result) => {
+          (result.password) && setPassword(result.password);
+          (result.username) && setUsername(result.username);
+        });
+    });
+    
   }, []);
 
   const handleSubmit = () => {
