@@ -2,10 +2,11 @@ import React from 'react';
 import api from './api';
 import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/vector-icons';
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
-import {StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, ScrollView, Image} from 'react-native';
 import notImplementedError from './helper';
 import Toast from "react-native-toast-message";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ACCENT_COLOR} from "./Constants";
 
 const screen = Dimensions.get("window");
 
@@ -13,6 +14,7 @@ const FriendProfile = ({ route, navigation }) => {
   const friendUsername = route.params.username;
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [imageUrl, setImageUrl] = React.useState(null);
   const [tags, setTags] = React.useState([]);
   const [optionVisible, setOptionsVisible] = React.useState(false);
   const [blockModalVisible, setBlockModalVisible] = React.useState(false);
@@ -67,9 +69,10 @@ const FriendProfile = ({ route, navigation }) => {
         if (result.result === 'success') {
           setFullName(result.name);
           setEmail(result.email);
+          (result.profile_img) && setImageUrl(result.profile_img);
         }
       });
-  }
+  };
 
   React.useEffect(() => {
     getFriendData();
@@ -103,7 +106,11 @@ const FriendProfile = ({ route, navigation }) => {
         <View style={style.mainContainer}>
           <View style={style.profileContainer}>
             <WingBlank>
-              <FontAwesome name="user-circle" size={90} color="black" />
+              <Image
+                style={style.profileIcon}
+                source={(imageUrl) ? {uri: imageUrl} : require('./assets/user.png')}
+              />
+              {/*<FontAwesome name="user-circle" size={90} color="black" />*/}
               <View style={[style.flexRow, style.profileLine]}>
                 <Text style={style.fullName}>{fullName}</Text>
                 <TouchableOpacity onPress={notImplementedError}>
@@ -282,6 +289,15 @@ const style = StyleSheet.create({
   tagNameText: {
     fontSize: 16,
     marginVertical: 10,
+  },
+  profileIcon: {
+    alignSelf: "flex-start",
+    width: 120,
+    height: 120,
+    borderRadius: 200,
+    backgroundColor: ACCENT_COLOR,
+    marginLeft: 0,
+    marginRight: 20,
   },
 });
 
