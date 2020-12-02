@@ -2,8 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, Dimensions, Button, TouchableOpacity } from 'react-native';
 import { Carousel } from '@ant-design/react-native';
 import { ACCENT_COLOR } from './Constants';
+import { ServerContainer } from '@react-navigation/native';
 
-const screen = Dimensions.get("window");
+const screen = Dimensions.get("screen");
 const ratio = screen.width/803; // actual image width
 
 const LandingPage = ({navigation}) => {
@@ -15,35 +16,44 @@ const LandingPage = ({navigation}) => {
         selectedIndex={0}
       >
         <View style={styles.item}>
-          <Image
-            style={styles.image}
-            source= {require('./assets/gallery-img.png')}
-          />
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source= {require('./assets/InstaMatchLogo.png')}
+            />
+          </View>
           <View style={styles.caption} >
             <Text style={styles.text}>
-            A great app for instantly finding friends who are free!
+            Spontaneously connect with your friends, when it suits you!
           </Text>
           </View>
         </View>
-        <View style={styles.item}>
-          <Image
-            style={styles.image}
-            source= {require('./assets/gallery-img.png')}
-          />
+        <View style={styles.item, styles.item2}>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source= {require('./assets/InstaMatchLogo.png')}
+            />
+          </View>
           <View style={styles.caption}>
             <Text style={styles.text}>
-              Second image caption
+              Apply filters and instantaneously search for other friends.
             </Text>
           </View>
         </View>
-        <View style={styles.item}>
-          <Image
-            style={styles.image}
-            source= {require('./assets/gallery-img.png')}
-          />
+        <View style={styles.item, styles.item3}>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source= {require('./assets/InstaMatchLogo.png')}
+            />
+          </View>
           <View style={styles.caption}>
             <Text style={styles.text}>
-              Third image caption
+              Manage your friends with tags!
+            </Text>
+            <Text style={styles.text} >
+              Match with the friends you want, when you want
             </Text>
           </View>
         </View>
@@ -68,24 +78,37 @@ const styles = StyleSheet.create({
   gallery: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: screen.height - 200,
+    height: screen.height * 0.9,
     flexGrow: 1,
   },
+  imageContainer: {
+    height: screen.height * 0.7,
+  },
   item: {
-    backgroundColor: '#3A3A3A',
+    backgroundColor: '#D3E5FF',
+    height: screen.height,
+  },
+  item2: {
+    backgroundColor: '#EF767A',
+  },
+  item3: {
+    backgroundColor: '#65b891',
   },
   caption:{
     backgroundColor: '#3A3A3A',
-    height: 200,
+    height: screen.height * 0.2,
   },
   text: {
     color: '#ffffff',
     margin: 20,
-    fontSize: 18,
+    fontSize: 20,
   },
   image: {
-    width: screen.width,
-    height: 1082 * ratio, // actual image height
+    marginTop: screen.height * 0.08,
+    marginLeft: 10
+    /* width: screen.width,
+    height: 1082 * ratio, // actual image height */
+    
   },
   buttonGroup: {
     display: "flex",
@@ -100,7 +123,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 2,
     backgroundColor: ACCENT_COLOR,
-    height: 100,
+    height: screen.height * 0.1,
     alignItems: "center",
     textAlign: "center",
     justifyContent: 'center',

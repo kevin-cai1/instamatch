@@ -88,7 +88,7 @@ const Profile = () => {
   const compressImage = async (uri) => {
     const result = await ImageManipulator.manipulateAsync(
       uri,
-      [{ resize: { width: 150 } }],
+      [{ resize: { width: 200 } }],
       { compress: 0, format: ImageManipulator.SaveFormat.PNG, base64: true}
     );
 
@@ -203,10 +203,12 @@ const style = StyleSheet.create({
   },
   profileIcon: {
     alignSelf: "center",
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
     borderRadius: 200,
-    backgroundColor: '#AB0053',
+    backgroundColor: ACCENT_COLOR,
+    borderColor: '#fff',
+    borderWidth: 4,
     margin: 20,
     marginLeft: 0,
     marginRight: 20,
@@ -222,13 +224,15 @@ const style = StyleSheet.create({
   editButton: {
     position: "absolute",
     bottom: 20,
-    right: 130,
+    right: 110,
   },
   imageIcon: {
     borderRadius: 50,
-    backgroundColor: ACCENT_COLOR,
+    backgroundColor: '#CDCDCD',
+    borderColor: '#fff',
+    borderWidth: 1.5,
     padding: 5,
-    color: "#fff",
+    color: "#000",
   },
   profileItem: {
     display: "flex",

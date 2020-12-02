@@ -10,15 +10,38 @@ const Settings = ({ navigation }) => {
   const [displayName, setDisplayName] = React.useState('Display Name');
   const [name, setName] = React.useState('Profile');
   const [profilePic, setProfilePic] = React.useState('');
+  let listener = null;
   const Api = new api();
 
-  React.useEffect(() => {
+  const loadData = () => {
     Api.getUserDetails(username)
       .then((result) => {
         (result.name) && setDisplayName(result.name);
         (result.username) && setName(result.username);
         (result.profile_img) && setProfilePic(result.profile_img);
       });
+  };
+
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+      // clear error
+    }
+    console.log('Done.')
+  }
+
+  const logout = () => {
+    clearAll();
+    console.log('log out');
+  }
+
+  React.useEffect(() => {
+    loadData();
+    listener = navigation.addListener('focus', () => {
+      loadData();
+    });
+    
   }, []);
 
   return (
@@ -61,17 +84,9 @@ const Settings = ({ navigation }) => {
             <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
           </View>
         </List.Item>
-        <List.Item onPress={() => navigation.navigate('LandingPage')}>
-          <View style={style.nestedLabel}>
-            <Text style={style.label}>
-              Landing Page 
-            </Text>
-            <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
-          </View>
-        </List.Item>
       </List>
       <List style={style.logout}>
-        <List.Item onPress={() => console.log('handle logout')} >
+        <List.Item onPress={() => logout()} >
           <Text style={style.logoutLabel}>
             Logout
           </Text>
@@ -89,7 +104,7 @@ const style = StyleSheet.create({
     paddingTop: 80,
   },
   logoutLabel: {
-    color: ACCENT_COLOR,
+    color: '#1C3AA1',
     fontSize: 18,
   },
   nestedLabel:{
