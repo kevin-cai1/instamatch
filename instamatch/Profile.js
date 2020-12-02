@@ -4,6 +4,7 @@ import { WingBlank, List, Modal, Provider } from '@ant-design/react-native';
 import Toast from "react-native-toast-message";
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 import api from './api';
 import { ACCENT_COLOR } from './Constants';
 
@@ -84,19 +85,31 @@ const Profile = () => {
     pickImage();
   };
 
+  const compressImage = async (uri) => {
+    const result = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 150 } }],
+      { compress: 0, format: ImageManipulator.SaveFormat.PNG, base64: true}
+    );
+
+    console.log(result);
+    setImage(`data:image/png;base64,${result.base64}`);
+    changeProfilePic(`data:image/png;base64,${result.base64}`);
+  };
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowEditing: true,
       aspect: [4, 3],
       quality: 1,
-      base64: true,
     });
 
     if (!result.cancelled) {
-      setImage(`data:image/png;base64,${result.base64}`);
-      // post change to user
-      changeProfilePic(`data:image/png;base64,${result.base64}`);
+      console.log(result);
+      compressImage(result.uri);
+      console.log('test');
+      
     }
   };
 

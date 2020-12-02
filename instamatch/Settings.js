@@ -15,7 +15,6 @@ const Settings = ({ navigation }) => {
   React.useEffect(() => {
     Api.getUserDetails(username)
       .then((result) => {
-        console.log(result);
         (result.name) && setDisplayName(result.name);
         (result.username) && setName(result.username);
         (result.profile_img) && setProfilePic(result.profile_img);
