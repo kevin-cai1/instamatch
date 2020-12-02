@@ -44,6 +44,11 @@ const Settings = ({ navigation }) => {
   const logout = () => {
     clearAll();
     console.log('log out');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Router'}],
+    });
+    navigation.navigate('LandingScreenNav');
   }
 
   React.useEffect(() => {

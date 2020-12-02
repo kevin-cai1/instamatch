@@ -18,7 +18,6 @@ const FriendsNav = () => {
   const [optionsState, setOptionsState] = React.useState(false);
 
   return (
-    <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name="Friends" component={Friends} />
         <Stack.Screen
@@ -77,7 +76,6 @@ const FriendsNav = () => {
           })}
         />
     </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 
