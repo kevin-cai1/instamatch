@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Keyboard, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Keyboard, TouchableOpacity, SafeAreaView, ScrollView} from 'react-native';
 import { Button, WhiteSpace, WingBlank, List } from '@ant-design/react-native';
 import { SearchBar } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
@@ -57,30 +57,32 @@ const SearchFriend = () => {
   };
 
   return (
-    <>
-      <SearchBar
-        placeholder="Search user..."
-        onChangeText={(text) => setSearchInput(text)}
-        onClear={() => setUsernames([])}
-        value={searchInput}
-        lightTheme={true}
-        round={true}
-        containerStyle={style.container}
-        inputContainerStyle={style.inputStyle}
-      />
-      <List>
-        {usernames.map((friend, idx) => (
-          <List.Item key={idx} >
-            <View style={style.listItem}>
-              <Text style={style.itemText} >{friend}</Text>
-              <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)} >
-                <AntDesign name="pluscircleo" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-          </List.Item>
-        ))}
-      </List>
-    </>
+    <SafeAreaView>
+      <ScrollView>
+        <SearchBar
+          placeholder="Search user..."
+          onChangeText={(text) => setSearchInput(text)}
+          onClear={() => setUsernames([])}
+          value={searchInput}
+          lightTheme={true}
+          round={true}
+          containerStyle={style.container}
+          inputContainerStyle={style.inputStyle}
+        />
+        <List>
+          {usernames.map((friend, idx) => (
+            <List.Item key={idx} >
+              <View style={style.listItem}>
+                <Text style={style.itemText} >{friend}</Text>
+                <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)} >
+                  <AntDesign name="pluscircleo" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+            </List.Item>
+          ))}
+        </List>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

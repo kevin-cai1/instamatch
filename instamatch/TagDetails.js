@@ -2,7 +2,7 @@ import React from 'react';
 import api from './api';
 import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons, Feather, AntDesign } from '@expo/vector-icons';
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
-import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, ScrollView} from 'react-native';
 import Api from './api';
 import notImplementedError from './helper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -60,66 +60,70 @@ const TagDetails = ({ route, navigation }) => {
   }, [navigation, optionsVisible]);
 
   return (
-    <View style={style.mainContainer}>
-      <View style={style.titleContainer}>
-        <WingBlank>
-          <View style={[style.flexRow, style.profileLine]}>
-            <Text style={style.title}>{tagName}</Text>
-            <Feather name="edit-2" size={25} color="#1C3AA1" style={style.editIcon} onPress={notImplementedError}/>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={style.mainContainer}>
+          <View style={style.titleContainer}>
+            <WingBlank>
+              <View style={[style.flexRow, style.profileLine]}>
+                <Text style={style.title}>{tagName}</Text>
+                <Feather name="edit-2" size={25} color="#1C3AA1" style={style.editIcon} onPress={notImplementedError}/>
+              </View>
+            </WingBlank>
           </View>
-        </WingBlank>
-      </View>
-      <View style={style.tagsContainer}>
-        <WingBlank>
-          <View style={[style.flexRow, style.spaceApart]}>
-            <View style={[style.flexRow]}>
-              <FontAwesome5 name="user-friends" size={24} color="black" style={style.tagIcon} />
-              <Text style={style.tagsText}>Friends</Text>
-            </View>
-            <AntDesign name="plus" size={30} color="#1C3AA1" onPress={() => navigation.navigate('TagAddFriend', {
-              tag: tagName,
-            })} />
-          </View>
-        </WingBlank>
-        <List>
-          {friends.map((friend, idx) => (
-            <List.Item
-              key={idx}
-              onPress={() => navigation.navigate('FriendProfile', {
-                username: friend,
-              })}
-            >
-              <Text style={style.tagNameText}>{friend}</Text>
-            </List.Item>
-          ))}
-        </List>
-      </View>
-      <Provider>
-        <Modal
-          visible={optionsVisible}
-          animationType="slide-down"
-          onClose={() => setOptionsVisible(false)}
-          style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
-        >
-          <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
+          <View style={style.tagsContainer}>
+            <WingBlank>
+              <View style={[style.flexRow, style.spaceApart]}>
+                <View style={[style.flexRow]}>
+                  <FontAwesome5 name="user-friends" size={24} color="black" style={style.tagIcon} />
+                  <Text style={style.tagsText}>Friends</Text>
+                </View>
+                <AntDesign name="plus" size={30} color="#1C3AA1" onPress={() => navigation.navigate('TagAddFriend', {
+                  tag: tagName,
+                })} />
+              </View>
+            </WingBlank>
             <List>
-              <List.Item>
-                <TouchableOpacity style={style.optionsItem} onPress={() => {
-                  setOptionsVisible(false);
-                  notImplementedError();
-                }}>
-                  <MaterialIcons name="cancel" size={35} color="red" />
-                  <Text style={style.optionsItemText}>Delete Tag</Text>
-                </TouchableOpacity>
-              </List.Item>
+              {friends.map((friend, idx) => (
+                <List.Item
+                  key={idx}
+                  onPress={() => navigation.navigate('FriendProfile', {
+                    username: friend,
+                  })}
+                >
+                  <Text style={style.tagNameText}>{friend}</Text>
+                </List.Item>
+              ))}
             </List>
           </View>
-          <TouchableOpacity style={style.optionsCancel} onPress={() => setOptionsVisible(false)} >
-            <Text style={style.optionsCancelText}>Cancel</Text>
-          </TouchableOpacity>
-        </Modal>
-      </Provider>
-    </View>
+          <Provider>
+            <Modal
+              visible={optionsVisible}
+              animationType="slide-down"
+              onClose={() => setOptionsVisible(false)}
+              style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
+            >
+              <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
+                <List>
+                  <List.Item>
+                    <TouchableOpacity style={style.optionsItem} onPress={() => {
+                      setOptionsVisible(false);
+                      notImplementedError();
+                    }}>
+                      <MaterialIcons name="cancel" size={35} color="red" />
+                      <Text style={style.optionsItemText}>Delete Tag</Text>
+                    </TouchableOpacity>
+                  </List.Item>
+                </List>
+              </View>
+              <TouchableOpacity style={style.optionsCancel} onPress={() => setOptionsVisible(false)} >
+                <Text style={style.optionsCancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </Modal>
+          </Provider>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
