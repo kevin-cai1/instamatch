@@ -8,6 +8,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from './api';
 import { ACCENT_COLOR } from './Constants';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const screen = Dimensions.get("window");
 
@@ -20,6 +21,8 @@ const Profile = () => {
   const [newEmail, setNewEmail] = React.useState('');
   const [nameModalVisible, setNameModalVisible] = React.useState(false);
   const [emailModalVisible, setEmailModalVisible] = React.useState(false);
+  const [isSpinning, setIsSpinning] = React.useState(false);
+
   const Api = new api();
 
   const getUsername = async () => {
@@ -65,8 +68,10 @@ const Profile = () => {
     const body = JSON.stringify({
       'profile_img': image,
     });
+    setIsSpinning(true);
     Api.changeUserDetails(username, body)
       .then(() => {
+        setIsSpinning(false);
         Toast.show({
           text1: 'Profile picture changed successfully'
         })
@@ -133,6 +138,11 @@ const Profile = () => {
           <Image
             style={style.profileIcon}
             source={(image) ? {uri: image} : require('./assets/user.png')}
+          />
+          <Spinner
+            visible={isSpinning}
+            textContent={'Uploading your new display picture...'}
+            textStyle={{color:'#FFFFFF'}}
           />
           <TouchableOpacity
             onPress={() => handleImage()}
