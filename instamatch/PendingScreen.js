@@ -15,6 +15,7 @@ const PendingScreen = ( { navigation, route } ) => {
   const hours = parseInt(strHours[0], 10);
   const strMins = route.params.minutes.split(' ');
   const minutes = parseInt(strMins[0], 10);
+  const [seconds, setSeconds] = useState(0);
   const [username, setUsername] = useState("");
   const getUsername = async () => {
     try {
@@ -23,35 +24,33 @@ const PendingScreen = ( { navigation, route } ) => {
       console.log(e);
     }
   };
-  React.useEffect(() => {
-    getUsername().then((result) => setUsername(result));
-  }, []);
+
   const Api = new api();
 
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     Api.checkMatch(username)
-  //       .then((response) => {
-  //
-  //       })
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds => seconds + 1);
+      console.log("seconds:", seconds);
+      getUsername().then((result) => {
+          setUsername(result);
+          Api.checkMatch(result).then((response) => {
+            const match = response;
+            console.log("match: ", match.match);
+            if(match != null) {
+              navigation.replace('PendingScreen', { hours: hours, minutes: minutes, activity: activity, ellapsed: seconds})
+            }
+          });
+        });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleCancelMatch = () => {
     Api.deleteFromMatchQueue(username)
       .then((response) => {
-        if(response.result == "success") {
-          console.log(response);
-          navigation.replace('Home');
-        } else {
-          console.log("failed deleting");
-          console.log(response);
-          Toast.show({
-            text1: "We couldn't remove you from queue.",
-            type: "error",
-          })
-        }
+        const deletion = JSON.stringify(response);
+        console.log('delete: ', deletion)
+        navigation.replace('Home');
       });
     Api.checkMatchQueue()
       .then((checkResponse) => {
