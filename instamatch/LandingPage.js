@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, Dimensions, Button, TouchableOpacity } from 'react-native';
 import { Carousel } from '@ant-design/react-native';
 import { ACCENT_COLOR } from './Constants';
+import { AntDesign } from '@expo/vector-icons';
 
 const screen = Dimensions.get("screen");
 
@@ -22,8 +23,24 @@ const LandingPage = ({navigation}) => {
               style={styles.logo}
               source= {require('./assets/InstaMatchLogo.png')}
             />
+            <View style={styles.graphics}>
+              <Image
+                style={styles.home1}
+                source= {require('./assets/home.png')}
+              />
+              <View style={{}} >
+                <AntDesign style={{transform: [{rotate: '90deg'}], marginTop: 100}} name="wifi" size={100} color="#2404E7" />
+              </View>  
+              <Image
+                style={styles.home1}
+                source= {require('./assets/home.png')}
+              />
+            </View>
           </View>
           <View style={styles.caption} >
+            <Text style={styles.heading}>
+              Welcome to InstaMatch!
+            </Text>
             <Text style={styles.text}>
               Spontaneously connect with your friends, when it suits you!
             </Text>
@@ -35,8 +52,17 @@ const LandingPage = ({navigation}) => {
               style={styles.logo}
               source= {require('./assets/InstaMatchLogo.png')}
             />
+            <View style={styles.graphics2}>
+              <Image
+                style={styles.home2}
+                source= {require('./assets/home.png')}
+              />
+            </View>
           </View>
           <View style={styles.caption}>
+            <Text style={styles.heading}>
+              Match up
+            </Text>
             <Text style={styles.text}>
               Apply filters and instantaneously search for other friends.
             </Text>
@@ -48,8 +74,21 @@ const LandingPage = ({navigation}) => {
               style={styles.logo}
               source= {require('./assets/InstaMatchLogo.png')}
             />
+            <View style={styles.graphics3}>
+              <Image
+                style={styles.tag}
+                source= {require('./assets/tag2.png')}
+              />  
+              <Image
+                style={styles.tag}
+                source= {require('./assets/tag1.png')}
+              />
+            </View>
           </View>
           <View style={styles.caption}>
+            <Text style={styles.heading}>
+              Friend Tags
+            </Text>
             <Text style={styles.text}>
               Manage your friends with tags!
               {"\n\n"}
@@ -83,6 +122,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: screen.height * 0.6,
+    alignContent: "center",
   },
   item: {
     backgroundColor: '#D3E5FF',
@@ -97,11 +137,11 @@ const styles = StyleSheet.create({
     height: screen.height,
   },
   caption:{
-    margin: 20
+    margin: 20,
+    marginLeft: 30,
   },
   text: {
     color: '#000',
-    margin: 20,
     fontSize: 20,
   },
   logo: {
@@ -110,6 +150,12 @@ const styles = StyleSheet.create({
   },
   image: {
     
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#000",
+    marginBottom: 10,
   },
   buttonGroup: {
     display: "flex",
@@ -139,6 +185,40 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: '#ffffff'
+  },
+  graphics: {
+    paddingTop: 40,
+    margin: 10,
+    width: screen.width * 0.4,
+    height: screen.height * 0.5,
+    display: "flex",
+    flexDirection: "row",
+  },
+  graphics2: {
+    width: screen.width * 0.4,
+    height: screen.height * 0.5,
+    display: "flex",
+    margin: 10,
+  },
+  graphics3: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  home1: {
+    resizeMode: "contain",
+    width: screen.width * 0.35,
+    height: 300,
+  },
+  home2: {
+    resizeMode: "contain",
+    height: screen.height * 0.45
+  },
+  tag: {
+    width: screen.width * 0.8,
+    resizeMode: "contain",
+    height: 100,
+    marginTop: 30
   }
 });
 
