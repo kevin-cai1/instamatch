@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import api from './api';
 import Toast from "react-native-toast-message";
 import loginAccountStyles from './styles/LoginAccountStyles';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const storeData = async (username) => {
   try {
@@ -39,7 +40,10 @@ const AccountDetailValidation = yup.object({
 
 const CreateAccountScreen = ({navigation}) => {
   const Api = new api();
+  const [isSpinning, setIsSpinning] = useState(false);
+
   const createAccountFunction = (accountDetails) => {
+    setIsSpinning(true);
     const accJSON = {
       "username": accountDetails.username,
       "email": accountDetails.email,
@@ -49,6 +53,7 @@ const CreateAccountScreen = ({navigation}) => {
     Api.signUp(JSON.stringify(accJSON)).then((response) => {
       console.log("response status: " + response.status);
       console.log("response: " + JSON.stringify(response));
+      setIsSpinning(false);
       if (response.result === "success") {
         storeData(accountDetails.username);
         navigation.reset({
@@ -68,6 +73,11 @@ const CreateAccountScreen = ({navigation}) => {
  return (
    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={loginAccountStyles.container}>
+        <Spinner
+          visible={isSpinning}
+          textContent={'Loading...'}
+          textStyle={{color:'#FFFFFF'}}
+        />
         <Image source={InstaMatchLogo} style={loginAccountStyles.logo}/>
         <Formik
           initialValues={{ username: '', displayName: '', email: '', password: '', confirmPassword: ''}}
