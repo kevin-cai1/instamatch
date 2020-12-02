@@ -238,12 +238,12 @@ const style = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     right: 110,
-  },
-  imageIcon: {
     borderRadius: 50,
     backgroundColor: '#CDCDCD',
     borderColor: '#fff',
     borderWidth: 1.5,
+  },
+  imageIcon: {
     padding: 5,
     color: "#000",
   },
