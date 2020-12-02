@@ -20,13 +20,32 @@ const AccountSettings = ({ navigation }) => {
     }
   };
 
-  const username = getUsername();
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+      // clear error
+    }
+    console.log('Done.')
+  }
+
+  const logout = () => {
+    clearAll();
+    console.log('log out');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Router'}],
+    });
+    navigation.navigate('LandingScreenNav');
+  }
 
   const deleteAccount = () => {
-    Api.deleteAccount(username)
-      .then(() => {
-        console.log('logout');
-      });
+    getUsername().then((username) => {
+      Api.deleteAccount(username)
+        .then(() => {
+          logout();
+        });
+    });
   };
 
   const handleDeleteConfirm = () => {

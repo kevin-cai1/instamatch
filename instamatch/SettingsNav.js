@@ -9,6 +9,7 @@ import ChangeDisplayName from './ChangeDisplayName';
 import ChangePassword from './ChangePassword';
 import LandingPage from './LandingPage';
 import Profile from './Profile';
+import {TouchableOpacity} from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -19,12 +20,32 @@ const SettingsNav = () => {
       <Stack.Screen 
         name="AccountSettings"
         component={AccountSettings}
-        options={{ title: 'Account'}} 
+        options={({navigation}) => ({
+            title: 'Account',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                  <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+        })}
       />
       <Stack.Screen 
         name="NotificationSettings"
         component={NotificationSettings}
-        options={{ title: 'Notifications'}}
+        options={({navigation}) => ({
+            title: 'Notifications',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                  <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+        })}
       />
       <Stack.Screen
         name="LandingPage"
@@ -33,16 +54,47 @@ const SettingsNav = () => {
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
-        options={{ title: 'Change Password'}}
+        options={({navigation}) => ({
+            title: 'Change Password',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                  <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+        })}
       />
       <Stack.Screen
         name="ChangeDisplayName"
         component={ChangeDisplayName}
-        options={{ title: 'Change Display Name'}}
+        options={({navigation}) => ({
+            title: 'Change Display Name',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                  <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+        })}
       />
       <Stack.Screen
         name="Profile"
         component={Profile}
+        options={({navigation}) => ({
+            title: '',
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 10,}}
+                onPress={() => { navigation.goBack() }}
+              >
+                  <AntDesign name="left" size={24} color="#1C3AA1" />
+              </TouchableOpacity>
+            ),
+        })}
       />
     </Stack.Navigator>
   );
