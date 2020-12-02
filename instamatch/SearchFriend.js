@@ -4,6 +4,7 @@ import { Button, WhiteSpace, WingBlank, List } from '@ant-design/react-native';
 import { SearchBar } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from './api';
 
@@ -11,13 +12,25 @@ const SearchFriend = () => {
 
   const [searchInput, setSearchInput] = React.useState("");
   const Api = new api();
-  const username = 'charmaine'; // change this
+  const [username, setUsername] = React.useState("");
   const [usernames, setUsernames] = React.useState([]);
+
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
 
   React.useEffect(() => {
     Api.searchUser(searchInput)
       .then((result) => setUsernames(result.users));
   }, [searchInput]);
+
+  React.useEffect(() => {
+    getUsername().then((result) => setUsername(result));
+  }, []);
 
   const handleAdd = (friend) => {
     const body = JSON.stringify({

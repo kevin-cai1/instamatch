@@ -5,23 +5,33 @@ import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import Api from './api';
 import notImplementedError from './helper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screen = Dimensions.get("window");
 
 const TagDetails = ({ route, navigation }) => {
-  const username = 'charmaine'; // please change
   const tagName = route.params.tag;
   const [friends, setFriends] = React.useState([]);
   const [optionsVisible, setOptionsVisible] = React.useState(false);
   const api = new Api();
 
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
   React.useEffect(() => {
-    api.getTagFriends(username, tagName)
-      .then((result) => {
-        if (result.result === 'success') {
-          setFriends(result.friends);
-        }
-      });
+    getUsername().then((username) => {
+      api.getTagFriends(username, tagName)
+        .then((result) => {
+          if (result.result === 'success') {
+            setFriends(result.friends);
+          }
+        });
+    });
   }, [navigation]);
 
   React.useLayoutEffect(() => {

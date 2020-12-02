@@ -5,17 +5,26 @@ import AddButtonMd from './Components/AddButtonMd';
 import api from './api';
 import {AntDesign} from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const window = Dimensions.get("window");
 
 const TagsList = ({ navigation }) => {
   const Api = new api();
-  const username = 'charmaine'; // change this
+  const [username, setUsername] = React.useState("");
   const [tagList, setTagList] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [newTag, setNewTag] = React.useState("");
   const [tagAdded, setTagAdded] = React.useState("");
   const [resultsFetched, setResultsFetched] = React.useState(false);
+
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
 
   const handleAddTag = () => {
     setModalVisible(false);
@@ -46,26 +55,32 @@ const TagsList = ({ navigation }) => {
   }, [navigation, modalVisible]);
 
   React.useEffect(() => {
-    Api.getAllTags(username)
-      .then((result) => {
-        if (result.tags) {
-          const allTags = result.tags.sort(function (a, b) {
-            return a.toLowerCase().localeCompare(b.toLowerCase()
-            )});
-          const letterList = [];
-          allTags.map((tag) => {
-            const letterObj = letterList.find((obj) => obj.letter === tag[0].toLowerCase());
-            if (!letterObj) {
-              const newLetterObj = {'letter': tag[0].toLowerCase(), 'tags': [tag]};
-              letterList.push(newLetterObj);
-            } else {
-              letterObj.tags.push(tag);
-            }
-          });
-          setTagList(letterList);
-          setResultsFetched(true);
-        }
-      });
+    getUsername().then((user) => setUsername(user));
+  });
+
+  React.useEffect(() => {
+    getUsername().then((username) => {
+      Api.getAllTags(username)
+        .then((result) => {
+          if (result.tags) {
+            const allTags = result.tags.sort(function (a, b) {
+              return a.toLowerCase().localeCompare(b.toLowerCase()
+              )});
+            const letterList = [];
+            allTags.map((tag) => {
+              const letterObj = letterList.find((obj) => obj.letter === tag[0].toLowerCase());
+              if (!letterObj) {
+                const newLetterObj = {'letter': tag[0].toLowerCase(), 'tags': [tag]};
+                letterList.push(newLetterObj);
+              } else {
+                letterObj.tags.push(tag);
+              }
+            });
+            setTagList(letterList);
+            setResultsFetched(true);
+          }
+        });
+    });
   }, [tagAdded]);
 
   return (

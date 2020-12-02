@@ -4,6 +4,7 @@ import { Button, WhiteSpace, WingBlank, List } from '@ant-design/react-native';
 import { SearchBar } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from './api';
 
@@ -12,19 +13,33 @@ const TagAddFriend = ({ route, navigation }) => {
   const [searchInput, setSearchInput] = React.useState("");
   const Api = new api();
   const tagName = route.params.tag;
-  const username = 'charmaine'; // change this
+  const [username, setUsername] = React.useState("");
   const [friends, setFriends] = React.useState([]);
   const [filteredList, setFilteredList] = React.useState([]);
 
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
   React.useEffect(() => {
-    Api.getAllFriends(username)
-      .then((result) => {
-        if (result.friends) {
-          const allFriends = result.friends;
-          setFriends(allFriends);
-          setFilteredList(allFriends);
-        }
-      });
+    getUsername().then((result) => setUsername(result));
+  }, []);
+
+  React.useEffect(() => {
+    getUsername().then((user) => {
+      Api.getAllFriends(user)
+        .then((result) => {
+          if (result.friends) {
+            const allFriends = result.friends;
+            setFriends(allFriends);
+            setFilteredList(allFriends);
+          }
+        });
+    });
   }, []);
 
   React.useEffect(() => {
