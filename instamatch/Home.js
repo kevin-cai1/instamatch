@@ -9,6 +9,7 @@ import TimePicker from './TimePicker';
 import api from './api';
 import Toast from 'react-native-toast-message';
 const Item = List.Item;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ( {navigation} ) => {
   const now = parseInt(Date.now()/1000);
@@ -18,7 +19,17 @@ const Home = ( {navigation} ) => {
   const [min, setMin] = useState("0 min");
   const [activity, setActivity] = useState("Any Activity");
   const [friends, setFriends] = useState("All Friends");
-  const username = "miran";
+  const [username, setUsername] = useState("");
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+  React.useEffect(() => {
+    getUsername().then((result) => setUsername(result));
+  }, []);
   const handleStartMatch = () => {
     const body = JSON.stringify({
       "activity": activity,

@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import CountDown from 'react-native-countdown-component';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import api from './api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 console.disableYellowBox = true;
 const PendingScreen = ( { navigation, route } ) => {
@@ -14,7 +15,17 @@ const PendingScreen = ( { navigation, route } ) => {
   const hours = parseInt(strHours[0], 10);
   const strMins = route.params.minutes.split(' ');
   const minutes = parseInt(strMins[0], 10);
-  const username = "miran";
+  const [username, setUsername] = useState("");
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+  React.useEffect(() => {
+    getUsername().then((result) => setUsername(result));
+  }, []);
   const Api = new api();
 
   // React.useEffect(() => {
@@ -31,9 +42,11 @@ const PendingScreen = ( { navigation, route } ) => {
     Api.deleteFromMatchQueue(username)
       .then((response) => {
         if(response.result == "success") {
-          console.log("success deleting");
+          console.log(response);
           navigation.replace('Home');
         } else {
+          console.log("failed deleting");
+          console.log(response);
           Toast.show({
             text1: "We couldn't remove you from queue.",
             type: "error",
