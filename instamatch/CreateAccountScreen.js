@@ -6,16 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import api from './api';
-import { apisAreAvailable } from 'expo';
-
-const clearAll = async () => {
-  try {
-    await AsyncStorage.clear()
-  } catch(e) {
-    // clear error
-  }
-  console.log('Done.')
-}
+import Toast from "react-native-toast-message";
 
 const storeData = async (username) => {
   try {
@@ -53,12 +44,7 @@ const AccountDetailValidation = yup.object({
     //.oneOf([yup.ref('password')],'Password does not match')
 })
 
-
 const CreateAccountScreen = ({navigation}) => {
-  const loginNavigate = () => {
-    navigation.navigate('LoginScreen')
-  }
-
   const Api = new api();
   const createAccountFunction = (accountDetails) => {
     const accJSON = {
@@ -67,16 +53,27 @@ const CreateAccountScreen = ({navigation}) => {
       "password": accountDetails.password,
       "name": "steve"
     }
-    console.log(JSON.stringify(accJSON));
-    Api.signUp(accJSON).then((result) => {
-      console.log("result: " + JSON.stringify(result));
+    Api.signUp(JSON.stringify(accJSON)).then((response) => {
+      console.log("response status: " + response.status);
+      console.log("response: " + JSON.stringify(response));
+      if (response.result === "success") {
+        storeData(accountDetails.username);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Router'}],
+        });
+        navigation.navigate('Router');
+      } else {
+        Toast.show({
+          text1: `User '${accountDetails.username}' already exists`,
+          type: 'error'
+        });
+      }
     })
-    //storeData(values.username);
-    //navigation.navigate('Router');
   }
 
  return (
-   <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.container}>
+   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
       <Image source={InstaMatchLogo} style={styles.logo}/>
         <Formik
@@ -148,15 +145,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center'
   },
-  inputbox: {
-    borderWidth: 5,
-    borderColor: '#1C3AA1',
-    backgroundColor: '#FFFFFF',
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
-    display: 'flex',
-    width: 50
+  inputBox: {
+    height: 40,
+    borderColor: '#cccccc', 
+    borderWidth: 1, 
+    borderRadius: 13, 
+    paddingHorizontal: 10, 
+    marginTop: 10
   },
   logo: {
     alignSelf: "center"
