@@ -4,6 +4,7 @@ import { InputItem } from '@ant-design/react-native';
 import InstaMatchLogo from './assets/InstaMatchLogo.png';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ReviewSchema = yup.object({
   username: yup.string()
