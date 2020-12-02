@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View, Text, TextInput, Dimensions} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Text, TextInput, Dimensions, SafeAreaView, ScrollView} from 'react-native';
 import {Button, List, Modal, Provider, WingBlank} from '@ant-design/react-native';
-import AddButtonMd from './Components/AddButtonMd';
 import api from './api';
 import {AntDesign} from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
@@ -17,6 +16,7 @@ const TagsList = ({ navigation }) => {
   const [newTag, setNewTag] = React.useState("");
   const [tagAdded, setTagAdded] = React.useState("");
   const [resultsFetched, setResultsFetched] = React.useState(false);
+  let listener = null;
 
   const getUsername = async () => {
     try {
@@ -58,7 +58,7 @@ const TagsList = ({ navigation }) => {
     getUsername().then((user) => setUsername(user));
   });
 
-  React.useEffect(() => {
+  const fetchData = () => {
     getUsername().then((username) => {
       Api.getAllTags(username)
         .then((result) => {
@@ -81,38 +81,49 @@ const TagsList = ({ navigation }) => {
           }
         });
     });
+  };
+
+  React.useEffect(() => {
+    fetchData();
+    listener = navigation.addListener('focus', () => {
+      fetchData();
+    });
   }, [tagAdded]);
 
   return (
     <>
-      <View style={style.container}>
-        { (resultsFetched) && (tagList.length === 0) && (
-          <WingBlank>
-            <Text style={{textAlign: 'center', fontSize: 25, fontWeight: '500', marginTop: window.height/6, marginBottom: 10,}}>Add Some Tags</Text>
-            <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>Tags help you sort friends into different categories, e.g. close friends, gym buddies. </Text>
-            <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>You can choose to only be visible to them when creating an activity session.</Text>
-            <Button style={{backgroundColor: '#1C3AA1', borderRadius: 25 }} onPress={() => setModalVisible(true)}>
-              <Text style={{color: '#FFFFFF', fontWeight: '500', fontSize: 20 }}>
-                Add Tag
-              </Text>
-            </Button>
-          </WingBlank>
-        )}
-        {tagList.map((letterList, idx) => (
-          <List key={idx} renderHeader={letterList.letter}>
-            {letterList.tags.map((tag, idx) => (
-              <List.Item
-                key={idx}
-                onPress={() => navigation.navigate('TagDetails', {
-                  tag: tag,
-                })}
-              >
-                {tag}
-              </List.Item>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={style.container}>
+            { (resultsFetched) && (tagList.length === 0) && (
+              <WingBlank>
+                <Text style={{textAlign: 'center', fontSize: 25, fontWeight: '500', marginTop: window.height/6, marginBottom: 10,}}>Add Some Tags</Text>
+                <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>Tags help you sort friends into different categories, e.g. close friends, gym buddies. </Text>
+                <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 20, }}>You can choose to only be visible to them when creating an activity session.</Text>
+                <Button style={{backgroundColor: '#1C3AA1', borderRadius: 25 }} onPress={() => setModalVisible(true)}>
+                  <Text style={{color: '#FFFFFF', fontWeight: '500', fontSize: 20 }}>
+                    Add Tag
+                  </Text>
+                </Button>
+              </WingBlank>
+            )}
+            {tagList.map((letterList, idx) => (
+              <List key={idx} renderHeader={letterList.letter}>
+                {letterList.tags.map((tag, idx) => (
+                  <List.Item
+                    key={idx}
+                    onPress={() => navigation.navigate('TagDetails', {
+                      tag: tag,
+                    })}
+                  >
+                    {tag}
+                  </List.Item>
+                ))}
+              </List>
             ))}
-          </List>
-        ))}
-      </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
       <Provider>
         <Modal
           title={<Text style={{ fontWeight: '700', fontSize: 20 }}>Add New Tag</Text>}

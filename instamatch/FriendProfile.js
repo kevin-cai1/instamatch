@@ -2,7 +2,7 @@ import React from 'react';
 import api from './api';
 import {FontAwesome5, FontAwesome, SimpleLineIcons, MaterialIcons} from '@expo/vector-icons';
 import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-design/react-native';
-import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, ScrollView} from 'react-native';
 import notImplementedError from './helper';
 import Toast from "react-native-toast-message";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -98,106 +98,110 @@ const FriendProfile = ({ route, navigation }) => {
   }, [navigation, optionVisible]);
 
   return (
-    <View style={style.mainContainer}>
-      <View style={style.profileContainer}>
-        <WingBlank>
-          <FontAwesome name="user-circle" size={90} color="black" />
-          <View style={[style.flexRow, style.profileLine]}>
-            <Text style={style.fullName}>{fullName}</Text>
-            <TouchableOpacity onPress={notImplementedError}>
-              <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon} />
-            </TouchableOpacity>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={style.mainContainer}>
+          <View style={style.profileContainer}>
+            <WingBlank>
+              <FontAwesome name="user-circle" size={90} color="black" />
+              <View style={[style.flexRow, style.profileLine]}>
+                <Text style={style.fullName}>{fullName}</Text>
+                <TouchableOpacity onPress={notImplementedError}>
+                  <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon} />
+                </TouchableOpacity>
+              </View>
+              <Text style={style.email}>{email}</Text>
+            </WingBlank>
           </View>
-          <Text style={style.email}>{email}</Text>
-        </WingBlank>
-      </View>
-      {(tags.length > 0) && (
-        <View style={style.tagsContainer}>
-          <WingBlank>
-            <View style={[style.flexRow]}>
-              <FontAwesome5 name="tags" size={20} color="black" style={style.tagIcon} />
-              <Text style={style.tagsText}>Tags</Text>
+          {(tags.length > 0) && (
+            <View style={style.tagsContainer}>
+              <WingBlank>
+                <View style={[style.flexRow]}>
+                  <FontAwesome5 name="tags" size={20} color="black" style={style.tagIcon} />
+                  <Text style={style.tagsText}>Tags</Text>
+                </View>
+              </WingBlank>
+              <List>
+                {tags.map((tag, idx) => (
+                  <List.Item
+                    key={idx}
+                    onPress={() => navigation.navigate('TagDetails', {
+                      tag: tag,
+                    })}
+                  >
+                    <Text style={style.tagNameText}>{tag}</Text>
+                  </List.Item>
+                ))}
+              </List>
             </View>
-          </WingBlank>
-          <List>
-            {tags.map((tag, idx) => (
-              <List.Item
-                key={idx}
-                onPress={() => navigation.navigate('TagDetails', {
-                  tag: tag,
-                })}
-              >
-                <Text style={style.tagNameText}>{tag}</Text>
-              </List.Item>
-            ))}
-          </List>
+          )}
+          <Provider>
+            <Modal
+              visible={optionVisible}
+              animationType="slide-down"
+              onClose={() => setOptionsVisible(false)}
+              style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
+            >
+              <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
+                <List>
+                  <List.Item>
+                    <TouchableOpacity style={style.optionsItem} onPress={handleRemoveModal}>
+                      <MaterialIcons name="cancel" size={35} color="red" />
+                      <Text style={style.optionsItemText}>Remove</Text>
+                    </TouchableOpacity>
+                  </List.Item>
+                  <List.Item>
+                    <TouchableOpacity style={style.optionsItem} onPress={handleBlockModal}>
+                      <MaterialIcons name="block" size={32} color="red" />
+                      <Text style={[style.optionsItemText, {paddingHorizontal: 20}]}>Block</Text>
+                    </TouchableOpacity>
+                  </List.Item>
+                </List>
+              </View>
+              <TouchableOpacity style={style.optionsCancel} onPress={() => setOptionsVisible(false)} >
+                <Text style={style.optionsCancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </Modal>
+            <Modal
+              title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Remove ${friendUsername}`}</Text>}
+              transparent
+              onClose={() => setRemoveModalVisible(false)}
+              maskClosable
+              visible={removeModalVisible}
+              footer={[
+                { text: 'Cancel', onPress: () => setRemoveModalVisible(false) },
+                { text: 'Yes', onPress: () => {
+                    setRemoveModalVisible(false);
+                    handleDeleteFriend();
+                  } },
+              ]}
+            >
+              <View style={{ paddingVertical: 20 }}>
+                <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to remove ${friendUsername} from your friends?`}</Text>
+              </View>
+            </Modal>
+            <Modal
+              title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Block ${friendUsername}`}</Text>}
+              transparent
+              onClose={() => setBlockModalVisible(false)}
+              maskClosable
+              visible={blockModalVisible}
+              footer={[
+                { text: 'Cancel', onPress: () => setBlockModalVisible(false) },
+                { text: 'Yes', onPress: () => {
+                    setBlockModalVisible(false);
+                    notImplementedError();
+                  } },
+              ]}
+            >
+              <View style={{ paddingVertical: 20 }}>
+                <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to block ${friendUsername}? This will remove them from your friends and block them from adding you in the future.`}</Text>
+              </View>
+            </Modal>
+          </Provider>
         </View>
-      )}
-      <Provider>
-        <Modal
-          visible={optionVisible}
-          animationType="slide-down"
-          onClose={() => setOptionsVisible(false)}
-          style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
-        >
-          <View style={{ paddingHorizontal: 10, borderRadius: 13, backgroundColor: '#FFFFFF', marginVertical: 7, marginHorizontal: 5 }}>
-            <List>
-              <List.Item>
-                <TouchableOpacity style={style.optionsItem} onPress={handleRemoveModal}>
-                  <MaterialIcons name="cancel" size={35} color="red" />
-                  <Text style={style.optionsItemText}>Remove</Text>
-                </TouchableOpacity>
-              </List.Item>
-              <List.Item>
-                <TouchableOpacity style={style.optionsItem} onPress={handleBlockModal}>
-                  <MaterialIcons name="block" size={32} color="red" />
-                  <Text style={[style.optionsItemText, {paddingHorizontal: 20}]}>Block</Text>
-                </TouchableOpacity>
-              </List.Item>
-            </List>
-          </View>
-          <TouchableOpacity style={style.optionsCancel} onPress={() => setOptionsVisible(false)} >
-            <Text style={style.optionsCancelText}>Cancel</Text>
-          </TouchableOpacity>
-        </Modal>
-        <Modal
-          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Remove ${friendUsername}`}</Text>}
-          transparent
-          onClose={() => setRemoveModalVisible(false)}
-          maskClosable
-          visible={removeModalVisible}
-          footer={[
-            { text: 'Cancel', onPress: () => setRemoveModalVisible(false) },
-            { text: 'Yes', onPress: () => {
-              setRemoveModalVisible(false);
-              handleDeleteFriend();
-              } },
-          ]}
-        >
-          <View style={{ paddingVertical: 20 }}>
-            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to remove ${friendUsername} from your friends?`}</Text>
-          </View>
-        </Modal>
-        <Modal
-          title={<Text style={{ fontWeight: '700', fontSize: 20 }}>{`Block ${friendUsername}`}</Text>}
-          transparent
-          onClose={() => setBlockModalVisible(false)}
-          maskClosable
-          visible={blockModalVisible}
-          footer={[
-            { text: 'Cancel', onPress: () => setBlockModalVisible(false) },
-            { text: 'Yes', onPress: () => {
-              setBlockModalVisible(false);
-              notImplementedError();
-              } },
-          ]}
-        >
-          <View style={{ paddingVertical: 20 }}>
-            <Text style={{ textAlign: 'center', fontSize: 15, }}>{`Are you sure you want to block ${friendUsername}? This will remove them from your friends and block them from adding you in the future.`}</Text>
-          </View>
-        </Modal>
-      </Provider>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

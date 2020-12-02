@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, SafeAreaView, ScrollView} from 'react-native';
 import {Button, List, WingBlank} from '@ant-design/react-native';
 import AddButtonMd from './Components/AddButtonMd';
 import api from './api';
@@ -54,33 +54,37 @@ const FriendsList = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={style.container}>
-      { (resultsFetched) && (usernameList.length === 0) && (
-        <WingBlank>
-          <Text style={{textAlign: 'center', fontSize: 25, fontWeight: '500', marginTop: window.height/5, marginBottom: 10,}}>Find Your Friends</Text>
-          <Text style={{textAlign: 'center', fontSize: 18, marginBottom: 20, }}>Add friends so you can match with them when you're free!</Text>
-          <Button style={{backgroundColor: '#1C3AA1', borderRadius: 25}} onPress={() => navigation.navigate('SearchFriend')}>
-            <Text style={{color: '#FFFFFF', fontWeight: '500', fontSize: 20 }}>
-              Search Friends
-            </Text>
-          </Button>
-        </WingBlank>
-      )}
-      {usernameList.map((letterList, idx) => (
-        <List key={idx} renderHeader={letterList.letter}>
-          {letterList.friends.map((friend, idx) => (
-            <List.Item
-              key={idx}
-              onPress={() => navigation.navigate('FriendProfile', {
-                username: friend,
-              })}
-            >
-              {friend}
-            </List.Item>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={style.container}>
+          { (resultsFetched) && (usernameList.length === 0) && (
+            <WingBlank>
+              <Text style={{textAlign: 'center', fontSize: 25, fontWeight: '500', marginTop: window.height/5, marginBottom: 10,}}>Find Your Friends</Text>
+              <Text style={{textAlign: 'center', fontSize: 18, marginBottom: 20, }}>Add friends so you can match with them when you're free!</Text>
+              <Button style={{backgroundColor: '#1C3AA1', borderRadius: 25}} onPress={() => navigation.navigate('SearchFriend')}>
+                <Text style={{color: '#FFFFFF', fontWeight: '500', fontSize: 20 }}>
+                  Search Friends
+                </Text>
+              </Button>
+            </WingBlank>
+          )}
+          {usernameList.map((letterList, idx) => (
+            <List key={idx} renderHeader={letterList.letter}>
+              {letterList.friends.map((friend, idx) => (
+                <List.Item
+                  key={idx}
+                  onPress={() => navigation.navigate('FriendProfile', {
+                    username: friend,
+                  })}
+                >
+                  {friend}
+                </List.Item>
+              ))}
+            </List>
           ))}
-        </List>
-      ))}
-    </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
