@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { List, Modal, Provider } from '@ant-design/react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from './api';
 
@@ -9,8 +10,17 @@ const screen = Dimensions.get("window");
 
 const AccountSettings = ({ navigation }) => {
   const Api = new api();
-  const username = "kevin";
   const [modalOpen, setModalOpen] = React.useState(false);
+
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+  const username = getUsername();
 
   const deleteAccount = () => {
     Api.deleteAccount(username)
@@ -26,14 +36,6 @@ const AccountSettings = ({ navigation }) => {
   return (
     <View style={style.container}>
       <List>
-        <List.Item onPress={() => navigation.navigate('ChangeDisplayName')}>
-          <View style={style.nestedLabel}>
-            <Text style={style.label}>
-              Change display name
-            </Text>
-            <Ionicons style={style.arrowIcon} name="ios-arrow-forward" size={28} />
-          </View>
-        </List.Item>
         <List.Item onPress={() => navigation.navigate('ChangePassword')}>
           <View style={style.nestedLabel}>
             <Text style={style.label}>
