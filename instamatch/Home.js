@@ -6,42 +6,40 @@ import { AntDesign } from '@expo/vector-icons';
 import ActivityPicker from './ActivityPicker';
 import FriendPicker from './FriendPicker';
 import TimePicker from './TimePicker';
-
+import api from './api';
+import Toast from 'react-native-toast-message';
 const Item = List.Item;
 
 const Home = ( {navigation} ) => {
   const now = parseInt(Date.now()/1000);
+  const Api = new api();
   const [hr, setHr] = useState("1 hr");
+  const [res, setRes] = useState("not set");
   const [min, setMin] = useState("0 min");
   const [activity, setActivity] = useState("Any Activity");
   const [friends, setFriends] = useState("All Friends");
+  const username = "miran";
   const handleStartMatch = () => {
-    const strHours = hr.split(' ');
-    const hours = parseInt(strHours[0], 10);
-    const strMins = min.split(' ');
-    const minutes = parseInt(strMins[0], 10);
     const body = JSON.stringify({
       "activity": activity,
       "tag": friends
     });
-
-    // Api.addFriend(username, body)
-    //   .then((result) => {
-    //     if (result.result) {
-    //       Api.getFriendStatus(username, friend)
-    //         .then((response) => {
-    //           if (response.status === 'friends') {
-    //             Toast.show({
-    //               text1: `You are now friends with ${friend}!`,
-    //             });
-    //           } else {
-    //             Toast.show({
-    //               text1: `Friend request sent to ${friend}.`,
-    //             });
-    //           }
-    //         });
-    //     }
-    //   });
+    Api.addToMatchQueue(username, body)
+      .then((response) => {
+        if(response.result == "success") {
+          console.log("success");
+          navigation.replace('PendingScreen', { hours: hr, minutes: min, activity: activity, friends: friends });
+        } else {
+          Toast.show({
+            text1: "Sorry 😔 We encountered a problem while adding you to match queue. Try again later.",
+            type: "error",
+          })
+        }
+      });
+    Api.checkMatchQueue()
+      .then((checkResponse) => {
+        console.log(checkResponse.users);
+      });
   };
   return (
     <View style={homeStyles.container}>
@@ -67,7 +65,6 @@ const Home = ( {navigation} ) => {
           }}
           onPress={() => {
             handleStartMatch();
-            navigation.replace('PendingScreen', { hours: hr, minutes: min, activity: activity, friends: friends })
             }
           }
           >

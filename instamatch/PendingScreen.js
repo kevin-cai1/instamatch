@@ -14,7 +14,37 @@ const PendingScreen = ( { navigation, route } ) => {
   const hours = parseInt(strHours[0], 10);
   const strMins = route.params.minutes.split(' ');
   const minutes = parseInt(strMins[0], 10);
-  
+  const username = "miran";
+  const Api = new api();
+
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     Api.checkMatch(username)
+  //       .then((response) => {
+  //
+  //       })
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  const handleCancelMatch = () => {
+    Api.deleteFromMatchQueue(username)
+      .then((response) => {
+        if(response.result == "success") {
+          console.log("success deleting");
+          navigation.replace('Home');
+        } else {
+          Toast.show({
+            text1: "We couldn't remove you from queue.",
+            type: "error",
+          })
+        }
+      });
+    Api.checkMatchQueue()
+      .then((checkResponse) => {
+        console.log("QUEUE LOOKS LIKE", checkResponse.users);
+      });
+  };
   return (
     <View style={homeStyles.container}>
       <View style={homeStyles.list}>
@@ -46,7 +76,9 @@ const PendingScreen = ( { navigation, route } ) => {
             <CountDown
               until={ 60 * (60 * hours + minutes) }
               size={20}
-              onFinish={() => alert('Finished')}
+              onFinish={() => {
+                handleCancelMatch();
+              }}
               digitStyle={{backgroundColor: '#647C90'}}
               digitTxtStyle={{color: 'white', fontWeight: "400", fontSize: 24}}
               timeToShow={['H', 'M', 'S']}
@@ -70,7 +102,9 @@ const PendingScreen = ( { navigation, route } ) => {
               shadowColor: '#474e59',
               shadowOffset: { height: 3, width: 0 }
             }}
-            onPress={() => navigation.replace('Home')}
+            onPress={() => {
+              handleCancelMatch();
+            }}
           >
             <Text style={homeStyles.cancel}>Cancel</Text>
           </TouchableOpacity>
