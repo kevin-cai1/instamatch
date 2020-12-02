@@ -5,20 +5,29 @@ import {WingBlank, Modal, Provider, WhiteSpace, List, Flex, Button } from '@ant-
 import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import notImplementedError from './helper';
 import Toast from "react-native-toast-message";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screen = Dimensions.get("window");
 
 const FriendProfile = ({ route, navigation }) => {
   const friendUsername = route.params.username;
-  const username = 'charmaine'; // pls change
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [tags, setTags] = React.useState([]);
   const [optionVisible, setOptionsVisible] = React.useState(false);
   const [blockModalVisible, setBlockModalVisible] = React.useState(false);
   const [removeModalVisible, setRemoveModalVisible] = React.useState(false);
+  let listener = null;
 
   const Api = new api();
+
+  const getUsername = async () => {
+    try {
+      return await AsyncStorage.getItem('@username')
+    } catch(e) {
+      console.log(e);
+    }
+  };
 
   const handleRemoveModal = () => {
     setOptionsVisible(false);
@@ -31,19 +40,28 @@ const FriendProfile = ({ route, navigation }) => {
   };
 
   const handleDeleteFriend = () => {
-    // const body = JSON.stringify({
-    //   "friend_name": friendUsername,
-    // });
-    // Api.deleteFriend(username, body)
-    //   .then(() => {
-    //     Toast.show({
-    //       text1: `Deleted ${friendUsername}`,
-    //     });
-    //   })
     notImplementedError();
   };
 
-  React.useEffect(() => {
+  const getTagData = () => {
+    getUsername().then((username) => {
+      Api.getAllTags(username)
+        .then((result) => {
+          const newTags = [];
+          result.tags.map((tag) => {
+            Api.getTagFriends(username, tag)
+              .then((response) => {
+                if (response.friends.includes(friendUsername)) {
+                  newTags.push(tag);
+                  setTags([newTags]);
+                }
+              });
+          })
+        });
+    });
+  };
+
+  const getFriendData = () => {
     Api.getUserDetails(friendUsername)
       .then((result) => {
         if (result.result === 'success') {
@@ -51,23 +69,16 @@ const FriendProfile = ({ route, navigation }) => {
           setEmail(result.email);
         }
       });
-  }, [route.params.username]);
+  }
 
   React.useEffect(() => {
-    Api.getAllTags(username)
-      .then((result) => {
-        const newTags = [];
-        result.tags.map((tag) => {
-          Api.getTagFriends(username, tag)
-            .then((response) => {
-              if (response.friends.includes(friendUsername)) {
-                newTags.push(tag);
-                setTags([...tags, ...newTags]);
-              }
-            });
-        })
-      });
-  }, [route.params.username]);
+    getFriendData();
+    getTagData();
+    listener = navigation.addListener('focus', () => {
+      getFriendData();
+      getTagData();
+    });
+  }, []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

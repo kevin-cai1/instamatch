@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, View, TouchableWithoutFeedback, Keyboard, Text, TextInput } from 'react-native';
-import { InputItem, Button } from '@ant-design/react-native';
+import { Image, View, TouchableWithoutFeedback, Keyboard, Text, TextInput, TouchableOpacity } from 'react-native';
 import InstaMatchLogo from './assets/InstaMatchLogo.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import api from './api';
 import Toast from "react-native-toast-message";
+import loginAccountStyles from './styles/LoginAccountStyles';
 
 const storeData = async (username) => {
   try {
@@ -29,7 +29,11 @@ const getData = async () => {
 
 const AccountDetailValidation = yup.object({
   username: yup.string()
-    .required('Must input a username'),
+    .required('Please enter a username'),
+    //.min(5, 'Username must be between 4-12 characters')
+    //.max(12, 'Username must be between 4-12 characters'),
+  displayName: yup.string()
+    .required('Please enter a display name'),
     //.min(5, 'Username must be between 4-12 characters')
     //.max(12, 'Username must be between 4-12 characters'),
   email: yup.string()
@@ -51,7 +55,7 @@ const CreateAccountScreen = ({navigation}) => {
       "username": accountDetails.username,
       "email": accountDetails.email,
       "password": accountDetails.password,
-      "name": "steve"
+      "name": accountDetails.displayName
     }
     Api.signUp(JSON.stringify(accJSON)).then((response) => {
       console.log("response status: " + response.status);
@@ -74,8 +78,8 @@ const CreateAccountScreen = ({navigation}) => {
 
  return (
    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-      <Image source={InstaMatchLogo} style={styles.logo}/>
+      <View style={loginAccountStyles.container}>
+        <Image source={InstaMatchLogo} style={loginAccountStyles.logo}/>
         <Formik
           initialValues={{ username: '', email: '', password: '', confirmPassword: ''}}
           validationSchema={AccountDetailValidation}
@@ -85,97 +89,67 @@ const CreateAccountScreen = ({navigation}) => {
             Keyboard.dismiss();
             createAccountFunction(values);
           }}
-          style={styles.form}
+          style={loginAccountStyles.form}
         >
           {(props) => (
-            <View style={styles.form}>
-              <InputItem 
+            <View style={loginAccountStyles.form}>
+              <TextInput 
                 placeholder="Username" 
-                styles={styles.testBox}
+                style={loginAccountStyles.inputBox}
                 value={props.values.username}
                 onChangeText={props.handleChange('username')}
+                placeholderTextColor='#647C90'
               />
-              <Text style={styles.errorText}>{props.touched.username && props.errors.username}</Text>
-             <InputItem 
+              <Text style={loginAccountStyles.errorText}>{props.touched.username && props.errors.username}</Text>
+              <TextInput 
+                placeholder="Display Name" 
+                style={loginAccountStyles.inputBox}
+                value={props.values.displayName}
+                onChangeText={props.handleChange('displayName')}
+                placeholderTextColor='#647C90'
+              />
+              <Text style={loginAccountStyles.errorText}>{props.touched.username && props.errors.username}</Text>
+             <TextInput 
                 placeholder="Email" 
-                styles={styles.inputBox}
+                style={loginAccountStyles.inputBox}
                 type='email'
                 value={props.values.email}
                 onChangeText={props.handleChange('email')}
+                placeholderTextColor='#647C90'
               />
-              <Text style={styles.errorText}>{props.touched.email && props.errors.email}</Text>
-              <InputItem 
+              <Text style={loginAccountStyles.errorText}>{props.touched.email && props.errors.email}</Text>
+              <TextInput 
                 placeholder="Password" 
-                styles={styles.inputBox}
+                style={loginAccountStyles.inputBox}
                 type='password'
                 value={props.values.password}
                 onChangeText={props.handleChange('password')}
+                placeholderTextColor='#647C90'
               />
-              <Text style={styles.errorText}>{props.touched.password && props.errors.password}</Text>
-              <InputItem 
+              <Text style={loginAccountStyles.errorText}>{props.touched.password && props.errors.password}</Text>
+              <TextInput 
                 placeholder="Confirm Password" 
-                styles={styles.inputBox}
+                style={loginAccountStyles.inputBox}
                 type='password'
                 value={props.values.confirmPassword}
                 onChangeText={props.handleChange('confirmPassword')}
+                placeholderTextColor='#647C90'
               />
-              <Text style={styles.errorText}>{props.touched.confirmPassword && props.errors.confirmPassword}</Text>
-              <Button onPress={props.handleSubmit} type="primary" style={styles.button}>Create Account</Button>
+              <Text style={loginAccountStyles.errorText}>{props.touched.confirmPassword && props.errors.confirmPassword}</Text>
+              <TouchableOpacity onPress={props.handleSubmit} style={loginAccountStyles.createAccountButton}>
+                <Text style={loginAccountStyles.buttonText}>Create Account</Text>
+              </TouchableOpacity>
             </View>
           )}
         </Formik>
         <View>
-          <Text>Already have an account?</Text>
-          <Button onPress={() => navigation.navigate('LoginScreen')}>Sign In</Button>
+          <Text style={loginAccountStyles.font}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')} style={loginAccountStyles.signInButton}>
+          <Text style={loginAccountStyles.signInText}>Sign In</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
  )
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F2F2F2',
-    margin: 20,
-    marginTop: 30,
-  },
-  form: {
-    width: 300,
-    flex: 1,
-    alignSelf: 'center'
-  },
-  inputBox: {
-    height: 40,
-    borderColor: '#cccccc', 
-    borderWidth: 1, 
-    borderRadius: 13, 
-    paddingHorizontal: 10, 
-    marginTop: 10
-  },
-  logo: {
-    alignSelf: "center"
-  },
-  button: {
-    backgroundColor: "#1C3AA1",
-    alignSelf: "flex-end"    
-  },
-  errorText: {
-    color: 'crimson',
-    fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 6,
-    fontSize: 16,
-    textAlign: 'center'
-  },
-  testBox: {
-    borderWidth: 1,
-    borderColor: 'crimson',
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 10,
-    height: 40,
-    marginBottom: 40,
-  },
-})
 export default CreateAccountScreen;

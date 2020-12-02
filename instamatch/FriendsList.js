@@ -9,9 +9,9 @@ const window = Dimensions.get("window");
 
 const FriendsList = ({ navigation }) => {
   const Api = new api();
-  // const username = 'charmaine'; // change this
   const [usernameList, setUsernameList] = React.useState([]);
   const [resultsFetched, setResultsFetched] = React.useState(false);
+  let listener = null;
 
   const getUsername = async () => {
     try {
@@ -21,7 +21,7 @@ const FriendsList = ({ navigation }) => {
     }
   };
 
-  React.useEffect(() => {
+  const fetchData = () => {
     getUsername().then((username) => {
       Api.getAllFriends(username)
         .then((result) => {
@@ -43,6 +43,13 @@ const FriendsList = ({ navigation }) => {
             setResultsFetched(true);
           }
         });
+    });
+  };
+
+  React.useEffect(() => {
+    fetchData();
+    listener = navigation.addListener('focus', () => {
+      fetchData();
     });
   }, []);
 

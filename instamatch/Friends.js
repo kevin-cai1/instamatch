@@ -10,8 +10,8 @@ const Friends = ({ navigation }) => {
 
   const [totalFriends, setTotalFriends] = React.useState("");
   const [totalTags, setTotalTags] = React.useState("");
-  // const username = 'charmaine'; // need to change
   const Api = new api();
+  let listener = null;
 
   const getUsername = async () => {
     try {
@@ -21,9 +21,8 @@ const Friends = ({ navigation }) => {
     }
   };
 
-  React.useEffect(() => {
+  const fetchData = () => {
     getUsername().then((username) => {
-      console.log(username);
       Api.getAllFriends(username)
         .then((result) => {
           (result.friends) && setTotalFriends(result.friends.length);
@@ -33,6 +32,14 @@ const Friends = ({ navigation }) => {
           (result.tags) && setTotalTags(result.tags.length);
         });
     });
+  };
+
+  React.useEffect(() => {
+    fetchData();
+    listener = navigation.addListener('focus', () => {
+      fetchData();
+    });
+
   }, []);
 
   return (
