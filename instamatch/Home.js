@@ -33,7 +33,8 @@ const Home = ( {navigation} ) => {
   const handleStartMatch = () => {
     const body = JSON.stringify({
       "activity": activity,
-      "tag": friends
+      "tag": friends,
+      "durationInMinutes": min.split(' ')[0] + hr.split(' ')[0]*60
     });
     Api.addToMatchQueue(username, body)
       .then((response) => {

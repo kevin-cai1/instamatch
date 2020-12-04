@@ -6,10 +6,14 @@ import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import api from './api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from "react-native-toast-message";
+import { stringify } from 'uuid';
+import { abs } from 'react-native-reanimated';
 
 const PendingScreen = ( { navigation, route } ) => {
   const {hours, minutes, activity, friends} = route.params;
   const timeLeft = 3600 * hours.split(' ')[0] + 60 * minutes.split(' ')[0];
+  const [initialEndTime, setInitialEndTime] = useState(0);
+
   const Api = new api();
   
   const getUsername = async () => {
@@ -20,14 +24,26 @@ const PendingScreen = ( { navigation, route } ) => {
     }
   };
 
+  const convertToMinutes = (timeString) => {
+    return 3600 * parseInt(timeString.split(':')[0]) + 60 * parseInt(timeString.split(':')[1]) + parseInt(timeString.split(':')[2]);
+  }
+  
+  const getAbs = (val1, val2) => {
+    return Math.abs(val1 - val2);
+  }
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       getUsername().then((user) => {
+        console.log("restarting interval");
         Api.checkMatch(user).then((response) => {
-          if (response == "success") {
+          console.log("response: " + JSON.stringify(response));
+          if (response.result == "success" && response.match !== null) {
             console.log("match found");
-            navigation.replace('MatchedScreen', { hours: 60, minutes: 0, activity: activity, friends: friends });
+            navigation.replace('MatchedScreen', { endTime: convertToMinutes(response.endTime), activity: activity, friends: friends, user: user });
+          } else {
+            console.log("still searching. user is: " + user + ".");
+            console.log("initial end time: " + initialEndTime);
           }
         })
       })
@@ -42,14 +58,16 @@ const PendingScreen = ( { navigation, route } ) => {
     getUsername().then((user => {
       console.log("user is: " + user);
       Api.deleteFromMatchQueue(user).then((response) => {
-        if (response == "success") {
+        if (response.result == "success") {
           console.log(user + " is deleted from match queue");
+          navigation.replace('Home');
         } else {
           Toast.show({
             text1: `Sorry! Please try cancelling again`,
             type: 'error'
           });
         }
+        console.log("response for cancelMatch: " + JSON.stringify(response));
       })
     }))
   };
