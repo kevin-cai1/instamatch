@@ -13,6 +13,7 @@ const MatchedScreen = ( { navigation, route } ) => {
   const strMins = route.params.minutes.split(' ');
   const minutes = parseInt(strMins[0], 10);
   const ellapsed = route.params.ellapsed;
+  const activity = route.params.activity;
   console.log("ellapsed time", ellapsed);
   const getUsername = async () => {
     try {

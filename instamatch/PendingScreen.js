@@ -34,10 +34,11 @@ const PendingScreen = ( { navigation, route } ) => {
       getUsername().then((result) => {
           setUsername(result);
           Api.checkMatch(result).then((response) => {
-            const match = response;
-            console.log("match: ", match.match);
-            if(match != null) {
-              navigation.replace('PendingScreen', { hours: hours, minutes: minutes, activity: activity, ellapsed: seconds})
+            const match = match.match;
+            console.log("response: ", response);
+            console.log("match: ", match);
+            if(match.match != "null") {
+              navigation.replace('MatchedScreen', { hours: hours, minutes: minutes, activity: route.params.activity, ellapsed: seconds})
             }
           });
         });
