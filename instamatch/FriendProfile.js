@@ -311,7 +311,7 @@ const style = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 200,
-    backgroundColor: ACCENT_COLOR,
+    backgroundColor: '#1C3AA1',
     marginLeft: 0,
     marginRight: 20,
   },
