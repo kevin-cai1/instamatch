@@ -14,6 +14,7 @@ const FriendProfile = ({ route, navigation }) => {
   const friendUsername = route.params.username;
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [imageUrl, setImageUrl] = React.useState(null);
   const [tags, setTags] = React.useState([]);
   const [optionVisible, setOptionsVisible] = React.useState(false);
@@ -42,16 +43,25 @@ const FriendProfile = ({ route, navigation }) => {
   };
 
   const handleDeleteFriend = () => {
-    notImplementedError();
+    const body = JSON.stringify({
+      "friend_name": friendUsername
+    });
+    Api.deleteFriend(username, body)
+      .then(() => {
+        Toast.show({
+          text1: `You have unfriended ${friendUsername}`,
+        });
+        navigation.goBack();
+      });
   };
 
   const getTagData = () => {
-    getUsername().then((username) => {
-      Api.getAllTags(username)
+    getUsername().then((user) => {
+      Api.getAllTags(user)
         .then((result) => {
           const newTags = [];
           result.tags.map((tag) => {
-            Api.getTagFriends(username, tag)
+            Api.getTagFriends(user, tag)
               .then((response) => {
                 if (response.friends.includes(friendUsername)) {
                   newTags.push(tag);
@@ -60,6 +70,7 @@ const FriendProfile = ({ route, navigation }) => {
               });
           })
         });
+      setUsername(user);
     });
   };
 
@@ -89,6 +100,8 @@ const FriendProfile = ({ route, navigation }) => {
         <TouchableOpacity
           style={style.addButtonContainer}
           onPress={() => setOptionsVisible(!optionVisible)}
+          accessible={true}
+          accessibilityLabel="Open Options Menu"
         >
           <SimpleLineIcons
             name="options"
@@ -113,7 +126,11 @@ const FriendProfile = ({ route, navigation }) => {
               {/*<FontAwesome name="user-circle" size={90} color="black" />*/}
               <View style={[style.flexRow, style.profileLine]}>
                 <Text style={style.fullName}>{fullName}</Text>
-                <TouchableOpacity onPress={notImplementedError}>
+                <TouchableOpacity
+                  onPress={notImplementedError}
+                  accessible={true}
+                  accessibilityLabel="Open Facebook Messenger"
+                >
                   <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon} />
                 </TouchableOpacity>
               </View>

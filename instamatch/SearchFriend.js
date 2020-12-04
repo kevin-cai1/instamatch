@@ -74,7 +74,12 @@ const SearchFriend = () => {
             <List.Item key={idx} >
               <View style={style.listItem}>
                 <Text style={style.itemText} >{friend}</Text>
-                <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)} >
+                <TouchableOpacity
+                  style={style.addIcon}
+                  accessible={true}
+                  accessibilityLabel={`add ${friend} as a friend`}
+                  onPress={() => handleAdd(friend)}
+                >
                   <AntDesign name="pluscircleo" size={24} color="black" />
                 </TouchableOpacity>
               </View>
