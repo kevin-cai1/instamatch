@@ -84,7 +84,12 @@ const TagAddFriend = ({ route, navigation }) => {
             <List.Item key={idx} >
               <View style={style.listItem}>
                 <Text style={style.itemText} >{friend}</Text>
-                <TouchableOpacity style={style.addIcon} onPress={() => handleAdd(friend)}>
+                <TouchableOpacity
+                  style={style.addIcon}
+                  onPress={() => handleAdd(friend)}
+                  accessible={true}
+                  accessibilityLabel={`Add ${friend}`}
+                >
                   <AntDesign name="pluscircleo" size={24} color="black" />
                 </TouchableOpacity>
               </View>

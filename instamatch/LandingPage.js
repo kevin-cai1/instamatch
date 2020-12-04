@@ -169,7 +169,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: "#3F65E9",
+    backgroundColor: "#2D4DC0",
+    borderWidth: 1,
+    borderColor: '#fff',
     margin: 10,
     borderRadius: 30,
     height: screen.height * 0.06,

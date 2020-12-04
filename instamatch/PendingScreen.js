@@ -1,69 +1,83 @@
 import React, {useState} from 'react';
 import * as Font from 'expo-font';
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
-import { List, Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import api from './api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from "react-native-toast-message";
+import { stringify } from 'uuid';
+import { abs } from 'react-native-reanimated';
 
-console.disableYellowBox = true;
 const PendingScreen = ( { navigation, route } ) => {
-  const now = Date.now();
-  const strHours = route.params.hours.split(' ');
-  const hours = parseInt(strHours[0], 10);
-  const strMins = route.params.minutes.split(' ');
-  const minutes = parseInt(strMins[0], 10);
-  const [seconds, setSeconds] = useState(0);
-  const [username, setUsername] = useState("");
+  const {hours, minutes, activity, friends} = route.params;
+  const timeLeft = 3600 * hours.split(' ')[0] + 60 * minutes.split(' ')[0];
+  const [initialEndTime, setInitialEndTime] = useState(0);
+
+  const Api = new api();
+
   const getUsername = async () => {
     try {
       return await AsyncStorage.getItem('@username')
     } catch(e) {
-      console.log(e);
+      console.log("error in getting username from async: " + e);
     }
   };
 
-  const Api = new api();
+  const convertToMinutes = (timeString) => {
+    return 3600 * parseInt(timeString.split(':')[0]) + 60 * parseInt(timeString.split(':')[1]) + parseInt(timeString.split(':')[2]);
+  }
+
+  const getAbs = (val1, val2) => {
+    return Math.abs(val1 - val2);
+  }
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1);
-      console.log("seconds:", seconds);
-      getUsername().then((result) => {
-          setUsername(result);
-          Api.checkMatch(result).then((response) => {
-            const match = match.match;
-            console.log("response: ", response);
-            console.log("match: ", match);
-            if(match.match != "null") {
-              navigation.replace('MatchedScreen', { hours: hours, minutes: minutes, activity: route.params.activity, ellapsed: seconds})
-            }
-          });
-        });
-    }, 1000);
+      getUsername().then((user) => {
+        console.log("restarting interval");
+        Api.checkMatch(user).then((response) => {
+          console.log("response: " + JSON.stringify(response));
+          if (response.result == "success" && response.match !== null) {
+            console.log("match found");
+            navigation.replace('MatchedScreen', { endTime: convertToMinutes(response.endTime), activity: activity, friends: friends, user: user });
+          } else {
+            console.log("still searching. user is: " + user + ".");
+            console.log("initial end time: " + initialEndTime);
+          }
+        })
+      })
+    }, 1000)
     return () => clearInterval(interval);
-  }, []);
+  })
 
   const handleCancelMatch = () => {
-    Api.deleteFromMatchQueue(username)
-      .then((response) => {
-        const deletion = JSON.stringify(response);
-        console.log('delete: ', deletion)
-        navigation.replace('Home');
-      });
-    Api.checkMatchQueue()
-      .then((checkResponse) => {
-        console.log("QUEUE LOOKS LIKE", checkResponse.users);
-      });
+    console.log("hour: " + hours + " min: " + minutes + " activity: " + activity + " tag: " + friends);
+    console.log("time left: " + timeLeft + " activity: " + activity + " tag: " + friends);
+    console.log("hour: " + timeLeft/60 + " min: " + timeLeft%60 + " activity: " + activity + " tag: " + friends);
+    getUsername().then((user => {
+      console.log("user is: " + user);
+      Api.deleteFromMatchQueue(user).then((response) => {
+        if (response.result == "success") {
+          console.log(user + " is deleted from match queue");
+          navigation.replace('Home');
+        } else {
+          Toast.show({
+            text1: `Sorry! Please try cancelling again`,
+            type: 'error'
+          });
+        }
+        console.log("response for cancelMatch: " + JSON.stringify(response));
+      })
+    }))
   };
   return (
     <View style={homeStyles.container}>
       <View style={homeStyles.list}>
-        <Text style={homeStyles.row}>Looking for a friend in <Text style={homeStyles.rowVariable}>{route.params.friends}</Text></Text>
-        <Text style={homeStyles.row}>to do <Text style={homeStyles.rowVariable}>{route.params.activity}</Text></Text>
+        <Text style={homeStyles.row}>Looking for a friend in <Text style={homeStyles.rowVariable}>{friends}</Text></Text>
+        <Text style={homeStyles.row}>to do <Text style={homeStyles.rowVariable}>{activity}</Text></Text>
         <View style={homeStyles.dotsContainer}>
+        {/*
           <AnimatedEllipsis numberOfDots={3}
                   minOpacity={0.3}
                   animationDelay={400}
@@ -73,6 +87,7 @@ const PendingScreen = ( { navigation, route } ) => {
                     letterSpacing: -15,
                   }}
                   />
+                */}
         </View>
         <View style={homeStyles.buttonContainer}>
           <View
@@ -86,8 +101,9 @@ const PendingScreen = ( { navigation, route } ) => {
               borderRadius:10,
             }}
             >
+
             <CountDown
-              until={ 60 * (60 * hours + minutes) }
+              until={timeLeft}
               size={20}
               onFinish={() => {
                 handleCancelMatch();
@@ -99,6 +115,7 @@ const PendingScreen = ( { navigation, route } ) => {
               separatorStyle={{color: 'white', fontWeight: "400"}}
               showSeparator
             />
+
           </View>
           <TouchableOpacity
             style={{ borderWidth:1,

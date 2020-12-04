@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   inputbox: {
     borderWidth: 1,
-    borderColor: ACCENT_COLOR,
+    borderColor: '#1C3AA1',
     padding: 10,
     fontSize: 18,
     borderRadius: 10,
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   button: {
-    color: ACCENT_COLOR,
-    backgroundColor: ACCENT_COLOR,
+    color: '#1C3AA1',
+    backgroundColor: '#1C3AA1',
     borderRadius: 30,
     width: screen.width * 0.4,
     alignSelf: "flex-end"

@@ -7,14 +7,11 @@ import CountDown from 'react-native-countdown-component';
 import api from './api';
 
 const MatchedScreen = ( { navigation, route } ) => {
-  const [username, setUsername] = useState("");
-  const strHours = route.params.hours.split(' ');
-  const hours = parseInt(strHours[0], 10);
-  const strMins = route.params.minutes.split(' ');
-  const minutes = parseInt(strMins[0], 10);
-  const ellapsed = route.params.ellapsed;
-  const activity = route.params.activity;
-  console.log("ellapsed time", ellapsed);
+  const username = route.params.user;
+  const hours = 1
+  const minutes = 10
+  console.log("params: " + JSON.stringify(route));
+  console.log("end time: " + route.params.endTime);
   const getUsername = async () => {
     try {
       return await AsyncStorage.getItem('@username')
@@ -22,9 +19,6 @@ const MatchedScreen = ( { navigation, route } ) => {
       console.log(e);
     }
   };
-  React.useEffect(() => {
-    getUsername().then((result) => setUsername(result));
-  }, []);
   const Api = new api();
 
   return (
@@ -45,7 +39,7 @@ const MatchedScreen = ( { navigation, route } ) => {
             }}
             >
             <CountDown
-              until={ 60 * (60 * hours + minutes) }
+              until={ route.params.endTime }
               size={20}
               onFinish={() => {
                 handleCancelMatch();

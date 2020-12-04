@@ -26,6 +26,8 @@ const SettingsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                   <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -41,6 +43,8 @@ const SettingsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                   <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -60,6 +64,8 @@ const SettingsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                   <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -75,6 +81,8 @@ const SettingsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                   <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -90,6 +98,8 @@ const SettingsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                   <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>

@@ -48,6 +48,8 @@ const TagDetails = ({ route, navigation }) => {
         <TouchableOpacity
           style={style.addButtonContainer}
           onPress={() => setOptionsVisible(!optionsVisible)}
+          accessible={true}
+          accessibilityLabel="Open Options Menu"
         >
           <SimpleLineIcons
             name="options"
@@ -67,7 +69,15 @@ const TagDetails = ({ route, navigation }) => {
             <WingBlank>
               <View style={[style.flexRow, style.profileLine]}>
                 <Text style={style.title}>{tagName}</Text>
-                <Feather name="edit-2" size={25} color="#1C3AA1" style={style.editIcon} onPress={notImplementedError}/>
+                <Feather
+                  name="edit-2"
+                  size={25}
+                  color="#1C3AA1"
+                  style={style.editIcon}
+                  accessible={true}
+                  accessibilityLabel="Edit Tag Name"
+                  onPress={notImplementedError}
+                />
               </View>
             </WingBlank>
           </View>
@@ -78,7 +88,13 @@ const TagDetails = ({ route, navigation }) => {
                   <FontAwesome5 name="user-friends" size={24} color="black" style={style.tagIcon} />
                   <Text style={style.tagsText}>Friends</Text>
                 </View>
-                <AntDesign name="plus" size={30} color="#1C3AA1" onPress={() => navigation.navigate('TagAddFriend', {
+                <AntDesign
+                  name="plus"
+                  size={30}
+                  color="#1C3AA1"
+                  accessible={true}
+                  accessibilityLabel="Add Friend to Tag"
+                  onPress={() => navigation.navigate('TagAddFriend', {
                   tag: tagName,
                 })} />
               </View>
