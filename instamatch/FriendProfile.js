@@ -15,7 +15,7 @@ const FriendProfile = ({ route, navigation }) => {
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [username, setUsername] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState(null);
+  const [imageUrl, setImageUrl] = React.useState(false);
   const [tags, setTags] = React.useState([]);
   const [optionVisible, setOptionsVisible] = React.useState(false);
   const [blockModalVisible, setBlockModalVisible] = React.useState(false);
@@ -63,7 +63,7 @@ const FriendProfile = ({ route, navigation }) => {
           result.tags.map((tag) => {
             Api.getTagFriends(user, tag)
               .then((response) => {
-                if (response.friends.includes(friendUsername)) {
+                if (response.friends && response.friends.includes(friendUsername)) {
                   newTags.push(tag);
                   setTags([newTags]);
                 }
@@ -123,7 +123,6 @@ const FriendProfile = ({ route, navigation }) => {
                 style={style.profileIcon}
                 source={(imageUrl) ? {uri: imageUrl} : require('./assets/user.png')}
               />
-              {/*<FontAwesome name="user-circle" size={90} color="black" />*/}
               <View style={[style.flexRow, style.profileLine]}>
                 <Text style={style.fullName}>{fullName}</Text>
                 <TouchableOpacity
