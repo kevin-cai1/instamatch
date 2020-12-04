@@ -29,6 +29,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={style.addButtonContainer}
                 onPress={() => navigation.navigate('SearchFriend')}
+                accessible={true}
+                accessibilityLabel="search for friends"
               >
                 <AntDesign name="plus" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -37,6 +39,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                 <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -52,6 +56,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                 <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -67,6 +73,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                 <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -82,6 +90,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                 <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -97,6 +107,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                 <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
@@ -112,6 +124,8 @@ const FriendsNav = () => {
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
                 onPress={() => { navigation.goBack() }}
+                accessible={true}
+                accessibilityLabel="go back"
               >
                 <AntDesign name="left" size={24} color="#1C3AA1" />
               </TouchableOpacity>
