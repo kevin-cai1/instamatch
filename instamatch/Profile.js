@@ -137,6 +137,8 @@ const Profile = () => {
         <View>
           <Image
             style={style.profileIcon}
+            accessibilityLabel="Profile Picture"
+            accessible={true}
             source={(image) ? {uri: image} : require('./assets/user.png')}
           />
           <Spinner
