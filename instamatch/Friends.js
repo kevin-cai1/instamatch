@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,6 +48,8 @@ const Friends = ({ navigation }) => {
         <Button
           style={[friends.button, friends.primaryButton]}
           onPress={() => navigation.navigate('FriendsList')}
+          accessible={true}
+          accessibilityLabel="Go to Friends List"
         >
           <View style={friends.buttonContent}>
             <FontAwesome5 name="user-friends" size={50} color="rgba(255, 255, 255, 0.85)" />
@@ -59,6 +61,8 @@ const Friends = ({ navigation }) => {
         <Button
           style={[friends.button, friends.secondaryButton]}
           onPress={() => navigation.navigate('TagsList')}
+          accessible={true}
+          accessibilityLabel="Go To Tags List"
         >
           <View style={friends.buttonContent}>
             <FontAwesome5 style={friends.tagIcon} name="tags" size={50} color="rgba(255, 255, 255, 0.85)" />

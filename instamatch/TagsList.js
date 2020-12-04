@@ -47,6 +47,8 @@ const TagsList = ({ navigation }) => {
         <TouchableOpacity
           style={style.addButtonContainer}
           onPress={ () => setModalVisible(true) }
+          accessible={true}
+          accessibilityLabel="add new tag"
         >
           <AntDesign name="plus" size={24} color="#1C3AA1" />
         </TouchableOpacity>

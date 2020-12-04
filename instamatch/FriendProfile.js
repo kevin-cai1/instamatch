@@ -100,6 +100,8 @@ const FriendProfile = ({ route, navigation }) => {
         <TouchableOpacity
           style={style.addButtonContainer}
           onPress={() => setOptionsVisible(!optionVisible)}
+          accessible={true}
+          accessibilityLabel="Open Options Menu"
         >
           <SimpleLineIcons
             name="options"
@@ -124,7 +126,11 @@ const FriendProfile = ({ route, navigation }) => {
               {/*<FontAwesome name="user-circle" size={90} color="black" />*/}
               <View style={[style.flexRow, style.profileLine]}>
                 <Text style={style.fullName}>{fullName}</Text>
-                <TouchableOpacity onPress={notImplementedError}>
+                <TouchableOpacity
+                  onPress={notImplementedError}
+                  accessible={true}
+                  accessibilityLabel="Open Facebook Messenger"
+                >
                   <FontAwesome5 name="facebook-messenger" size={35} color="#0078FF" style={style.messageIcon} />
                 </TouchableOpacity>
               </View>

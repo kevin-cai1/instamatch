@@ -147,6 +147,8 @@ const Profile = () => {
           <TouchableOpacity
             onPress={() => handleImage()}
             style={style.editButton}
+            accessible={true}
+            accessibilityLabel="edit profile picture"
           >
             <MaterialIcons style={style.imageIcon} name="edit" size={40} />
           </TouchableOpacity>
@@ -161,7 +163,12 @@ const Profile = () => {
                 {name}
               </Text>
             </View>
-            <MaterialIcons style={style.icon} name="edit" size={28} />
+            <MaterialIcons
+              style={style.icon}
+              name="edit" size={28}
+              accessible={true}
+              accessibilityLabel="edit name"
+            />
           </List.Item>
           <List.Item onPress={() => setEmailModalVisible(true)}>
             <View style={style.profileLabel}>
@@ -172,7 +179,13 @@ const Profile = () => {
                 {email}
               </Text>
             </View>
-            <MaterialIcons style={style.icon} name="edit" size={28} />
+            <MaterialIcons
+              style={style.icon}
+              name="edit"
+              size={28}
+              accessible={true}
+              accessibilityLabel="edit email"
+            />
           </List.Item>
         </List>
       </View>
