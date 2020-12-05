@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as Font from 'expo-font';
-import { StyleSheet, Image, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { List, Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import CountDown from 'react-native-countdown-component';
@@ -41,6 +41,18 @@ const MatchedScreen = ( { navigation, route } ) => {
         }
       });
   };
+
+  const handleMessageAlert = () => {
+    Alert.alert(
+      "Coming soon...",
+      "Messaging feature is not implemented yet.",
+      [
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ],
+      { cancelable: true }
+    );
+  };
+
   React.useEffect(() => {
     getFriendImg();
     getImg();
@@ -106,7 +118,7 @@ const MatchedScreen = ( { navigation, route } ) => {
             style={{ borderWidth:1,
               borderColor:'#1C3AA1',
               alignItems:'center',
-              justifyContent:'center',
+              justifyContent:'flex-start',
               display: 'flex',
               flexDirection: 'row',
               width:320,
@@ -123,8 +135,8 @@ const MatchedScreen = ( { navigation, route } ) => {
               handleMessageAlert();
             }}
           >
-            <FontAwesome name="comments" color="white" style={{fontSize: 48, paddingRight: 10}} />
-            <Text style={{color: 'white', fontWeight: "400", fontSize: 24, paddingLeft: 10}}>Message</Text>
+            <FontAwesome name="comments" color="white" style={{fontSize: 48, paddingLeft: 30, paddingRight: 20}} />
+            <Text style={{color: 'white', fontWeight: "400", fontSize: 24, paddingLeft: 20}}>Message</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -164,7 +176,7 @@ const homeStyles = StyleSheet.create({
   rowVariable: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#647C90',
+    color: 'black',
     marginBottom: 60,
   },
   buttonContainer: {
@@ -216,13 +228,13 @@ const homeStyles = StyleSheet.create({
   },
   name1: {
     paddingTop: 10,
-    color: 'black',
+    color: '#647C90',
     fontSize: 16,
     fontWeight: "600"
   },
   name2: {
     paddingTop: 10,
-    color: 'black',
+    color: '#647C90',
     fontSize: 16,
     fontWeight: "600"
   },
