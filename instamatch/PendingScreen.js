@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as Font from 'expo-font';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import api from './api';
@@ -39,8 +39,9 @@ const PendingScreen = ( { navigation, route } ) => {
         Api.checkMatch(user).then((response) => {
           console.log("response: " + JSON.stringify(response));
           if (response.result == "success" && response.match !== null) {
+            const match = response.match;
             console.log("match found");
-            navigation.replace('MatchedScreen', { endTime: convertToMinutes(response.endTime), activity: activity, friends: friends, user: user });
+            navigation.replace('MatchedScreen', { endTime: convertToMinutes(response.endTime), activity: activity, match: match, user: user });
           } else {
             console.log("still searching. user is: " + user + ".");
             console.log("initial end time: " + initialEndTime);
@@ -72,7 +73,7 @@ const PendingScreen = ( { navigation, route } ) => {
     }))
   };
   return (
-    <View style={homeStyles.container}>
+    <ScrollView style={homeStyles.container}>
       <View style={homeStyles.list}>
         <Text style={homeStyles.row}>Looking for a friend in <Text style={homeStyles.rowVariable}>{friends}</Text></Text>
         <Text style={homeStyles.row}>to do <Text style={homeStyles.rowVariable}>{activity}</Text></Text>
@@ -140,7 +141,7 @@ const PendingScreen = ( { navigation, route } ) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

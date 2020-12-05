@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as Font from 'expo-font';
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { List, Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { AntDesign } from '@expo/vector-icons';
 import ActivityPicker from './ActivityPicker';
@@ -54,7 +54,7 @@ const Home = ( {navigation} ) => {
       });
   };
   return (
-    <View style={homeStyles.container}>
+    <ScrollView style={homeStyles.container}>
       <View style={ homeStyles.list }>
         <TimePicker updateHr={ (value) => { setHr(value) }} updateMin={ (value) => { setMin(value) }}/>
         <ActivityPicker updateActivity={ (value) => { setActivity(value) }}/>
@@ -83,7 +83,7 @@ const Home = ( {navigation} ) => {
           <Text style={homeStyles.cta}>Start Now!</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
