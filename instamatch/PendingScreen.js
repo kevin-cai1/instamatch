@@ -13,6 +13,7 @@ const PendingScreen = ( { navigation, route } ) => {
   const {hours, minutes, activity, friends} = route.params;
   const timeLeft = 3600 * hours.split(' ')[0] + 60 * minutes.split(' ')[0];
   const [initialEndTime, setInitialEndTime] = useState(0);
+  const [ellapsed, setEllapsed] = useState(0);
 
   const Api = new api();
 
@@ -34,6 +35,7 @@ const PendingScreen = ( { navigation, route } ) => {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
+      setEllapsed(ellapsed => ellapsed + 1)
       getUsername().then((user) => {
         console.log("restarting interval");
         Api.checkMatch(user).then((response) => {
@@ -41,7 +43,7 @@ const PendingScreen = ( { navigation, route } ) => {
           if (response.result == "success" && response.match !== null) {
             const match = response.match;
             console.log("match found");
-            navigation.replace('MatchedScreen', { endTime: convertToMinutes(response.endTime), activity: activity, match: match, user: user });
+            navigation.replace('MatchedScreen', { timeLeft: timeLeft, ellapsed: ellapsed, activity: activity, match: match, user: user });
           } else {
             console.log("still searching. user is: " + user + ".");
             console.log("initial end time: " + initialEndTime);

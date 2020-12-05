@@ -7,14 +7,12 @@ import CountDown from 'react-native-countdown-component';
 import api from './api';
 
 const MatchedScreen = ( { navigation, route } ) => {
+  const Api = new api();
   const username = route.params.user;
   const match = route.params.match;
   const [friendImg, setFriendImage] = useState(false);
   const [img, setImage] = useState(false);
-  const hours = 1
-  const minutes = 10
   console.log("params: " + JSON.stringify(route));
-  console.log("end time: " + route.params.endTime);
   const getUsername = async () => {
     try {
       return await AsyncStorage.getItem('@username')
@@ -45,7 +43,7 @@ const MatchedScreen = ( { navigation, route } ) => {
   const handleMessageAlert = () => {
     Alert.alert(
       "Coming soon...",
-      "Messaging feature is not implemented yet.",
+      "Messaging feature not available yet.",
       [
         { text: "OK", onPress: () => console.log("OK Pressed") }
       ],
@@ -58,12 +56,10 @@ const MatchedScreen = ( { navigation, route } ) => {
     getImg();
   });
 
-  const Api = new api();
-  const today = new Date();
-  const time = convertToMinutes(today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds());
-
-  console.log("curr time: ", time);
-  console.log("match: ", match);
+  const initialTimeLeft = route.params.timeLeft;
+  const timeEllapsed = route.params.ellapsed;
+  console.log("timeLeft: ", initialTimeLeft);
+  console.log("timeEllapsed: ", timeEllapsed);
   return (
     <View style={homeStyles.container}>
       <ScrollView>
@@ -100,7 +96,7 @@ const MatchedScreen = ( { navigation, route } ) => {
               >
               <Text style={homeStyles.timeLeft}>Time Left</Text>
               <CountDown
-                until={ route.params.endTime }
+                until={ initialTimeLeft - timeEllapsed }
                 size={20}
                 onFinish={() => {
                   handleCancelMatch();
