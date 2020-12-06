@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Switch } from 'react-native';
 import { WingBlank, List } from '@ant-design/react-native';
+import notImplementedError from './helper';
 import api from './api';
 import { ACCENT_COLOR } from './Constants';
 
@@ -10,6 +11,11 @@ const NotificationSettings = ({ navigation }) => {
   const [match, setMatch] = React.useState(false);
   const [activity, setActivity] = React.useState(false);
 
+  const handleNotification = (value) => {
+    setNotification(value);
+    notImplementedError();
+  }
+
   return (
     <View style={style.container}>
       <List style={style.list}>
@@ -18,7 +24,7 @@ const NotificationSettings = ({ navigation }) => {
             <Switch
               trackColor={{ false: '#787770', true: ACCENT_COLOR }}
               thumbColor="#fefeff"
-              onValueChange={(value) => setNotification(value)}
+              onValueChange={(value) => handleNotification(value)}
               value={notification}
             />
           }
