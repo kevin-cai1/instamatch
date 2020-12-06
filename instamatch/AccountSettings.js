@@ -54,7 +54,7 @@ const AccountSettings = ({ navigation }) => {
 
   return (
     <View style={style.container}>
-      <List>
+      <List style={style.list}>
         <List.Item onPress={() => navigation.navigate('ChangePassword')}>
           <View style={style.nestedLabel}>
             <Text style={style.label}>
@@ -97,6 +97,9 @@ const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
     height: screen.height,
+  },
+  list: {
+    marginTop: 10,
   },
   delete: {
     paddingTop: 50,
