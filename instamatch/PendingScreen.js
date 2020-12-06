@@ -8,12 +8,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from "react-native-toast-message";
 import { stringify } from 'uuid';
 import { abs } from 'react-native-reanimated';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const PendingScreen = ( { navigation, route } ) => {
   const {hours, minutes, activity, friends} = route.params;
   const timeLeft = 3600 * hours.split(' ')[0] + 60 * minutes.split(' ')[0];
   const [initialEndTime, setInitialEndTime] = useState(0);
   const [ellapsed, setEllapsed] = useState(0);
+  const [optionVisible, setOptionsVisible] = React.useState(false);
 
   const Api = new api();
 
@@ -74,6 +76,23 @@ const PendingScreen = ( { navigation, route } ) => {
       })
     }))
   };
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'Home',
+      headerLeft: () => (
+        <TouchableOpacity
+          style={homeStyles.cancelSession}
+          onPress={() => {handleCancelMatch()}}
+          accessible={true}
+          accessibilityLabel="cancel"
+        >
+          <Text style={ homeStyles.cancelSessionText }>Cancel</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, optionVisible]);
+
   return (
     <ScrollView style={homeStyles.container}>
       <View style={homeStyles.list}>
@@ -120,27 +139,6 @@ const PendingScreen = ( { navigation, route } ) => {
             />
 
           </View>
-          <TouchableOpacity
-            style={{ borderWidth:1,
-              borderColor:'#1C3AA1',
-              alignItems:'center',
-              justifyContent:'center',
-              width:108,
-              height:44,
-              backgroundColor:'#1C3AA1',
-              borderRadius:24,
-              marginTop:144,
-              shadowOpacity: 0.5,
-              shadowRadius: 3,
-              shadowColor: '#474e59',
-              shadowOffset: { height: 3, width: 0 }
-            }}
-            onPress={() => {
-              handleCancelMatch();
-            }}
-          >
-            <Text style={homeStyles.cancel}>Cancel</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -186,7 +184,7 @@ const homeStyles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    paddingTop: 40,
+    paddingTop: 100,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -198,10 +196,19 @@ const homeStyles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
   },
-  cancel: {
-    color: 'white',
-    fontSize: 16,
-  }
+  cancelSession: {
+    paddingLeft: 10,
+    alignItems:'center',
+    justifyContent:'center',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  cancelSessionText: {
+    paddingLeft: 5,
+    color: '#1C3AA1',
+    fontSize: 20,
+    fontWeight: '500',
+  },
 });
 
 export default PendingScreen;

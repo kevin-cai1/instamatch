@@ -64,7 +64,6 @@ const MatchedScreen = ( { navigation, route } ) => {
     <View style={homeStyles.container}>
       <ScrollView>
         <View style={homeStyles.list}>
-          <Text style={homeStyles.rowVariable}>It's a match!</Text>
           <Text style={homeStyles.row}>{route.params.activity}</Text>
           <View style={homeStyles.profileContainer}>
               <View style={homeStyles.profile1}>
@@ -160,13 +159,13 @@ const homeStyles = StyleSheet.create({
   },
   list: {
     padding: 10,
-    marginTop: 20,
+    marginTop: 100,
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
   },
   row: {
-    color: '#647C90',
+    color: 'black',
     fontSize: 20,
   },
   rowVariable: {
@@ -224,13 +223,13 @@ const homeStyles = StyleSheet.create({
   },
   name1: {
     paddingTop: 10,
-    color: '#647C90',
+    color: 'black',
     fontSize: 16,
     fontWeight: "600"
   },
   name2: {
     paddingTop: 10,
-    color: '#647C90',
+    color: 'black',
     fontSize: 16,
     fontWeight: "600"
   },
