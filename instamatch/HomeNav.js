@@ -11,7 +11,6 @@ const Stack = createStackNavigator();
 
 const HomeNav = () => {
   return (
-    <NavigationContainer independent={true}>
     <Stack.Navigator screenOptions={{ headerStatusBarHeight: 0, }}>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen
@@ -39,7 +38,6 @@ const HomeNav = () => {
           })}
         />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 

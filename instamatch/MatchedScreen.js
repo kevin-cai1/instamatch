@@ -238,7 +238,7 @@ const homeStyles = StyleSheet.create({
     width: 128,
     height: 128,
     borderRadius: 100,
-    backgroundColor: '#1C3AA1'
+    backgroundColor: 'rgba(28,58,161,0.5)'
   }
 });
 
