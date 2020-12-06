@@ -11,8 +11,8 @@ const Stack = createStackNavigator();
 const HomeNav = () => {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator screenOptions={{ headerStatusBarHeight: 0, }}>
+        <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen
           name="PendingScreen"
           component={PendingScreen}
@@ -25,7 +25,6 @@ const HomeNav = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 };
 
