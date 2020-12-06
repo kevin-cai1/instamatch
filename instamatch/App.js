@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 const App = () => {
+  console.disableYellowBox = true;
   return (
     <>
     <NavigationContainer>
@@ -17,7 +18,7 @@ const App = () => {
         <Stack.Screen name="LandingScreenNav" component={routes.LandingScreenNav}/>
         <Stack.Screen name="MainAppRoutes" component={routes.MainAppRoutes}/>
       </Stack.Navigator>
-    </NavigationContainer>    
+    </NavigationContainer>
     <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
   );
