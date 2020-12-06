@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, Image, View, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
-import InstaMatchLogo from './assets/InstaMatchLogo.png';
+import InstaMatchLogo from './assets/InstaMatchLogo.js';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import api from './api';
@@ -59,7 +59,9 @@ const LoginScreen = ({navigation}) => {
         textContent={'Loading...'}
         textStyle={{color:'#FFFFFF'}}
       />
-      <Image source={InstaMatchLogo} style={loginAccountStyles.logo}/>
+      <View style={loginAccountStyles.logo}>
+        <InstaMatchLogo/>
+      </View>
       <Formik
         initialValues={{ username: '', email: '', password: '', confirmPassword: ''}}
         validationSchema={LoginValidation}

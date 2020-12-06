@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Image, View, TouchableWithoutFeedback, Keyboard, Text, TextInput, TouchableOpacity } from 'react-native';
-import InstaMatchLogo from './assets/InstaMatchLogo.png';
+import InstaMatchLogo from './assets/InstaMatchLogo.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -78,7 +78,9 @@ const CreateAccountScreen = ({navigation}) => {
           textContent={'Loading...'}
           textStyle={{color:'#FFFFFF'}}
         />
-        <Image source={InstaMatchLogo} style={loginAccountStyles.logo}/>
+      <View style={loginAccountStyles.logo}>
+        <InstaMatchLogo/>
+      </View>
         <Formik
           initialValues={{ username: '', displayName: '', email: '', password: '', confirmPassword: ''}}
           validationSchema={AccountDetailValidation}
