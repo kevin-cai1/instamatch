@@ -238,8 +238,6 @@ const homeStyles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 100,
-    borderWidth: 3,
-    borderColor: '#1C3AA1',
     backgroundColor: '#1C3AA1'
   }
 });
