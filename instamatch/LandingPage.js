@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   home1: {
     resizeMode: "contain",
     width: screen.width * 0.35,
-    height: 300,
+    height: screen.height * 0.3,
   },
   home2: {
     resizeMode: "contain",

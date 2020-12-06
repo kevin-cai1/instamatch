@@ -87,8 +87,8 @@ const MatchedScreen = ( { navigation, route } ) => {
                 borderColor:'#D3E5FF',
                 alignItems:'center',
                 justifyContent:'center',
-                width:210,
-                height:100,
+                width:260,
+                height:110,
                 backgroundColor:'#D3E5FF',
                 borderRadius:10,
               }}
@@ -101,10 +101,10 @@ const MatchedScreen = ( { navigation, route } ) => {
                   handleCancelMatch();
                 }}
                 digitStyle={{backgroundColor: '#D3E5FF'}}
-                digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 36}}
+                digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 32}}
                 timeToShow={['H', 'M', 'S']}
                 timeLabels={{m: null, s: null}}
-                separatorStyle={{color: 'black', fontWeight: "400"}}
+                separatorStyle={{color: 'black', fontWeight: "400", fontSize: 32}}
                 showSeparator
               />
             </View>
@@ -116,7 +116,7 @@ const MatchedScreen = ( { navigation, route } ) => {
               justifyContent:'flex-start',
               display: 'flex',
               flexDirection: 'row',
-              width:320,
+              width:340,
               height:60,
               backgroundColor:'#1C3AA1',
               borderRadius:32,
@@ -131,7 +131,7 @@ const MatchedScreen = ( { navigation, route } ) => {
             }}
           >
             <FontAwesome name="comments" color="white" style={{fontSize: 48, paddingLeft: 30, paddingRight: 20}} />
-            <Text style={{color: 'white', fontWeight: "400", fontSize: 24, paddingLeft: 20}}>Message</Text>
+            <Text style={{color: 'white', fontWeight: "400", fontSize: 24, paddingLeft: 25}}>Message</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -166,7 +166,7 @@ const homeStyles = StyleSheet.create({
   },
   row: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "600"
   },
   rowVariable: {
@@ -177,7 +177,7 @@ const homeStyles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    marginTop: 60,
+    marginTop: 80,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -210,7 +210,7 @@ const homeStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    paddingRight:20,
+    paddingRight:24,
     width: 140,
     height: 140,
   },
@@ -218,7 +218,7 @@ const homeStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    paddingLeft:20,
+    paddingLeft:24,
     width: 140,
     height: 140,
   },
@@ -235,10 +235,10 @@ const homeStyles = StyleSheet.create({
     fontWeight: "500"
   },
   image: {
-    width: 120,
-    height: 120,
+    width: 128,
+    height: 128,
     borderRadius: 100,
-    backgroundColor: '#1C3AA1'
+    backgroundColor: 'rgba(28,58,161,0.5)'
   }
 });
 

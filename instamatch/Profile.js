@@ -110,7 +110,6 @@ const Profile = () => {
       { compress: 0, format: ImageManipulator.SaveFormat.PNG, base64: true}
     );
 
-    console.log(result);
     setImage(`data:image/png;base64,${result.base64}`);
     changeProfilePic(`data:image/png;base64,${result.base64}`);
   };
@@ -124,9 +123,7 @@ const Profile = () => {
     });
 
     if (!result.cancelled) {
-      console.log(result);
       compressImage(result.uri);
-      console.log('test');
       
     }
   };

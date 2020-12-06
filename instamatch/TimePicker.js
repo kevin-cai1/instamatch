@@ -25,7 +25,7 @@ const TimePicker = ( {updateHr, updateMin} ) => {
         value={hr}
         title={"I'm free for..."}
         items={hours}
-        titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '400' }}
+        titleStyle={{ color: "black", fontSize: 20, fontWeight: '400' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
         confirmButtonEnabledTextStyle={{ color: "#147efb", fontWeight: '400', fontSize: 20 }}
@@ -66,7 +66,7 @@ const pickerStyles = StyleSheet.create({
   row: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#647C90',
+    borderColor: 'black',
     marginRight: 10,
     height: 40,
     width: 70,
@@ -76,11 +76,11 @@ const pickerStyles = StyleSheet.create({
     marginLeft: 38
   },
   rowTitle: {
-    color: '#647C90',
+    color: 'black',
     fontSize: 20,
   },
   rowValue: {
-    color: '#647C90',
+    color: 'black',
     fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,

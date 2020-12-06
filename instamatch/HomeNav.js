@@ -52,7 +52,7 @@ const style = StyleSheet.create({
   cancelSessionText: {
     paddingLeft: 5,
     color: '#1C3AA1',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
   },
 });
