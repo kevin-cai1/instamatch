@@ -34,6 +34,8 @@ const Friends = ({ navigation }) => {
     });
   };
 
+  console.disableYellowBox = true;
+
   React.useEffect(() => {
     fetchData();
     listener = navigation.addListener('focus', () => {
