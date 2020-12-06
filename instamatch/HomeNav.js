@@ -12,16 +12,16 @@ const HomeNav = () => {
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{ headerStyle: { backgroundColor: '#f2f2f2', shadowColor: 'transparent' }, }} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen
           name="PendingScreen"
           component={PendingScreen}
-          options={{ title: 'Home', headerStyle: { backgroundColor: '#f2f2f2', shadowColor: 'transparent' }, }}
+          options={{ title: 'Home' }}
         />
         <Stack.Screen
           name="MatchedScreen"
           component={MatchedScreen}
-          options={{ title: 'Home', headerStyle: { backgroundColor: '#f2f2f2', shadowColor: 'transparent' }, }}
+          options={{ title: 'Home' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
