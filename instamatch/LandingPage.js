@@ -3,6 +3,7 @@ import { StyleSheet, View, Image, Text, Dimensions, Button, TouchableOpacity } f
 import { Carousel } from '@ant-design/react-native';
 import { ACCENT_COLOR } from './Constants';
 import { AntDesign } from '@expo/vector-icons';
+import InstaMatchLogo from './assets/InstaMatchLogo.js';
 
 const screen = Dimensions.get("screen");
 
@@ -19,10 +20,9 @@ const LandingPage = ({navigation}) => {
       >
         <View style={styles.item}>
           <View style={styles.imageContainer}>
-            <Image
-              style={styles.logo}
-              source= {require('./assets/InstaMatchLogo.png')}
-            />
+          <View style={styles.logo}>
+            <InstaMatchLogo/>
+          </View>
             <View style={styles.graphics}>
               <Image
                 style={styles.home1}
@@ -48,10 +48,9 @@ const LandingPage = ({navigation}) => {
         </View>
         <View style={styles.item2}>
           <View style={styles.imageContainer}>
-            <Image
-              style={styles.logo}
-              source= {require('./assets/InstaMatchLogo.png')}
-            />
+            <View style={styles.logo}>
+              <InstaMatchLogo/>
+            </View>
             <View style={styles.graphics2}>
               <Image
                 style={styles.home2}
@@ -70,10 +69,9 @@ const LandingPage = ({navigation}) => {
         </View>
         <View style={styles.item3}>
           <View style={styles.imageContainer}>
-            <Image
-              style={styles.logo}
-              source= {require('./assets/InstaMatchLogo.png')}
-            />
+            <View style={styles.logo}>
+              <InstaMatchLogo/>
+            </View>
             <View style={styles.graphics3}>
               <Image
                 style={styles.tag}
@@ -213,8 +211,9 @@ const styles = StyleSheet.create({
     height: screen.height * 0.3,
   },
   home2: {
+    marginTop: screen.height * 0.03,
     resizeMode: "contain",
-    height: screen.height * 0.45
+    height: screen.height * 0.40
   },
   tag: {
     width: screen.width * 0.8,
