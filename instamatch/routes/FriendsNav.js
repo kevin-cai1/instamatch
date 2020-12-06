@@ -18,7 +18,7 @@ const FriendsNav = () => {
   const [optionsState, setOptionsState] = React.useState(false);
 
   return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerStatusBarHeight: 0, }}>
         <Stack.Screen name="Friends" component={Friends} />
         <Stack.Screen
           name="FriendsList"
