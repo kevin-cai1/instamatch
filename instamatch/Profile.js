@@ -244,7 +244,7 @@ const style = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 200,
-    backgroundColor: ACCENT_COLOR,
+    backgroundColor: '#1C3AA1',
     borderColor: '#fff',
     borderWidth: 4,
     margin: 20,

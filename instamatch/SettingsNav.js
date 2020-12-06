@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 
 const SettingsNav = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerStatusBarHeight: 0, }}>
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen 
         name="AccountSettings"
@@ -93,7 +93,7 @@ const SettingsNav = () => {
         name="Profile"
         component={Profile}
         options={({navigation}) => ({
-            title: '',
+            title: 'Profile',
             headerLeft: () => (
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}

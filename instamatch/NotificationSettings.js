@@ -12,7 +12,7 @@ const NotificationSettings = ({ navigation }) => {
 
   return (
     <View style={style.container}>
-      <List>
+      <List style={style.list}>
         <List.Item
           extra={
             <Switch
@@ -61,6 +61,9 @@ const NotificationSettings = ({ navigation }) => {
 const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
+  },
+  list: {
+    marginTop: 10,
   },
   notificationSubheadings: {
     marginTop: 20,
