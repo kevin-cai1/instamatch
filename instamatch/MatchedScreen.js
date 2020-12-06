@@ -101,7 +101,7 @@ const MatchedScreen = ( { navigation, route } ) => {
                   handleCancelMatch();
                 }}
                 digitStyle={{backgroundColor: '#D3E5FF'}}
-                digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 24}}
+                digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 36}}
                 timeToShow={['H', 'M', 'S']}
                 timeLabels={{m: null, s: null}}
                 separatorStyle={{color: 'black', fontWeight: "400"}}
