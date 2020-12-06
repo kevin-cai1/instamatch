@@ -65,7 +65,7 @@ const PendingScreen = ( { navigation, route } ) => {
       Api.deleteFromMatchQueue(user).then((response) => {
         if (response.result == "success") {
           console.log(user + " is deleted from match queue");
-          navigation.replace('Home');
+          navigation.goBack('Home');
         } else {
           Toast.show({
             text1: `Sorry! Please try cancelling again`,
@@ -114,12 +114,12 @@ const PendingScreen = ( { navigation, route } ) => {
         <View style={homeStyles.buttonContainer}>
           <View
             style={{ borderWidth:1,
-              borderColor:'#647C90',
+              borderColor:'#D3E5FF',
               alignItems:'center',
               justifyContent:'center',
               width:210,
               height:100,
-              backgroundColor:'#647C90',
+              backgroundColor:'#D3E5FF',
               borderRadius:10,
             }}
             >
@@ -130,11 +130,11 @@ const PendingScreen = ( { navigation, route } ) => {
               onFinish={() => {
                 handleCancelMatch();
               }}
-              digitStyle={{backgroundColor: '#647C90'}}
-              digitTxtStyle={{color: 'white', fontWeight: "400", fontSize: 24}}
+              digitStyle={{backgroundColor: '#D3E5FF'}}
+              digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 24}}
               timeToShow={['H', 'M', 'S']}
               timeLabels={{m: null, s: null}}
-              separatorStyle={{color: 'white', fontWeight: "400"}}
+              separatorStyle={{color: 'black', fontWeight: "400"}}
               showSeparator
             />
 
