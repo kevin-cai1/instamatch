@@ -11,6 +11,7 @@ import { abs } from 'react-native-reanimated';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const PendingScreen = ( { navigation, route } ) => {
+  console.disableYellowBox = true;
   const {hours, minutes, activity, friends} = route.params;
   const timeLeft = 3600 * hours.split(' ')[0] + 60 * minutes.split(' ')[0];
   const [initialEndTime, setInitialEndTime] = useState(0);
@@ -96,20 +97,20 @@ const PendingScreen = ( { navigation, route } ) => {
   return (
     <ScrollView style={homeStyles.container}>
       <View style={homeStyles.list}>
-        <Text style={homeStyles.row}>Looking for a friend in <Text style={homeStyles.rowVariable}>{friends}</Text></Text>
+        <Text style={homeStyles.row}>Looking for <Text style={homeStyles.rowVariable}>{friends}</Text></Text>
         <Text style={homeStyles.row}>to do <Text style={homeStyles.rowVariable}>{activity}</Text></Text>
         <View style={homeStyles.dotsContainer}>
-        {/*
+        {
           <AnimatedEllipsis numberOfDots={3}
                   minOpacity={0.3}
                   animationDelay={400}
                   style={{
-                    color: '#647C90',
+                    color: 'black',
                     fontSize: 72,
                     letterSpacing: -15,
                   }}
                   />
-                */}
+                }
         </View>
         <View style={homeStyles.buttonContainer}>
           <View
@@ -117,8 +118,8 @@ const PendingScreen = ( { navigation, route } ) => {
               borderColor:'#D3E5FF',
               alignItems:'center',
               justifyContent:'center',
-              width:210,
-              height:100,
+              width:260,
+              height:120,
               backgroundColor:'#D3E5FF',
               borderRadius:10,
             }}
@@ -131,10 +132,10 @@ const PendingScreen = ( { navigation, route } ) => {
                 handleCancelMatch();
               }}
               digitStyle={{backgroundColor: '#D3E5FF'}}
-              digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 24}}
+              digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 32}}
               timeToShow={['H', 'M', 'S']}
               timeLabels={{m: null, s: null}}
-              separatorStyle={{color: 'black', fontWeight: "400"}}
+              separatorStyle={{color: 'black', fontWeight: "400", fontSize: 32}}
               showSeparator
             />
 
@@ -162,19 +163,19 @@ const homeStyles = StyleSheet.create({
   },
   list: {
     padding: 10,
-    marginTop: 100,
+    marginTop: 140,
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
   },
   row: {
-    color: '#647C90',
-    fontSize: 20,
+    color: 'black',
+    fontSize: 21,
   },
   rowVariable: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: '600',
-    color: '#647C90',
+    color: 'black',
   },
   dotsContainer: {
     display: 'flex',
@@ -184,7 +185,7 @@ const homeStyles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    paddingTop: 100,
+    paddingTop: 50,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -206,7 +207,7 @@ const homeStyles = StyleSheet.create({
   cancelSessionText: {
     paddingLeft: 5,
     color: '#1C3AA1',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
   },
 });

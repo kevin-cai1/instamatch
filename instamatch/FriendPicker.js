@@ -75,7 +75,7 @@ const pickerStyles = StyleSheet.create({
   row: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#647C90',
+    borderColor: 'black',
     marginRight: 32,
     height: 40,
     width: 160,
@@ -85,11 +85,11 @@ const pickerStyles = StyleSheet.create({
     marginLeft: 90
   },
   rowTitle: {
-    color: '#647C90',
+    color: 'black',
     fontSize: 20,
   },
   rowValue: {
-    color: '#647C90',
+    color: 'black',
     fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,
