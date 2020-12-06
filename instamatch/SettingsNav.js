@@ -93,7 +93,7 @@ const SettingsNav = () => {
         name="Profile"
         component={Profile}
         options={({navigation}) => ({
-            title: '',
+            title: 'Profile',
             headerLeft: () => (
               <TouchableOpacity
                 style={{ paddingHorizontal: 10,}}
