@@ -84,12 +84,12 @@ const MatchedScreen = ( { navigation, route } ) => {
           <View style={homeStyles.buttonContainer}>
             <View
               style={{ borderWidth:1,
-                borderColor:'#647C90',
+                borderColor:'#D3E5FF',
                 alignItems:'center',
                 justifyContent:'center',
                 width:210,
                 height:100,
-                backgroundColor:'#647C90',
+                backgroundColor:'#D3E5FF',
                 borderRadius:10,
               }}
               >
@@ -100,11 +100,11 @@ const MatchedScreen = ( { navigation, route } ) => {
                 onFinish={() => {
                   handleCancelMatch();
                 }}
-                digitStyle={{backgroundColor: '#647C90'}}
-                digitTxtStyle={{color: 'white', fontWeight: "400", fontSize: 24}}
+                digitStyle={{backgroundColor: '#D3E5FF'}}
+                digitTxtStyle={{color: 'black', fontWeight: "400", fontSize: 24}}
                 timeToShow={['H', 'M', 'S']}
                 timeLabels={{m: null, s: null}}
-                separatorStyle={{color: 'white', fontWeight: "400"}}
+                separatorStyle={{color: 'black', fontWeight: "400"}}
                 showSeparator
               />
             </View>
@@ -159,7 +159,7 @@ const homeStyles = StyleSheet.create({
   },
   list: {
     padding: 10,
-    marginTop: 100,
+    marginTop: 60,
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
@@ -167,6 +167,7 @@ const homeStyles = StyleSheet.create({
   row: {
     color: 'black',
     fontSize: 20,
+    fontWeight: "600"
   },
   rowVariable: {
     fontSize: 24,
@@ -176,12 +177,12 @@ const homeStyles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    paddingTop: 40,
+    marginTop: 60,
     justifyContent: "center",
     alignItems: "center",
   },
   timeLeft: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     paddingBottom: 5,
     fontWeight: "600"
@@ -203,7 +204,7 @@ const homeStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    paddingTop: 20
+    marginTop: 40
   },
   profile1: {
     display: 'flex',
@@ -225,21 +226,21 @@ const homeStyles = StyleSheet.create({
     paddingTop: 10,
     color: 'black',
     fontSize: 16,
-    fontWeight: "600"
+    fontWeight: "500"
   },
   name2: {
     paddingTop: 10,
     color: 'black',
     fontSize: 16,
-    fontWeight: "600"
+    fontWeight: "500"
   },
   image: {
     width: 120,
     height: 120,
     borderRadius: 100,
     borderWidth: 3,
-    borderColor: '#647C90',
-    backgroundColor: '#647C90'
+    borderColor: '#1C3AA1',
+    backgroundColor: '#1C3AA1'
   }
 });
 
