@@ -25,7 +25,7 @@ const TimePicker = ( {updateHr, updateMin} ) => {
         value={hr}
         title={"I'm free for..."}
         items={hours}
-        titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '400' }}
+        titleStyle={{ color: "black", fontSize: 20, fontWeight: '400' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
         confirmButtonEnabledTextStyle={{ color: "#147efb", fontWeight: '400', fontSize: 20 }}

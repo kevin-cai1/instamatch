@@ -18,7 +18,7 @@ const MinutePicker = ( {updateMin} ) => {
         value={min}
         title={"I'm free for..."}
         items={mins}
-        titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '400' }}
+        titleStyle={{ color: "black", fontSize: 20, fontWeight: '400' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
         confirmButtonEnabledTextStyle={{ color: "#147efb", fontWeight: '400', fontSize: 20 }}

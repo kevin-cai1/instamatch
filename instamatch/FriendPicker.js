@@ -35,7 +35,7 @@ const FriendPicker = ( {updateFriends} ) => {
         value={value}
         title={"With..."}
         items={tagsList}
-        titleStyle={{ color: "#8e8e93", fontSize: 20, fontWeight: '400' }}
+        titleStyle={{ color: "black", fontSize: 20, fontWeight: '400' }}
         itemStyle={{ color: "black" }}
         selectedColor="black"
         confirmButtonEnabledTextStyle={{ color: "#147efb", fontWeight: '400', fontSize: 20 }}
