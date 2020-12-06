@@ -65,7 +65,7 @@ const PendingScreen = ( { navigation, route } ) => {
       Api.deleteFromMatchQueue(user).then((response) => {
         if (response.result == "success") {
           console.log(user + " is deleted from match queue");
-          navigation.replace('Home');
+          navigation.goBack('Home');
         } else {
           Toast.show({
             text1: `Sorry! Please try cancelling again`,

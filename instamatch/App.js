@@ -5,17 +5,18 @@ import Toast from 'react-native-toast-message';
 import * as routes from './routes/index';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <>
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="LandingScreenNav" component={routes.LandingScreenNav}/>
-        <Drawer.Screen name="MainAppRoutes" component={routes.MainAppRoutes}/>
-      </Drawer.Navigator>
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name="LandingScreenNav" component={routes.LandingScreenNav}/>
+        <Stack.Screen name="MainAppRoutes" component={routes.MainAppRoutes}/>
+      </Stack.Navigator>
     </NavigationContainer>    
     <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
