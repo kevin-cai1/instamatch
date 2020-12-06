@@ -76,7 +76,7 @@ const pickerStyles = StyleSheet.create({
     marginLeft: 38
   },
   rowTitle: {
-    color: '#647C90',
+    color: '#000000',
     fontSize: 20,
   },
   rowValue: {
